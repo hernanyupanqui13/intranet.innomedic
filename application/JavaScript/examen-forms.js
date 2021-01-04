@@ -5,7 +5,7 @@ const dni_input = document.getElementById("dni_evaristo");
 // Si no es dni el documento se eliminan las restricciones para ingresar datos
 tipo_documento.addEventListener("change", function() {
 
-    if(tipo_documento.value!="dni") {
+    if(tipo_documento.value!="dni") {   
         dni_input.removeAttribute("pattern");
         dni_input.removeAttribute("maxlength");
     } else {
@@ -13,6 +13,7 @@ tipo_documento.addEventListener("change", function() {
         dni_input.setAttribute("pattern", "[0-9]{8}");
         dni_input.value = "";
     }    
+    
 });
 
 

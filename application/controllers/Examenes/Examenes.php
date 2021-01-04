@@ -181,7 +181,7 @@ class Examenes extends CI_Controller
 					$uploadDataI = $this->upload->data();
 					$imagen = $uploadDataI['file_name'];
 				} else {
-					$imagen = '';
+					$imagen = '';   
 				}
 				
 			} else {
