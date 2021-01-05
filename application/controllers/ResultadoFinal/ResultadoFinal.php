@@ -301,53 +301,33 @@ class ResultadoFinal extends CI_Controller {
       
 		$mail = new PHPMailer();
 
+
+        // Creando la configuracion del correo
         $mail->isSMTP();
-
-       // $mail->Host     = 'smtp.office365.com';
-      	$mail->Host     = 'smtp-mail.outlook.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'escudero059407@hotmail.com';
-        $mail->Password = 'Escuderohh';
-        //$mail->SMTPSecure = 'STARTTLS';
-        $mail->SMTPSecure = 'tls';
-      //  $mail->Port     = 587;
-        $mail->Port     = 587;
-        $mail->CharSet = 'UTF-8';
-        $mail->SMTPDebug = 2;
-
-       // $mail->Host = 'localhost';
-        //$mail->SMTPAuth = false;
-        $mail->SMTPAutoTLS = false; 
-        $mail->CharSet = 'UTF-8';
-        $mail->AllowEmpty = true;
-
-      /*   $mail->isSMTP();
-        $mail->Host     = 'ssl://ssmtp.innomedic.pe';
+        $mail->Host     = 'ssl://p3plzcpnl434616.prod.phx3.secureserver.net';
         $mail->SMTPSecure = false;
-      //  $mail->SMTPAuth = true;
         $mail->SMTPDebug  = 3;
         $mail->Username = 'reenviadores@innomedic.pe';
         $mail->Password = 'Sistemas20**';
-        $mail->Host = 'localhost';
-        $mail->SMTPAuth = false;
+        $mail->SMTPAuth = true;
         $mail->SMTPAutoTLS = false; 
-       // $mail->Port = 465; 
-       // $mail->SMTPSecure = 'ssl';
-        $mail->Port     = 25;
-        $mail->CharSet = 'UTF-8';*/
+        $mail->SMTPSecure = 'ssl';   
+        $mail->Port     = 465;
+        $mail->CharSet = 'UTF-8';
+        $mail->AllowEmpty = true;
 
-        //Mandamos a los correos
+        // De: 
+        $mail->setFrom('reenviadores@innomedic.pe', 'Innomedic.pe | Resultados de la Clinica Innomedic International E.I.R.L');
+
 
         $archivo1 = 'upload/Resultado_analisis/'.$archivo1_xx;
 
-        $mail->setFrom('reenviadores@innomedic.pe', 'Innomedic.pe | Resultados de la Clinica Innomedic International E.I.R.L');
 
        // $mail->setFrom('resetpassword@innomedic.pe', 'Innomedic.pe | Restablecer la Contraseña');
-
+        
+       //Mandamos a los correos
         $mail->addReplyTo('reenviadores@innomedic.pe', 'Innomedic.pe | Reenviar Email');
         $mail->addAddress($correo_paciente,  $nombrex); 
-        $mail->addAddress("escudero0594@hotmail.com",  $nombrex); 
-       // $mail->addCC('resetpassword@innomedic.pe', 'Reset Password');
         $mail->Subject = 'Innomedic.pe '.$nombrex.' | Verificar Tus resultados';
        
         // Set email format to HTML
@@ -359,7 +339,7 @@ class ResultadoFinal extends CI_Controller {
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			</head>
 			<body>
-				<tr><td valign="top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 600px"><tbody><tr><td style="vertical-align: top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" style="width: 600px"><tbody><tr><td class="logo" width="588" align="right" valign="top" style="color: #ffffff; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; padding-bottom: 12px; text-align: right; width: 588px"><img class="logo" alt="Adobe" src="http://innomedic.metjetsac.com/public/assets/images/logo.png"  border="0" hspace="0" vspace="0" style=" display: inline-block; vertical-align: top; width: 205px; height: 60px"></td>
+				<tr><td valign="top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 600px"><tbody><tr><td style="vertical-align: top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" style="width: 600px"><tbody><tr><td class="logo" width="588" align="right" valign="top" style="color: #ffffff; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; padding-bottom: 12px; text-align: right; width: 588px"><img class="logo" alt="Adobe" src="http://innomedic.pe/public/assets/images/logo.png"  border="0" hspace="0" vspace="0" style=" display: inline-block; vertical-align: top; width: 205px; height: 60px"></td>
 			                <td width="12" style="width: 12px">&nbsp;</td>
 			              </tr></tbody></table></td>
 			        </tr><tr><td valign="top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 600px"><tbody><tr><td class="mobile-spacer" width="30" style="width: 30px">&nbsp; </td>
@@ -370,14 +350,14 @@ class ResultadoFinal extends CI_Controller {
 			               
 			                <td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			              </tr><tr><td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
-			                <td style="color: #555555; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; padding-top: 20px">En caso de un error, <a href="http://innomedic.metjetsac.com/soporte/" style="color: #1473e6; text-decoration: none" target="_blank" rel="noreferrer">ponte en contacto con nosotros inmediatamente</a>.</td>
+			                <td style="color: #555555; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; padding-top: 20px">En caso de un error, <a href="http://innomedic.pe/" style="color: #1473e6; text-decoration: none" target="_blank" rel="noreferrer">ponte en contacto con nosotros inmediatamente</a>.</td>
 			                <td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			              </tr><tr><td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			                <td style="color: #555555; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; padding-top: 20px; padding-bottom: 30px">Muchas gracias,<br> INNOMEDIC INTERNATIONAL E.I.R.L</td>
 			                <td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			              </tr></tbody></table></td>
 			            </tr><tr><td valign="top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#313A3E" style="background-color: #313A3E; width: 600px"><tbody><tr><td width="22" style="width: 22px">&nbsp;</td>
-			          			<td align="center" style="color: #ffffff; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 14px; padding-top: 30px; text-align: center"><strong><a href="http://intranet.metjetsac.com/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Administrar tu cuenta</a> | <a href="http://innomedic.metjetsac.com/soporte/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Asistencia al colaborador</a> | <a href="http://innomedic.metjetsac.com/soporte/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Foros</a> </strong></td>
+			          			<td align="center" style="color: #ffffff; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 14px; padding-top: 30px; text-align: center"><strong><a href="http://intranet.metjetsac.com/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Administrar tu cuenta</a> | <a href="http://innomedic.metjetsac.com/soporte/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Asistencia al colaborador</a> | <a href="http://innomedic.pe/" style="color: #ffffff; font-weight: bold; text-decoration: none" target="_blank" rel="noreferrer">Foros</a> </strong></td>
 			          			<td width="22" style="width: 22px">&nbsp;</td>
 			        		</tr>
 			        		<tr>
@@ -388,7 +368,7 @@ class ResultadoFinal extends CI_Controller {
 			          				&reg; Av. Javier Prado Este 2638, San Borja, Lima, Perú<br/>
 			                        <a target="_blank" href="http://innomedic.metjetsac.com/soporte/" style="color: #ffffff;"><font color="#ffffff">Mas informacion</font></a> Área de Sistemas T.I
 			                        <br /><br />
-			                        <a href="https://www.facebook.com/escudero05/" color="#ffffff" style="color: #ffffff;">Desarrollado por: Evaristo Escudero Huillcamascco</a>
+			                        <a href="https://www.facebook.com/escudero05/" color="#ffffff" style="color: #ffffff;">Desarrollado por: Area de Sistemas</a>
 			          			</td>
 
 			          			<td width="22" style="width: 22px">&nbsp;</td>
@@ -409,19 +389,13 @@ class ResultadoFinal extends CI_Controller {
         //$mail->AddAttachment($imagen , 'RenamedFile.pdf');
 
         $mail->Body = $mailContent;
-        // Send email
+
+        // Enviando email. Notese que send() devuelve true ó false a parte de enviar el correo
         if(!$mail->send()){
-            // $this->session->set_flashdata('flash_messagex', 'No se a enviado el email '.$mail->ErrorInfo.'');
-         //   $this->output->set_status_header(400);
-          //  echo json_encode(array("error"=>"Su petición no a sido enviada"));
             echo 'Mailer Error: ' . $mail->ErrorInfo;
-
-        }else{
-
-           // echo json_encode(array("sms"=>"Su petición a sido enviada"));
-            
-             // $this->session->set_flashdata('flash_messagexxx', 'Email enviado correctamente');
-
+            $this->output->set_status_header(400);
+        } else {
+            echo "Su petición ha sido enviada";
         }
 
     }
