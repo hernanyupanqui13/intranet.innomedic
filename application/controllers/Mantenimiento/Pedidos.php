@@ -15,6 +15,10 @@ class Pedidos extends CI_Controller
 		  
 	}
 
+	public function fake() {
+		echo json_encode($this->Pedidos_model->get_datatables());
+	}
+
 	public function index()
 	{
 		if ($this->session->userdata("session_id")=="") {
@@ -533,7 +537,7 @@ class Pedidos extends CI_Controller
 			$no++;
 			$row = array();
 			$row[]=$no;
-			$row[] = $person->description;
+			$row[] = $person->descripcion;
 			$row[] = $person->fecha;
 			if ($person->status=="1") {
 				$row[]='<span class="label label-table label-success">Activado</span>';

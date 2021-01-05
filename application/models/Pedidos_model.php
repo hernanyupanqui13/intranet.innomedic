@@ -6,8 +6,8 @@ class Pedidos_model extends CI_model
 
 	//Descripcion Unidad Medida
 	var $table = 'ts_descripcion_unidad_medida';
-	var $column_order = array(null,'description','fecha','status'); //set column field database for datatable orderable
-	var $column_search = array('description','fecha','status'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $column_order = array(null,'descripcion','fecha','status'); //set column field database for datatable orderable
+	var $column_search = array('descripcion','fecha','status'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('Id' => 'desc'); // default order 
 	//var $where_id = "id_usuario=".$this->session->userdata("session_id")."";
 
@@ -163,7 +163,7 @@ class Pedidos_model extends CI_model
 	{
 		$this->_get_datatables_query_unidad_medida();
 		if($_POST['length'] != -1)
-		$this->db->select("*,(select description from ts_descripcion_unidad_medida where id=id_descripcion_unidad) as descripcion_unidad,
+		$this->db->select("*,(select descripcion from ts_descripcion_unidad_medida where id=id_descripcion_unidad) as descripcion_unidad,
 (select nombre from ts_unidad where Id=id_unidad) as unidad_medida");
 		$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
@@ -278,7 +278,7 @@ class Pedidos_model extends CI_model
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
-		//$this->db->select("*,(select nombre from ts_unidad_medida where id=id_unidad_medida) as unidad_medida");
+		$this->db->select("*,(select id_unidad from ts_unidad_medida where ts_descripcion_unidad_medida.id=id_descripcion_unidad) as unidad_medida");
 		$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
