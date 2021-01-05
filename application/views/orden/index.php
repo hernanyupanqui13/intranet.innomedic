@@ -86,6 +86,23 @@
 	
 </div>
 
+<!-- Imprimir Modal  -->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-xl ">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<h5 class="modal-title font-weight-bold" id="exampleModalLabel">Resultado del paciente: <span class="font-weight-normal" id="nombres_completos_pacientex"></span></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" style="border: 2px solid #210202;border-radius: 50%;">&nbsp;&nbsp;&times;&nbsp;&nbsp;</span>
+				</button>
+			</div>
+			<div class="modal-body printableAreaprueba bg-white" id="pdfdocx">
+				<span id="pdfdoc"></span>			
+			</div>			
+		</div>
+	</div>
+</div>
+
 
 
 
@@ -234,7 +251,12 @@
             $("#fecha_fin").val("");
             $("#nombre_busqueda").val("");
             $("#dni_busqueda").val("");
-          }
+		  }
+		  
+		function impresion_final($id) {
+			$("#exampleModal").modal({show: true});			
+			$("#pdfdoc").html('<iframe src="<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>'+$id+'"  width="100%" height="700px" frameBorder="0"></iframe>');			
+		}
 	</script>
 
 	<script>

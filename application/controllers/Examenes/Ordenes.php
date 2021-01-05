@@ -70,7 +70,7 @@ class Ordenes extends CI_Controller {
             }
 
             
-            $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
+            $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="impresion_final('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
            // $row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class="fas fa-location-arrow"></i>&nbsp;Enviar Resultado</a>';
             $data[] = $row;
         }
@@ -153,7 +153,7 @@ class Ordenes extends CI_Controller {
             }
 
             
-            $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
+            $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="impresion_final('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
            // $row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class="fas fa-location-arrow"></i>&nbsp;Enviar Resultado</a>';
             $data[] = $row;
         }
