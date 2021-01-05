@@ -213,6 +213,11 @@ class ResultadoFinal extends CI_Controller {
 
     }
 
+    public function getFullName($id) {
+        $query = $this->db->query("select concat_ws(' ', nombre, apellido_paterno, apellido_materno) as full_name from exam_datos_generales where Id='$id'");
+        echo json_encode($query->row());
+    }
+
     //esto es una prueba que se esta realizando 
     public function view_result_data_list_details($id_paciente)
     {

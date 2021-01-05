@@ -262,12 +262,13 @@
 		}
 
 		function impresion_final($id) {
-		//	$("#exampleModal").modal("show");
-			$("#exampleModal").modal({
-                              show: true
-                          });
-			 $("#pdfdoc").html('<iframe src="<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>'+$id+'"  width="100%" height="700px" frameBorder="0"></iframe>');
+			$("#exampleModal").modal({show: true});
+			$("#pdfdoc").html('<iframe src="<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>'+$id+'"  width="100%" height="700px" frameBorder="0"></iframe>');
 			
+			$.get("<?php echo base_url().'ResultadoFinal/ResultadoFinal/getFullName/'?>" + $id, function(data) {
+				let obj = JSON.parse(data);
+				$("#nombres_completos_pacientex").html(obj.full_name);
+			});
 		}
 
 		function enviarcorreo($id) {
