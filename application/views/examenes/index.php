@@ -193,7 +193,7 @@
                                   <label class="custom-control-label" for="customRadio1_xxxx"> <i class="ti-check text-active" aria-hidden="true"></i> Paquete en General</label>
                                 </div>
                               </label>
-                              <label class="btn btn-outline btn-info active">
+                              <label class="btn btn-outline btn-info">
                                 <div class="custom-control custom-radio" id="genewral_paquetes_idd">
                                   <input type="radio" id="customRadio2" name="paquete" value="2" class="custom-control-input">
                                   <label class="custom-control-label" for="customRadio2"> <i class="ti-check text-active" aria-hidden="true"></i> Exámenes en general</label>
@@ -1404,6 +1404,7 @@ function regresar_id() {
 //mostramos y ocultamos los datos en general
 
 $(document).ready(function() {
+  
   $("#customRadio1_xxxx").click(function(event) {
 
     /* Act on the event */
@@ -1458,6 +1459,8 @@ $(document).ready(function() {
     
   
   });
+
+  
 
   $("#genewral_paquetes_idd").click(function(event) {
     /* Act on the event */
@@ -3117,6 +3120,9 @@ $(document).ready(function() {
       
 
     });
+
+
+    document.getElementById("customRadio1_xxxx").click();
   }); 
 
 

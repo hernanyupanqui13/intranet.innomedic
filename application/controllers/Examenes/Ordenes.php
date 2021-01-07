@@ -55,7 +55,7 @@ class Ordenes extends CI_Controller {
             }else{
                 $row["empresa"] = $person->empresa;
             }
-            if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" or $person->id_paquete=="5") {
+            if (in_array($person->id_paquete, array("1", "2", "3", "5", "580", "581", "582", "583"))) {
                 $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
                  
             }else{

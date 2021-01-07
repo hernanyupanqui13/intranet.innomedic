@@ -30,12 +30,19 @@ class Laboratorio extends CI_Controller {
         }else{
             $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register($data['segmento']);
         }
+        
+        $id_del_paquete = $data['laboratorio_view_register'][0]->id_paquete;
 
       
         
         $this->load->view("intranet_view/head",$data);
         $this->load->view("intranet_view/title",$data);
         $this->load->view('laboratorio/index',$data);
+        if ($id_del_paquete =="5") {
+            $this->load->view("laboratorio/prueba_rapida_imprimir");
+        } else if ($id_del_paquete=="580") {
+            $this->load->view("laboratorio/prueba_rapida_cuantitativa_imprimir");
+        }
         $this->load->view("intranet_view/footer",$data);
     }
 
@@ -51,6 +58,9 @@ class Laboratorio extends CI_Controller {
             $data = array(
                 'igm' => $this->input->post("igm"), 
                 'igg' => $this->input->post("igg"),
+                'concentracion_igm' => $this->input->post("concentracion_igm"),
+                'concentracion_igg' => $this->input->post("concentracion_igg"),
+
                 'update_covid' => date('Y-m-d G:i:s')
             );
 
