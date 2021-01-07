@@ -21,7 +21,7 @@
           <span id="agregar_nav_link"></span>
         </ul>
 
-        <!-- Tab panes -->
+        <!-- Tab panes gracias 5-->
         <div class="tab-content tabcontent-border collapse" id="collapseExample">
           <div class="tab-pane active" id="home" role="tabpanel">
             <div class="p-20">

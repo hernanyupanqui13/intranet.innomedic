@@ -183,7 +183,7 @@
 		                          
 		                            </ul>
 		                            <form class="letritas"  method="post" id="form_register_rayox_x" enctype="multipart/form-data" >
-			                            <!-- Tab panes -->
+			                            <!-- Tab panes gracias totales -->
 			                            <div class="tab-content">
 			                                <div class="tab-pane active" id="home2" role="tabpanel" >
 			                                    <div class="p-20" id="eliminamos">

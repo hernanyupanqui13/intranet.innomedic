@@ -14,7 +14,7 @@
                                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down font-weight-bold">Lista de Exámenes Clínicos</span></a> </li>
                                    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>-->
                                 </ul>
-                                <!-- Tab panes -->
+                                <!-- Tab panes gracias 12 -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane active" id="home" role="tabpanel">
                                         <div class="p-20">

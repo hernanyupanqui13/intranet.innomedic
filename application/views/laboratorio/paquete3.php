@@ -11,7 +11,7 @@
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"  id="mostrar_prueba_rapida"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down font-weight-bold">Prueba Rapida</span></a> </li>
                                <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>-->
                             </ul>
-                            <!-- Tab panes -->
+                            <!-- Tab panes gracias 3 -->
                             <div class="tab-content tabcontent-border">
                                 <div class="tab-pane active p-20" id="home" role="tabpanel">
                                     <form action="#" method="POST" id="registrar_paquete_01">   
@@ -24,7 +24,7 @@
                                                     <table class="table"  cellspacing="0" cellpadding="0" style="padding: 0; margin: 0;">
                                                         <thead class="text-center">
                                                             <tr>
-                                                                <th>ANALISIS</th>
+                                                                <th>ANALISIS3</th>
                                                                 <th>RESULTADO DE ANALISIS</th>
                                                                 <th>UNIDAD</th>
                                                                 <th>RANGO DE REFERENCIA</th>

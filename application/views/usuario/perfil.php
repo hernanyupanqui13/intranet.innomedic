@@ -104,7 +104,7 @@
                                     echo "Configuración";
                                 } ?></a> </li>
                             </ul>
-                            <!-- Tab panes -->
+                            <!-- Tab panes gracias 6 -->
                             <div class="tab-content">
                                 <!--second tab-->
                                 <div class="tab-pane active" id="profile" role="tabpanel">

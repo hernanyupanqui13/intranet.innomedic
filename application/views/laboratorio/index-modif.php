@@ -3,7 +3,7 @@
 	                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"  id="mostrar_prueba_rapida"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down font-weight-bold">Prueba Rapida</span></a> </li>
 	                           <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>-->
 	                        </ul>
-	                        <!-- Tab panes -->
+	                        <!-- Tab panes gracias 10 -->
 	                        <div class="tab-content tabcontent-border">
 	                            <div class="tab-pane active p-20" id="home" role="tabpanel">
 	                                <table width="100%" class="FacetFormTABLE" align="left">
