@@ -155,15 +155,15 @@
 										<div class="col-md-6 text-center ">
 											<p><span><img class="img-fluid "  src="<?php echo base_url().'upload/';?>firma/721.jpg?ver=<?php echo rand(); ?>" alt=""></span><br><small>
 												Firma y Sello<br>
-		Ruiz Cotrina Jorge Martin<br>
-		Patólogo Clínico<br>
-		<strong>C.M.P. :</strong>040560   <strong>R.N.E.:</strong>021633
+												Ruiz Cotrina Jorge Martin<br>
+												Patólogo Clínico<br>
+												<strong>C.M.P. :</strong>040560   <strong>R.N.E.:</strong>021633
 											</small></p>
 										</div>
 									</th>
 								</tr>
 							</thead>
-							</table>
+						</table>
 					</div>
 				</div>	
 			</div>

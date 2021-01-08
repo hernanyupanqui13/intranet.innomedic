@@ -44,6 +44,8 @@ class Laboratorio extends CI_Controller {
             $this->load->view("laboratorio/prueba_rapida_cuantitativa_imprimir");
         } else if($id_del_paquete =="581") {
             $this->load->view("laboratorio/prueba_antigeno_imprimir");
+        } else if($id_del_paquete =="583") {
+            $this->load->view("laboratorio/prueba_antigeno_cuanti_imprimir");
         }
         $this->load->view("intranet_view/footer",$data);
     }
@@ -63,6 +65,9 @@ class Laboratorio extends CI_Controller {
                 'concentracion_igm' => $this->input->post("concentracion_igm"),
                 'concentracion_igg' => $this->input->post("concentracion_igg"),
                 'antigeno_resultado' => $this->input->post("antigeno_resultado"),
+                'concentra_atig' => $this->input->post("concentra_atig"),
+
+
 
                 'update_covid' => date('Y-m-d G:i:s')
             );
@@ -186,6 +191,52 @@ class Laboratorio extends CI_Controller {
         $data = $this->Laboratorio_model->Mostrar_paquete_01($id_paciente);
         echo json_encode($data);
 
+    }
+
+    public function uploadMolecular() {
+        if(!empty($_FILES['images']['name'])){ 
+            $filesCount = count($_FILES['images']['name']); 
+            for($i = 0; $i < $filesCount; $i++){ 
+             //   $_FILES['file']['name']     = $_FILES['images']['name'][$i]; 
+                $_FILES['file']['type']     = $_FILES['images']['type'][$i]; 
+                $_FILES['file']['tmp_name'] = $_FILES['images']['tmp_name'][$i]; 
+                $_FILES['file']['error']    = $_FILES['images']['error'][$i]; 
+                $_FILES['file']['size']     = $_FILES['images']['size'][$i]; 
+                $_FILES['file']['name']     = "Boletas_".rand(100000000000000,900000000000000).'_'.$_FILES['images']['name'][$i];
+                 
+                // File upload configuration 
+                $uploadPath = 'upload/boletas/'; 
+                $config['upload_path'] = $uploadPath; 
+                $config['allowed_types'] = 'jpg|png|gif|pdf|mp3|mp4|AVI|3GP|FLV|doc|docm|docx|dot|dotm|dotx|htm|html|odt|csv|txt|xls|xlsm|xlsx|xps|bmp|emf|odp|ppt|pptx|jpge|zip'; 
+                $config['max_size'] = '1000000000000000'; // whatever you need
+                 
+                // Load and initialize upload library 
+                $this->load->library('upload', $config); 
+                $this->upload->initialize($config); 
+                 
+                // Upload file to server 
+                if($this->upload->do_upload('file')){ 
+                    // Uploaded file data 
+                    $fileData = $this->upload->data(); 
+                    $uploadData[$i]['id_bo_cabecera'] = $galleryID; 
+                    $uploadData[$i]['archivo'] = $fileData['file_name']; 
+                    $uploadData[$i]['fecha_enviado'] = date("Y-m-d H:i:s");
+                    $uploadData[$i]['para'] = $nombres[$i];  
+                    $uploadData[$i]['id_usuario'] = $id_usuario[$i];  
+                    $uploadData[$i]['tipo_boleta'] = $boleta[$i];  
+                    $uploadData[$i]['ano'] = $ano[$i];  
+                    $uploadData[$i]['mes'] = $mes[$i]; 
+                    $uploadData[$i]['estado'] = $estado;
+                    $uploadData[$i]['url'] = $url; 
+                    $uploadData[$i]['view'] = $view;  
+                    $uploadData[$i]['dni'] = $nro_documento[$i]; 
+                    $uploadData[$i]['puesto'] = $puesto[$i]; 
+                    $uploadData[$i]['area'] = $area[$i];
+                    $uploadData[$i]['email'] = $email[$i];
+                    $uploadData[$i]['fija'] = $fija; 
+                }
+            }
+        }
     }
 
 

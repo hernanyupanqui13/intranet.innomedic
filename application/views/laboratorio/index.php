@@ -175,6 +175,8 @@
 			<script src=<?= base_url().'application/JavaScript/prueba-covid-cuantitativa-form.js'?>></script>
 			<script src=<?= base_url().'application/JavaScript/prueba_rapida-form.js'?>></script>
 			<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>
+			<script src=<?= base_url().'application/JavaScript/prueba-antigeno-cuantitativa.js'?>></script>
+
 
 
 			<!--PAQUETE Nº1-->
@@ -251,7 +253,9 @@
 							$("#update_covid").text(data.update_covid);
 							$("#concentracion_igm_imprimir").text(data.la_concentracion_igm);
 							$("#concentracion_igg_imprimir").text(data.la_concentracion_igg);  
-							$("#antigeno_resultado").text(data.los_resultados_antigeno);  
+							$("#antigeno_resultado_imprimir").text(data.los_resultados_antigeno);
+							$("#concentra_atig_imprimir").text(data.la_concentra_atig);  
+  
 
           					
           				
@@ -1217,6 +1221,9 @@ function ValidaRangosSexo(campo, a, b, c, d) {
 						//$('.noantibiograma').css("display","none");
 					}
 				}
+
+				console.log("ahi vaaaaaa");
+				console.log("<?= base_url() . 'application/styles/exams-body.css'?>");
 
 
 			</script>

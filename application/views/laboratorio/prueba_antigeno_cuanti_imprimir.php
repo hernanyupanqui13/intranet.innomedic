@@ -91,15 +91,33 @@
                 <br>
                 <br>
                 <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">                            
+                    <div class="table-responsive">                        
+                        <table class="table">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Prueba</th>
+                                    <th>Resultado</th>
+                                    <th>Unidades</th>
+                                    <th>Concentracion</th>
+                                    <th>Valores de Referencia</th>
+                                </tr>
+                            </thead>
                             <tbody class="text-center">
                                 <tr>
-                                    <th>RESULTADO</td>
+                                    <td>ANTÍGENO</td>
                                     <td>
                                         <span id="antigeno_resultado_imprimir"></span>
                                     </td>
-                                </tr>                             
+                                    <td>
+                                        <span>IU/mL</span>
+                                    </td>
+                                    <td>
+                                        <span id="concentra_atig_imprimir"></span>
+                                    </td>
+                                    <td>
+                                        <span>0-0.4</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -109,7 +127,7 @@
                 <br>
                 <br>
                 <br>
-                <div class="col-md-12">
+                <div class="col-md-12 table-recomendaciones" >
                     <div class="table-responsive">
                         <table width="100%" class="table">
                             <thead>
