@@ -69,6 +69,11 @@ class Laboratorio_model extends CI_Model
         return $query->row();
     }
 
+    public function obtenerMolecularUrl($id_exam) {
+        $query=$this->db->query("select molecular_url from exam_laboratorio where Id=$id_exam");
+        return $query->row();
+    }
+
    
 
  

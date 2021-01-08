@@ -2107,6 +2107,23 @@
             $("div.printableAreaprueba").printArea(options);
         });
 
+        $("#print_prueba_molecular").click(function() {
+          console.log("molecuylaaaaaaaaaaaa");
+          var mode = 'iframe'; //popup
+          var close = mode == "popup";
+          var options = {
+              mode: mode,
+              popClose: close
+          };
+          //$("#imprimir_molecular_container").print();
+
+          var pdfObject = document.getElementById("imprimir_molecular_container").contentWindow;
+          pdfObject.print();
+
+          
+
+        });
+
         //oit
         $("#print_prueba_consentimiento_consentimiento").click(function() {
             var mode = 'iframe'; //popup

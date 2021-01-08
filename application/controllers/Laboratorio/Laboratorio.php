@@ -7,7 +7,8 @@ class Laboratorio extends CI_Controller {
 	{
 		parent::__construct();
         ini_set('date.timezone', 'America/Lima');
-		$this->load->helper(array('url','funciones'));
+        $this->load->helper(array('url','funciones'));
+        $this->load->helper(array('form', 'url'));
         $this->load->model("Laboratorio_model");
          
 	}  
@@ -30,6 +31,8 @@ class Laboratorio extends CI_Controller {
         }else{
             $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register($data['segmento']);
         }
+
+        
         
         $id_del_paquete = $data['laboratorio_view_register'][0]->id_paquete;
 
@@ -46,6 +49,11 @@ class Laboratorio extends CI_Controller {
             $this->load->view("laboratorio/prueba_antigeno_imprimir");
         } else if($id_del_paquete =="583") {
             $this->load->view("laboratorio/prueba_antigeno_cuanti_imprimir");
+        } else if ($id_del_paquete =="582") {
+            $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($data['segmento']);
+            $molecular_url = $molecular_url->molecular_url;
+            $molecular_data = array("molecular_url"=>$molecular_url);
+            $this->load->view("laboratorio/prueba-molecular-imprimir", $molecular_data);
         }
         $this->load->view("intranet_view/footer",$data);
     }
@@ -66,9 +74,6 @@ class Laboratorio extends CI_Controller {
                 'concentracion_igg' => $this->input->post("concentracion_igg"),
                 'antigeno_resultado' => $this->input->post("antigeno_resultado"),
                 'concentra_atig' => $this->input->post("concentra_atig"),
-
-
-
                 'update_covid' => date('Y-m-d G:i:s')
             );
 
@@ -193,50 +198,52 @@ class Laboratorio extends CI_Controller {
 
     }
 
-    public function uploadMolecular() {
-        if(!empty($_FILES['images']['name'])){ 
-            $filesCount = count($_FILES['images']['name']); 
-            for($i = 0; $i < $filesCount; $i++){ 
-             //   $_FILES['file']['name']     = $_FILES['images']['name'][$i]; 
-                $_FILES['file']['type']     = $_FILES['images']['type'][$i]; 
-                $_FILES['file']['tmp_name'] = $_FILES['images']['tmp_name'][$i]; 
-                $_FILES['file']['error']    = $_FILES['images']['error'][$i]; 
-                $_FILES['file']['size']     = $_FILES['images']['size'][$i]; 
-                $_FILES['file']['name']     = "Boletas_".rand(100000000000000,900000000000000).'_'.$_FILES['images']['name'][$i];
-                 
-                // File upload configuration 
-                $uploadPath = 'upload/boletas/'; 
-                $config['upload_path'] = $uploadPath; 
-                $config['allowed_types'] = 'jpg|png|gif|pdf|mp3|mp4|AVI|3GP|FLV|doc|docm|docx|dot|dotm|dotx|htm|html|odt|csv|txt|xls|xlsm|xlsx|xps|bmp|emf|odp|ppt|pptx|jpge|zip'; 
-                $config['max_size'] = '1000000000000000'; // whatever you need
-                 
-                // Load and initialize upload library 
-                $this->load->library('upload', $config); 
-                $this->upload->initialize($config); 
-                 
-                // Upload file to server 
-                if($this->upload->do_upload('file')){ 
-                    // Uploaded file data 
-                    $fileData = $this->upload->data(); 
-                    $uploadData[$i]['id_bo_cabecera'] = $galleryID; 
-                    $uploadData[$i]['archivo'] = $fileData['file_name']; 
-                    $uploadData[$i]['fecha_enviado'] = date("Y-m-d H:i:s");
-                    $uploadData[$i]['para'] = $nombres[$i];  
-                    $uploadData[$i]['id_usuario'] = $id_usuario[$i];  
-                    $uploadData[$i]['tipo_boleta'] = $boleta[$i];  
-                    $uploadData[$i]['ano'] = $ano[$i];  
-                    $uploadData[$i]['mes'] = $mes[$i]; 
-                    $uploadData[$i]['estado'] = $estado;
-                    $uploadData[$i]['url'] = $url; 
-                    $uploadData[$i]['view'] = $view;  
-                    $uploadData[$i]['dni'] = $nro_documento[$i]; 
-                    $uploadData[$i]['puesto'] = $puesto[$i]; 
-                    $uploadData[$i]['area'] = $area[$i];
-                    $uploadData[$i]['email'] = $email[$i];
-                    $uploadData[$i]['fija'] = $fija; 
-                }
-            }
+    public function do_upload() {
+
+        // Cambiando el nombre al archivo
+        $_FILES['file']['type']     = $_FILES['userfile']['type']; 
+        $_FILES['file']['tmp_name'] = $_FILES['userfile']['tmp_name']; 
+        $_FILES['file']['error']    = $_FILES['userfile']['error']; 
+        $_FILES['file']['size']     = $_FILES['userfile']['size']; 
+        $_FILES['file']['name']     = "Molecular_".rand(100000000000000,900000000000000).'_'.substr($_FILES['userfile']['name'], -5);
+
+        // Colocando la configuracion
+        $config['upload_path']          = 'upload/resultados_molecular';
+        $config['allowed_types']        = 'jpg|png|gif|pdf|mp3|mp4|AVI|3GP|FLV|doc|docm|docx|dot|dotm|dotx|htm|html|odt|csv|txt|xls|xlsm|xlsx|xps|bmp|emf|odp|ppt|pptx|jpge|zip';
+        $config['max_size']             = 100000000;
+
+        //Cargando la libreria
+        $this->load->library('upload', $config);
+
+        // Subiendo el archivo al servidor
+        if ( ! $this->upload->do_upload('file')) {
+            echo json_encode($this->upload->display_errors());
         }
+        else {
+            echo $_FILES["file"]["name"];
+        }
+
+        if($this->session->userdata('session_id')==''){
+            redirect(base_url());
+        }
+       
+
+        if ($this->input->is_ajax_request()) {
+
+            $id = $this->input->post("id_unico");
+            $data = array(
+                'update_covid' => date('Y-m-d G:i:s'),
+                'molecular_url' => $_FILES["file"]["name"]
+            );
+
+            $this->Laboratorio_model->actualizar_prueba_rapida($id,$data);
+        } else {
+            exit('No direct script access allowed');
+        }
+    }
+
+    public function testing() {
+        $this->load->view("test1");
     }
 
 

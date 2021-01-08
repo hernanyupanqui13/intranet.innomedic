@@ -176,6 +176,7 @@
 			<script src=<?= base_url().'application/JavaScript/prueba_rapida-form.js'?>></script>
 			<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>
 			<script src=<?= base_url().'application/JavaScript/prueba-antigeno-cuantitativa.js'?>></script>
+			<script src=<?= base_url().'application/JavaScript/prueba-molecular.js'?>></script>
 
 
 
