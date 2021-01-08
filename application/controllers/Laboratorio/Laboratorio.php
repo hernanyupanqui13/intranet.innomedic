@@ -42,6 +42,8 @@ class Laboratorio extends CI_Controller {
             $this->load->view("laboratorio/prueba_rapida_imprimir");
         } else if ($id_del_paquete=="580") {
             $this->load->view("laboratorio/prueba_rapida_cuantitativa_imprimir");
+        } else if($id_del_paquete =="581") {
+            $this->load->view("laboratorio/prueba_antigeno_imprimir");
         }
         $this->load->view("intranet_view/footer",$data);
     }
@@ -60,6 +62,7 @@ class Laboratorio extends CI_Controller {
                 'igg' => $this->input->post("igg"),
                 'concentracion_igm' => $this->input->post("concentracion_igm"),
                 'concentracion_igg' => $this->input->post("concentracion_igg"),
+                'antigeno_resultado' => $this->input->post("antigeno_resultado"),
 
                 'update_covid' => date('Y-m-d G:i:s')
             );

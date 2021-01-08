@@ -1,11 +1,11 @@
-$(document).on('submit', '#registrar_prueba_covid', function(event) {
+$(document).on('submit', '#registrar_prueba_antigeno', function(event) {
     event.preventDefault();
     /* Act on the event */
 
     $.ajax({
         url: window.location.pathname+"../../actualizar_prueba_rapida/",
         type: 'POST',
-        data: $("#registrar_prueba_covid").serialize(),
+        data: $("#registrar_prueba_antigeno").serialize(),
     })
 
     .done(function() {

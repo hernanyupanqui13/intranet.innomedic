@@ -174,6 +174,7 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<script src=<?= base_url().'application/JavaScript/prueba-covid-cuantitativa-form.js'?>></script>
 			<script src=<?= base_url().'application/JavaScript/prueba_rapida-form.js'?>></script>
+			<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>
 
 
 			<!--PAQUETE Nº1-->
@@ -250,6 +251,8 @@
 							$("#update_covid").text(data.update_covid);
 							$("#concentracion_igm_imprimir").text(data.la_concentracion_igm);
 							$("#concentracion_igg_imprimir").text(data.la_concentracion_igg);  
+							$("#antigeno_resultado").text(data.los_resultados_antigeno);  
+
           					
           				
 
@@ -1217,7 +1220,6 @@ function ValidaRangosSexo(campo, a, b, c, d) {
 
 
 			</script>
-
 			<style type="text/css">
 				.valoranormal {
 				    background-color: red !important;
@@ -1234,11 +1236,9 @@ function ValidaRangosSexo(campo, a, b, c, d) {
 				    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
 				    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
 				}
-
-
-
-
 			</style>
+			<link rel="stylesheet" type="text/css" href="<?= base_url() . 'application/styles/exams-body.css'?>">
+
 
 				
 

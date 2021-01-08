@@ -48,6 +48,7 @@ class Laboratorio_model extends CI_Model
             (select igg from exam_laboratorio where id_paciente=a.Id) as igg,
             (select concentracion_igm from exam_laboratorio where id_paciente=a.Id) as la_concentracion_igm,
             (select concentracion_igg from exam_laboratorio where id_paciente=a.Id) as la_concentracion_igg,
+            (select UPPER(antigeno_resultado) from exam_laboratorio where id_paciente=a.Id) as los_resultados_antigeno,
             (select update_covid from exam_laboratorio where id_paciente=a.Id) as update_covid,
             TIMESTAMPDIFF(YEAR,a.fecha_nacimiento,CURDATE()) as edad 
              from exam_datos_generales a where Id='".$id."'");
