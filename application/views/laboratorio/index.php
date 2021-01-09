@@ -152,14 +152,15 @@
                             	<?php } ?>
                             </div>
 
+							<?=$test_data?>
 
 
-                           <!--MOSTRAMOS LOS PAQUETES-->
-                           <!--paquetes-->
+
+                           <!-- Mostramos los Paquetes -->
                            <?php if ($id_paquete=="" || $id_paquete==null) {
                            		echo "estamos agregando los demas paquetes";
                            	}else{?>
-								<?php  echo $html_paquete; ?>
+								<?php  echo $body_template;?>
                            <?php } ?>
                            
                      

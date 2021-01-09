@@ -16,45 +16,73 @@ class Laboratorio extends CI_Controller {
     {
         if($this->session->userdata('session_id')==''){
             redirect(base_url());
-        }
-           $data = array(
-            'title' =>array("estas viendo la lista de Laboratorio","Laboratorio","","<a target='_blank' href='https://www.facebook.com/escudero05' title=''>Evaristo Escudero Huillcamascco</a>"),
-            'seleccione_sexo' => $this->Laboratorio_model->seleccione_sexo(),
-            
-             );
+        }   
 
-
-        $data['segmento']=$this->uri->segment(4,0); 
-
-        if (!$data['segmento']) {
-            $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register();
-        }else{
-            $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register($data['segmento']);
-        }
-
-        
-        
-        $id_del_paquete = $data['laboratorio_view_register'][0]->id_paquete;
+        $fake_data = array("fake"=>"Hola mundo!");
 
       
+
+
+
+
+        $data = array(
+        'title' =>array("estas viendo la lista de Laboratorio","Laboratorio","","<a target='_blank' href='https://www.facebook.com/escudero05' title=''>Evaristo Escudero Huillcamascco</a>"),
+        'seleccione_sexo' => $this->Laboratorio_model->seleccione_sexo(),
+        'test_data'=> $this->load->view("testing",$fake_data, TRUE)
+        );
+
+        $the_id= $this->uri->segment(4,0); 
+        $data['segmento']=$the_id;
+
+        if (!$the_id) {
+            $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register();
+        }else{
+            $data['laboratorio_view_register'] = $this->Laboratorio_model->laboratorio_view_register($the_id);
+        }
+
+
+        $id_del_paquete = $data['laboratorio_view_register'][0]->id_paquete;
+
+
         
+        $view_path_body="";
+        $view_path_imprimir = "";
+        $body_view_data = array();
+
+        // Configurando un body diferente apra cada tipo de examen
+        if ($id_del_paquete =="5") {
+            $view_path_body = "laboratorio/prueba-rapida-body";
+            $view_path_imprimir ="laboratorio/prueba_rapida_imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+
+        } else if ($id_del_paquete=="580") {
+            $view_path_body = "laboratorio/prueba-rapida-cuanti-body";
+            $view_path_imprimir = "laboratorio/prueba_rapida_cuantitativa_imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+        } else if($id_del_paquete =="581") {
+            $view_path_body = "laboratorio/prueba-antigeno-body";
+            $view_path_imprimir = "laboratorio/prueba_antigeno_imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+        } else if($id_del_paquete =="583") {
+            $view_path_body = "laboratorio/prueba-antigeno-cuanti-body";
+            $view_path_imprimir = "laboratorio/prueba_antigeno_cuanti_imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+        } else if ($id_del_paquete =="582") {
+            $view_path_body = "laboratorio/prueba-molecular-body";
+            // Para imprimir el PDF adjunto
+            $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($data['segmento']);
+            $molecular_url = $molecular_url->molecular_url;
+            $body_view_data = array("molecular_url"=>$molecular_url);
+        }
+
+        $data["body_template"]=$this->load->view($view_path_body, $body_view_data, TRUE);
+
+
+        // Renderizando las vistas        
         $this->load->view("intranet_view/head",$data);
         $this->load->view("intranet_view/title",$data);
         $this->load->view('laboratorio/index',$data);
-        if ($id_del_paquete =="5") {
-            $this->load->view("laboratorio/prueba_rapida_imprimir");
-        } else if ($id_del_paquete=="580") {
-            $this->load->view("laboratorio/prueba_rapida_cuantitativa_imprimir");
-        } else if($id_del_paquete =="581") {
-            $this->load->view("laboratorio/prueba_antigeno_imprimir");
-        } else if($id_del_paquete =="583") {
-            $this->load->view("laboratorio/prueba_antigeno_cuanti_imprimir");
-        } else if ($id_del_paquete =="582") {
-            $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($data['segmento']);
-            $molecular_url = $molecular_url->molecular_url;
-            $molecular_data = array("molecular_url"=>$molecular_url);
-            $this->load->view("laboratorio/prueba-molecular-imprimir", $molecular_data);
-        }
+        if($id_del_paquete != 582) $this->load->view($view_path_imprimir);
         $this->load->view("intranet_view/footer",$data);
     }
 
@@ -241,13 +269,6 @@ class Laboratorio extends CI_Controller {
             exit('No direct script access allowed');
         }
     }
-
-    public function testing() {
-        $this->load->view("test1");
-    }
-
-
-
     
 }
  

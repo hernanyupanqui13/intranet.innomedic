@@ -50,8 +50,9 @@ class Ordenes extends CI_Controller {
             $row["nro_identificador"] = $person->nro_identificador;
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = $person->nombrex;
+            $row["tipo_examen"] = $person->nombre_paquete;
             if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "____________________";
+                $row["empresa"] = "____";
             }else{
                 $row["empresa"] = $person->empresa;
             }
@@ -59,20 +60,23 @@ class Ordenes extends CI_Controller {
                 $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
                  
             }else{
-                $row["laboratorio"] = '___________________';
+                $row["laboratorio"] = '____';
                  
             }
             //rayox x
             if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
                  $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
             }else{
-                 $row["rayox"] = '________________';
+                 $row["rayox"] = '____';
             }
 
             
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="impresion_final('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
            // $row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class="fas fa-location-arrow"></i>&nbsp;Enviar Resultado</a>';
-            $data[] = $row;
+            $data[] = $row; // Añadiendo el row a data
+
+
+            
         }
 
         $output = $data;

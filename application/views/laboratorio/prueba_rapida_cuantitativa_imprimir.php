@@ -80,10 +80,10 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <p class="font-weight-bold">Detección de anticuerpos - <span class="font-weight-normal"> SARS-CoV-2</span></p> 
+                    <p class="font-weight-bold">MUESTRA: <span class="font-weight-normal">Prueba Serologica</span></p> 
                 </div>
                 <div class="col-md-12">
-                    <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Inmunocromatografia</span></p>
+                    <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Quimioluminiscencia CLIA</span></p>
                 </div>
                 <div class="col-md-12">
                     <div class="table-responsive">

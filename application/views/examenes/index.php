@@ -13,7 +13,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist" >
           <li class="nav-item"> 
-            <a class="nav-link active" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="nav-link active" id="add_exam_trigger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
               <span class="hidden-sm-up"></span>
               <span class="hidden-xs-down font-weight-bold btn-dark btn btn-rounded"><i class="ti-home"></i>&nbsp;Nueva Orden de Atención</span>
             </a> 
@@ -3121,9 +3121,14 @@ $(document).ready(function() {
 
     });
 
-
+    // Para activar el checkbox de paquetes como predeterminado
     document.getElementById("customRadio1_xxxx").click();
   }); 
+
+  // Para activar el checkbox de paquetes como rpedeterminado siempre que se quiere agregar un examen
+  $("#add_exam_trigger").click(function(event) {
+    document.getElementById("customRadio1_xxxx").click();    
+  });
 
 
 

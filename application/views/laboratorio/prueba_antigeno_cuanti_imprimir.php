@@ -80,10 +80,10 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <p class="font-weight-bold">MUESTRA:&nbsp;<span class="font-weight-normal">Hisopado Nasofaringeo</span></p> 
+                    <p class="font-weight-bold">MUESTRA:&nbsp;<span class="font-weight-normal">Hisopado Nasofaringeo o nasal</span></p> 
                 </div>
                 <div class="col-md-12">
-                    <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Inmunocromatografía</span></p>
+                    <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Inmunoflourescencia</span></p>
                 </div>
                 <br>
                 <br>
