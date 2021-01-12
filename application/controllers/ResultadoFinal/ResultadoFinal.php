@@ -8,7 +8,9 @@ class ResultadoFinal extends CI_Controller {
 		parent::__construct();
         ini_set('date.timezone', 'America/Lima');
 		$this->load->helper(array('url','funciones'));
-		$this->load->model("ResultadoFinal_model");
+        $this->load->model("ResultadoFinal_model");
+        $this->load->model("Laboratorio_model");
+
 	} 
 
 	public function index()
@@ -200,15 +202,36 @@ class ResultadoFinal extends CI_Controller {
             redirect(base_url().'Inicio/Zona_roja/');
         }
         $query = $this->db->query("select * from exam_datos_generales where Id='".$id."'");
-		foreach ($query->result() as $emp) {
-			$nombrex = $emp->apellido_paterno." ".$emp->apellido_materno.", ".$emp->nombre;
-		}
+        $result = $query->row();
+        
+        $nombrex = $result->apellido_paterno." ".$result->apellido_materno.", ".$result->nombre;
+
 		$data['title'] = array($nombrex);
 
     	$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register($id);
-    	# code...
-    	//$this->load->view('resultadofinal/impresion',$data);
-    	$this->load->view('resultadofinal/impresion',$data);
+                
+        
+        if ($result->id_paquete=="5") {
+            $view_path_imprimir ="laboratorio/prueba_rapida_imprimir";
+
+        } elseif ($result->id_paquete=="580") {
+            $view_path_imprimir = "laboratorio/prueba_rapida_cuantitativa_imprimir";
+
+
+        } elseif ($result->id_paquete=="581") {
+            $view_path_imprimir = "laboratorio/prueba_antigeno_imprimir";
+
+        } elseif ($result->id_paquete=="582"){
+            $view_path_imprimir = "laboratorio/prueba-molecular-imprimir";
+            $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($id);
+            $molecular_url = $molecular_url->molecular_url;
+            $data = array("molecular_url"=>$molecular_url);
+
+
+        } elseif ($result->id_paquete=="583") {
+            $view_path_imprimir = "laboratorio/prueba_antigeno_cuanti_imprimir";
+        }
+    	$this->load->view($view_path_imprimir,$data);
 
 
     }
@@ -533,6 +556,7 @@ class ResultadoFinal extends CI_Controller {
         );
 
         $this->ResultadoFinal_model->update_insert_file($id_paciente_xx,$data_update);
+
 
     }
 

@@ -16,7 +16,6 @@ class Laboratorio_model extends CI_Model
     	return $query->result();
     }
 
-    //sexo
 
     public function seleccione_sexo()
     {
@@ -37,11 +36,16 @@ class Laboratorio_model extends CI_Model
     public function Mostrar_prueba_rapida($id)
     {
         $query = $this->db->query("select * from exam_laboratorio where id_paciente='".$id."'");
-       // return $query->result();
         return $query->row();
     }
-    public function Impoirmir_prueba_rapida($id)
-    {
+
+
+    /*
+    Esta funcion devuelve los datos par auna rapida impresion de un examen en especifico de Laboratorio
+    La data es procesada en el lado del cliente con JS
+    */
+    public function Impoirmir_prueba_rapida($id) {
+
         $query = $this->db->query("select a.*,
             (select nombre from ts_sexo where Id=a.id_sexo) as sexo,
             (select igm from exam_laboratorio where id_paciente=a.Id) as igm,
@@ -52,7 +56,7 @@ class Laboratorio_model extends CI_Model
             (select concentra_atig from exam_laboratorio where id_paciente=a.Id) as la_concentra_atig,
             (select update_covid from exam_laboratorio where id_paciente=a.Id) as update_covid,
             TIMESTAMPDIFF(YEAR,a.fecha_nacimiento,CURDATE()) as edad 
-             from exam_datos_generales a where Id='".$id."'");
+            from exam_datos_generales a where Id='".$id."'");
         return $query->row();
     }
 
@@ -64,8 +68,7 @@ class Laboratorio_model extends CI_Model
 
     public function Mostrar_paquete_01($id_paciente)
     {
-         $query = $this->db->query("select * from exam_laboratorio where id_paciente='".$id_paciente."'");
-       // return $query->result();
+        $query = $this->db->query("select * from exam_laboratorio where id_paciente='".$id_paciente."'");
         return $query->row();
     }
 

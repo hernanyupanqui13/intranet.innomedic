@@ -26,15 +26,7 @@ class Ordenes extends CI_Controller {
         $this->load->view('orden/index',$data);
         $this->load->view("intranet_view/footer",$data);
     }
-    /*  public function obtener_registro_ajax()
-    {
-        if($this->session->userdata('session_id')==''){
-            redirect(base_url());
-        }
 
-        $data = $this->Ordenes_model->obtener_registro_ajax();
-        echo json_encode($data);
-    }*/
     public function obtener_registro_ajax()
     {
         if ($this->session->userdata("session_id")=="") {
@@ -138,7 +130,7 @@ class Ordenes extends CI_Controller {
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = $person->nombrex;
             if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "____________________";
+                $row["empresa"] = "______";
             }else{
                 $row["empresa"] = $person->empresa;
             }
@@ -146,19 +138,19 @@ class Ordenes extends CI_Controller {
                 $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
                  
             }else{
-                $row["laboratorio"] = '___________________';
+                $row["laboratorio"] = '______';
                  
             }
             //rayox x
             if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
                  $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
             }else{
-                 $row["rayox"] = '________________';
+                 $row["rayox"] = '______';
             }
 
             
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="impresion_final('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-           // $row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class="fas fa-location-arrow"></i>&nbsp;Enviar Resultado</a>';
+            
             $data[] = $row;
         }
 

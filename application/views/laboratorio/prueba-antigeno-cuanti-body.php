@@ -8,9 +8,8 @@
 </div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#profile" role="tab" id="mostrar_prueba_rapida" aria-selected="true"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down font-weight-bold">Prueba Antigeno Cuantitativa</span></a> </li>
-    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>-->
 </ul>
-<!-- Tab panes -->
+<!-- Tab panel -->
 <div class="tab-content tabcontent-border">
 
     <div class="tab-pane  p-20 active show" id="profile" role="tabpanel">

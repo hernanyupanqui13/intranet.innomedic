@@ -11,24 +11,18 @@ class Laboratorio extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->model("Laboratorio_model");
          
-	}  
+    }
+    
+    // Este vendria a ser el index del controlador
     public function Mostrar_registros()
     {
         if($this->session->userdata('session_id')==''){
             redirect(base_url());
-        }   
-
-        $fake_data = array("fake"=>"Hola mundo!");
-
-      
-
-
-
+        }
 
         $data = array(
         'title' =>array("estas viendo la lista de Laboratorio","Laboratorio","","<a target='_blank' href='https://www.facebook.com/escudero05' title=''>Evaristo Escudero Huillcamascco</a>"),
         'seleccione_sexo' => $this->Laboratorio_model->seleccione_sexo(),
-        'test_data'=> $this->load->view("testing",$fake_data, TRUE)
         );
 
         $the_id= $this->uri->segment(4,0); 
@@ -49,7 +43,7 @@ class Laboratorio extends CI_Controller {
         $view_path_imprimir = "";
         $body_view_data = array();
 
-        // Configurando un body diferente apra cada tipo de examen
+        // Configurando un body diferente apra cada tipo de examen y su formato de impresion rapida
         if ($id_del_paquete =="5") {
             $view_path_body = "laboratorio/prueba-rapida-body";
             $view_path_imprimir ="laboratorio/prueba_rapida_imprimir";
@@ -72,17 +66,21 @@ class Laboratorio extends CI_Controller {
             // Para imprimir el PDF adjunto
             $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($data['segmento']);
             $molecular_url = $molecular_url->molecular_url;
+            $view_path_imprimir = "laboratorio/prueba-molecular-imprimir";
             $body_view_data = array("molecular_url"=>$molecular_url);
         }
 
+        // Cargando una vista dentro de una vista desde el controlador
         $data["body_template"]=$this->load->view($view_path_body, $body_view_data, TRUE);
+        $data["body_print"]=$this->load->view($view_path_imprimir, NULL, TRUE);
+
+     
 
 
         // Renderizando las vistas        
         $this->load->view("intranet_view/head",$data);
         $this->load->view("intranet_view/title",$data);
         $this->load->view('laboratorio/index',$data);
-        if($id_del_paquete != 582) $this->load->view($view_path_imprimir);
         $this->load->view("intranet_view/footer",$data);
     }
 
@@ -105,19 +103,17 @@ class Laboratorio extends CI_Controller {
                 'update_covid' => date('Y-m-d G:i:s')
             );
 
-            $this->Laboratorio_model->actualizar_prueba_rapida($id,$data);
-        }else{
-           
+            $this->Laboratorio_model->actualizar_prueba_rapida($id, $data);
 
-             exit('No direct script access allowed');
-
+        } else {
+            exit('No direct script access allowed');
         }
 
     }
 
     public function Mostrar_prueba_rapida()
     {
-        if($this->session->userdata('session_id')==''){
+        if ($this->session->userdata('session_id') == ''){
             redirect(base_url());
         }
 
@@ -125,6 +121,12 @@ class Laboratorio extends CI_Controller {
         $data = $this->Laboratorio_model->Mostrar_prueba_rapida($id_obtenemos_data);
         echo json_encode($data);
     }
+
+
+    /*
+    Esta funcion devuelve los datos par auna rapida impresion de un examen en especifico de Laboratorio
+    La data es procesada en el lado del cliente con JS
+    */
     public function imprimir_prueba_rapida()
     {
         if($this->session->userdata('session_id')==''){
@@ -136,8 +138,7 @@ class Laboratorio extends CI_Controller {
         echo json_encode($data);
     }
 
-    //aqui registramos el paquete Nº1
-
+    // Aqui registramos el paquete 01
     public function Registrar_paquete_01()
     {
         if($this->session->userdata('session_id')==''){
@@ -208,10 +209,7 @@ class Laboratorio extends CI_Controller {
             $this->Laboratorio_model->Registrar_paquete_01($id,$data);
             echo json_encode(array("mensaje"=>"Se Actualizo de Manera Correcta"));
         }else{
-           
-
-             exit('No direct script access allowed');
-
+            exit('No direct script access allowed');
         }
 
 
@@ -226,7 +224,10 @@ class Laboratorio extends CI_Controller {
 
     }
 
-    public function do_upload() {
+    /*
+    Funcion para subir archivos al servidor. Se usa cuando se sube el resultado final externo de la prueba molecular
+    */
+    public function uploadMolecular() {
 
         // Cambiando el nombre al archivo
         $_FILES['file']['type']     = $_FILES['userfile']['type']; 
@@ -268,6 +269,10 @@ class Laboratorio extends CI_Controller {
         } else {
             exit('No direct script access allowed');
         }
+    }
+
+    public function obtenerMolecularUrl($id_exam) {
+        echo json_encode($this->Laboratorio_model->obtenerMolecularUrl($id_exam));
     }
     
 }

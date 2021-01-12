@@ -2097,14 +2097,27 @@
 
     
     $(document).ready(function() {
+
+      console.log(document.getElementById("print_prueba_rapida").tagName);
+      console.log("kokokokokok");
         $("#print_prueba_rapida").click(function() {
-            var mode = 'iframe'; //popup
-            var close = mode == "popup";
-            var options = {
-                mode: mode,
-                popClose: close
-            };
+
+          var mode = 'iframe'; //popup
+          var close = mode == "popup";
+          var options = {
+            mode: mode,
+            popClose: close
+          };
+          var divArea = document.querySelector("div.printableAreaprueba");
+          if (divArea != null) {
             $("div.printableAreaprueba").printArea(options);
+          }
+          
+
+          var pdfObject = document.querySelector("iframe.printableAreaprueba");
+          if (pdfObject != null) {
+            pdfObject.contentWindow.print();
+          }
         });
 
         $("#print_prueba_molecular").click(function() {
@@ -2117,7 +2130,7 @@
           };
           //$("#imprimir_molecular_container").print();
 
-          var pdfObject = document.getElementById("imprimir_molecular_container").contentWindow;
+          var pdfObject = document.getElementByQuery("iframe.printableAreaprueba").contentWindow;
           pdfObject.print();
 
           

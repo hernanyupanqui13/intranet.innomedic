@@ -393,10 +393,6 @@
 	      overflow: hidden;
 		}
 
-		.letrasotra {
-	
-	 }
-
 
 
 	</style>

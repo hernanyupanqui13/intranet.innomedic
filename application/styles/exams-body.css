@@ -29,9 +29,7 @@
     height: 100%;
 }
 
-.molecular_modal {
-    height: 80vh !important;
-}
-.molecular_iframe_container iframe {
-    height: 100%;
+
+iframe {
+    height: 70vh;
 }

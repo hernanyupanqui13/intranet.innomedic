@@ -346,22 +346,30 @@
                             echo "";
                         } ?>
 
-                        <?php if ($this->session->userdata("session_perfil")==36 || $this->session->userdata("session_perfil")==1) {?>
+                        <?php if ($this->session->userdata("session_perfil")==36 || $this->session->userdata("session_perfil")==1 || $this->session->userdata("session_perfil")==19) {?>
                             <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-grid2"></i><span class="hide-menu">RR-HH</span></a>
                                 <ul  aria-expanded="false" class="collapse">
-                                    <?php $query = $this->db->query("select *,
+                                    <?php 
+                                    $count = 0;
+                                    $query = $this->db->query("select *,
                                         (select url from ts_menu_rrhh where Id=menu) as urlx,
                                         (select nombre from ts_menu_rrhh where Id=menu) as menux,
                                         (select icono from ts_menu_rrhh where Id=menu) as icono 
-                                        from ts_menu_items_rrhh where perfil = '".$this->session->userdata("session_perfil")."' "); 
-                                    foreach ($query->result() as $xx) {?>
+                                        from ts_menu_items_rrhh where perfil = '36'"); 
+                                    foreach ($query->result() as $xx) {
+                                        $count +=1;
+                                        ?>
                                        <!-- <?php if ($xx->menu == 2) {
                                             $mostrar = date('m').'?='.rand();
                                         }else{
                                             $mostrar = "";
                                         } ?>-->
-                                        <li><a href="<?php echo base_url().$xx->urlx?>"><i class="<?php echo $xx->icono;?>"></i>&nbsp;<?php echo $xx->menux;?></a></li>
 
+                                        <?php if ($this->session->userdata("session_perfil")==19 && $count!=1) {
+                                            echo "";
+                                        } else {?>                            
+                                        <li><a href="<?php echo base_url().$xx->urlx?>"><i class="<?php echo $xx->icono;?>"></i>&nbsp;<?php echo $xx->menux;?></a></li>
+                                        <?php }?>
                                      <?php } ?>
                                 </ul>
                             </li>
