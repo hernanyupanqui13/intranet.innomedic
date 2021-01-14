@@ -1,5 +1,5 @@
 
-<div class="modal-body printableAreaprueba bg-white">
+<div class="printableAreaprueba">
     <div class="container bg-white">
         <div class="row">
             <div class="col-md-12 m-2">
@@ -69,10 +69,10 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <p class="font-weight-bold">MUESTRA:&nbsp;<span class="font-weight-normal">Hisopado Nasofaringeo o nasal</span></p> 
+                <p class="font-weight-bold">MUESTRA:&nbsp;<span class="font-weight-normal">Hisopado Nasofaringeo</span></p> 
             </div>
             <div class="col-md-12">
-                <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Inmunoflourescencia</span></p>
+                <p class="font-weight-bold">METODOLOGÍA: <span class="font-weight-normal">Inmunocromatografía</span></p>
             </div>
             <br>
             <br>
@@ -80,33 +80,15 @@
             <br>
             <br>
             <div class="col-md-12">
-                <div class="table-responsive">                        
-                    <table class="table">
-                        <thead class="text-center">
-                            <tr>
-                                <th>Prueba</th>
-                                <th>Resultado</th>
-                                <th>Unidades</th>
-                                <th>Concentracion</th>
-                                <th>Valores de Referencia</th>
-                            </tr>
-                        </thead>
+                <div class="table-responsive">
+                    <table class="table table-striped">                            
                         <tbody class="text-center">
                             <tr>
-                                <td>ANTÍGENO</td>
+                                <th>RESULTADO</td>
                                 <td>
                                     <span id="antigeno_resultado_imprimir"></span>
                                 </td>
-                                <td>
-                                    <span>IU/mL</span>
-                                </td>
-                                <td>
-                                    <span id="concentra_atig_imprimir"></span>
-                                </td>
-                                <td>
-                                    <span>0-0.4</span>
-                                </td>
-                            </tr>
+                            </tr>                             
                         </tbody>
                     </table>
                 </div>
@@ -116,7 +98,7 @@
             <br>
             <br>
             <br>
-            <div class="col-md-12 table-recomendaciones" >
+            <div class="col-md-12">
                 <div class="table-responsive">
                     <table width="100%" class="table">
                         <thead>

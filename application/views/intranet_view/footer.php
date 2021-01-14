@@ -2098,8 +2098,6 @@
     
     $(document).ready(function() {
 
-      console.log(document.getElementById("print_prueba_rapida").tagName);
-      console.log("kokokokokok");
         $("#print_prueba_rapida").click(function() {
 
           var mode = 'iframe'; //popup

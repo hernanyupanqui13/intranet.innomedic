@@ -1,15 +1,14 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" id="imprimir_prueba_rapida" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida</button>
-            <button type="button" id="print_paquete1" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Laboratorio</button>
+            <button type="button" id="imprimir_prueba_rapida" onclick="getPlantilla('prueba-rapida-imprimir')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida</button>
+            <button type="button" id="print_paquete1" onclick="getPlantilla('paquete1-imprimir')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Laboratorio</button>
         </div>
     </div>
 </div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down font-weight-bold">Laboratorio</span></a> </li>
     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"  id="mostrar_prueba_rapida"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down font-weight-bold">Prueba Rapida</span></a> </li>
-    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>-->
 </ul>
 <!-- Tab panes -->
 <div class="tab-content tabcontent-border">

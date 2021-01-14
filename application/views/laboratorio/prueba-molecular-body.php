@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" id="imprimir_prueba_molecular" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Molecular</button>
+            <button type="button" id="imprimir_prueba_molecular" onclick="getPlantilla('prueba-molecular-imprimir')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Molecular</button>
         
         </div>
     </div>

@@ -27,8 +27,7 @@ class ResultadoFinal extends CI_Controller {
         }
          $data = array(
             'title' =>array("estas viendo Resultado Final","Resultado Final","","<a target='_blank' href='https://www.facebook.com/escudero05' title=''>Evaristo Escudero Huillcamascco</a>"),
-             );
-
+        );
         
         $this->load->view("intranet_view/head",$data);
         $this->load->view("intranet_view/title",$data);
@@ -212,14 +211,14 @@ class ResultadoFinal extends CI_Controller {
                 
         
         if ($result->id_paquete=="5") {
-            $view_path_imprimir ="laboratorio/prueba_rapida_imprimir";
+            $view_path_imprimir ="laboratorio/prueba-rapida-imprimir";
 
         } elseif ($result->id_paquete=="580") {
-            $view_path_imprimir = "laboratorio/prueba_rapida_cuantitativa_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-rapida-cuanti-imprimir";
 
 
         } elseif ($result->id_paquete=="581") {
-            $view_path_imprimir = "laboratorio/prueba_antigeno_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-imprimir";
 
         } elseif ($result->id_paquete=="582"){
             $view_path_imprimir = "laboratorio/prueba-molecular-imprimir";
@@ -229,11 +228,28 @@ class ResultadoFinal extends CI_Controller {
 
 
         } elseif ($result->id_paquete=="583") {
-            $view_path_imprimir = "laboratorio/prueba_antigeno_cuanti_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-cuanti-imprimir";
+        } elseif (in_array($result->id_paquete, array("1", "2", "3"))) {
+            $view_path_imprimir = "resultadofinal/paquetes-impresion-final";
         }
     	$this->load->view($view_path_imprimir,$data);
 
 
+    }
+
+    /*
+    Esta funcion devuelve los datos par auna rapida impresion de un examen en especifico de Laboratorio
+    La data es procesada en el lado del cliente con JS
+    */
+    public function getImpresionData()
+    {
+        if($this->session->userdata('session_id')=='') {
+            redirect(base_url());
+        }
+
+        $id_obtenemos_data = $this->input->post("id_paciente");
+        $data = $this->Laboratorio_model->Impoirmir_prueba_rapida($id_obtenemos_data);
+        echo json_encode($data);
     }
 
     public function getFullName($id) {

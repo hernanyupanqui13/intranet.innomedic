@@ -42,24 +42,38 @@ class Laboratorio extends CI_Controller {
         $view_path_body="";
         $view_path_imprimir = "";
         $body_view_data = array();
+        $imprimir_data = NULL;
 
         // Configurando un body diferente apra cada tipo de examen y su formato de impresion rapida
         if ($id_del_paquete =="5") {
             $view_path_body = "laboratorio/prueba-rapida-body";
-            $view_path_imprimir ="laboratorio/prueba_rapida_imprimir";
+            $view_path_imprimir ="laboratorio/prueba-rapida-imprimir";
             $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
 
-        } else if ($id_del_paquete=="580") {
+        } else if ($id_del_paquete=="1") {
+            $view_path_body = "laboratorio/paquete1-body";
+            $view_path_imprimir = "laboratorio/paquete1-imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+            $imprimir_data = array("laboratorio_view_register"=>$this->Laboratorio_model->laboratorio_view_register($the_id));
+        } else if($id_del_paquete =="2") {
+            $view_path_body = "laboratorio/paquete2-body";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+        } else if($id_del_paquete =="3") {
+            $view_path_body = "laboratorio/paquete3-body";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-cuanti-imprimir";
+            $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
+        }else if ($id_del_paquete=="580") {
             $view_path_body = "laboratorio/prueba-rapida-cuanti-body";
-            $view_path_imprimir = "laboratorio/prueba_rapida_cuantitativa_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-rapida-cuanti-imprimir";
             $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
         } else if($id_del_paquete =="581") {
             $view_path_body = "laboratorio/prueba-antigeno-body";
-            $view_path_imprimir = "laboratorio/prueba_antigeno_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-imprimir";
             $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
         } else if($id_del_paquete =="583") {
             $view_path_body = "laboratorio/prueba-antigeno-cuanti-body";
-            $view_path_imprimir = "laboratorio/prueba_antigeno_cuanti_imprimir";
+            $view_path_imprimir = "laboratorio/prueba-antigeno-cuanti-imprimir";
             $body_view_data = array("exam_data"=>$this->Laboratorio_model->Mostrar_prueba_rapida($the_id));
         } else if ($id_del_paquete =="582") {
             $view_path_body = "laboratorio/prueba-molecular-body";
@@ -72,7 +86,7 @@ class Laboratorio extends CI_Controller {
 
         // Cargando una vista dentro de una vista desde el controlador
         $data["body_template"]=$this->load->view($view_path_body, $body_view_data, TRUE);
-        $data["body_print"]=$this->load->view($view_path_imprimir, NULL, TRUE);
+        $data["body_print"]=$this->load->view($view_path_imprimir, $imprimir_data, TRUE);
 
      
 
@@ -83,6 +97,57 @@ class Laboratorio extends CI_Controller {
         $this->load->view('laboratorio/index',$data);
         $this->load->view("intranet_view/footer",$data);
     }
+
+    public function getPruebaRapidaPlantilla() {
+        return $this->load->view("laboratorio/prueba-rapida-imprimir");
+    }
+
+    public function getPruebaRapidaCuantiPlantilla() {
+        return $this->load->view("laboratorio/prueba-rapida-cuanti-imprimir");
+    }
+
+    public function getPruebaMolecularPlantilla() {
+        $molecular_url = $this->Laboratorio_model->obtenerMolecularUrl($id);
+        $molecular_url = $molecular_url->molecular_url;
+        $imprimir_data = array("molecular_url"=>$molecular_url);
+        return $this->load->view("laboratorio/prueba-molecular-imprimir", $imprimir_data);
+    }
+
+    public function getPruebaAntigenoPlantilla() {
+        return $this->load->view("laboratorio/prueba-antigeno-imprimir");
+    }
+
+    public function getPruebaAntigenoCuantiPlantilla() {
+        return $this->load->view("laboratorio/prueba-antigeno-cuanti-imprimir");
+    }
+
+    public function getPaquete1Plantilla($the_id) {
+        $imprimir_data = array("laboratorio_view_register"=>$this->Laboratorio_model->laboratorio_view_register($the_id));
+        return $this->load->view("laboratorio/paquete1-imprimir", $imprimir_data);
+    }
+
+    public function getPlantilla($nombre_plantilla, $id = NULL) {
+
+        //$id_del_paquete = $this->Laboratorio_model->laboratorio_view_register($id)[0]->id_paquete;
+
+        if ($nombre_plantilla =="prueba-rapida-imprimir") {
+            return $this->getPruebaRapidaPlantilla();
+        } else if($nombre_plantilla =="prueba-antigeno-imprimir") {
+            return $this->getPruebaAntigenoPlantilla();
+        } else if($nombre_plantilla =="prueba-antigeno-cuanti-imprimir") {
+            return $this->getPruebaAntigenoCuantiPlantilla();
+        }else if ($nombre_plantilla=="prueba-rapida-cuanti-imprimir") {
+            return $this->getPruebaRapidaCuantiPlantilla();
+        } else if ($nombre_plantilla =="prueba-molecular-imprimir" && $id!= NULL) {
+            return $this->getPruebaMolecularPlantilla($id);
+        } else if ($nombre_plantilla == "paquete1-imprimir") {
+            return $this->getPaquete1Plantilla($id);
+        }
+    }
+
+    
+
+    
 
     public function actualizar_prueba_rapida()
     {

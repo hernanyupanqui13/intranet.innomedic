@@ -1,5 +1,5 @@
 
-<div class="modal-body printableAreaprueba bg-white">
+<div class="printableAreaprueba">
 	<div class="container bg-white">
 		<div class="row">
 			<div class="col-md-12 m-2">

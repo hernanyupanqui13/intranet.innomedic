@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" id="imprimir_prueba_rapida" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida Cuantitativa</button>
+            <button type="button" id="imprimir_prueba_rapida" onclick="getPlantilla('prueba-rapida-cuanti-imprimir')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida Cuantitativa</button>
        
         </div>
     </div>
