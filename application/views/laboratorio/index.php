@@ -180,7 +180,7 @@ if (!empty($laboratorio_view_register)) {
 			</div>						
 			<div class="modal-footer">
 				<button type="button" class="btn btn-outline-danger btn btn-rounded" data-dismiss="modal"><i class=" fas fa-window-close"></i>&nbsp;Cerrar</button>
-				<button type="button" id="print_prueba_rapida" class="btn btn-outline-dark btn btn-rounded"><i class=" fas fa-print"></i>&nbsp;Imprimir</button>
+				<button type="button" id="print_prueba_rapida" onclick="imprimir()" class="btn btn-outline-dark btn btn-rounded"><i class=" fas fa-print"></i>&nbsp;Imprimir</button>
 			</div>
 		</div>
 	</div>
@@ -198,24 +198,11 @@ if (!empty($laboratorio_view_register)) {
 <script src=<?= base_url().'application/JavaScript/prueba-molecular.js'?>></script>
 
 
-
+<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
 <!--PAQUETE Nº1-->
 <script>
 
-function getPlantilla(plantilla) {
-	
-	let id = <?php echo $this->uri->segment(4,0); ?>;
-	let xhttp = new XMLHttpRequest();
 
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("modal-body-imprimir").innerHTML = this.responseText;
-		}
-	};
-
-	xhttp.open("GET", "<?php echo base_url().'Laboratorio/Laboratorio/getPlantilla/'?>" + plantilla + "/" + id, false);
-	xhttp.send();
-}
 	
 $(document).ready(function() {
 	
@@ -250,60 +237,6 @@ $(document).ready(function() {
 		
 		
 
-	//imprimirmos los datos de pruiebva rapida mediante ajax
-
-	$(document).on('click', '#imprimir_prueba_rapida', function(event) {
-		//event.preventDefault();
-		/* Act on the event */
-		id_paciente = <?php echo $this->uri->segment(4,0); ?>;
-
-		$.ajax({
-			url: '<?php echo base_url().'Laboratorio/Laboratorio/imprimir_prueba_rapida/' ?>',
-			type: 'POST',
-			dataType: 'json',
-			data: {id_paciente: id_paciente},
-		})
-		.done(function(data) {
-			console.log("success");
-
-			$("#exampleModal").modal("show");
-			$("#nombres_completos_paciente").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-			$("#nombres_completos_pacientex").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-			$("#dni_paciente").text(data.dni);
-			if (data.empresa=="") {
-				aplicate = ``;
-				
-			} else {
-				aplicate = `<div class=" text-center p-2 border ">
-						<div class="font-weight-bold text-dark">
-							EMPRESA:<span class="font-weight-normal" > `+data.empresa+`&nbsp;&nbsp;&nbsp;&nbsp;`+data.ruc+`</span>
-						</div>
-					</div>`;
-				
-			}
-			$("#aplicamos_cambios").html(aplicate);
-			$("#sexo_id").text(data.sexo);
-
-			$("#igmx").text(data.igm);
-			$("#iggx").text(data.igg);
-			$("#edad_xx").text(data.edad);
-			$("#fecha_nacimientoxx").text(data.fecha_nacimiento);
-			$("#update_covid").text(data.update_covid);
-			$("#concentracion_igm_imprimir").text(data.la_concentracion_igm);
-			$("#concentracion_igg_imprimir").text(data.la_concentracion_igg);  
-			$("#antigeno_resultado_imprimir").text(data.los_resultados_antigeno);
-			$("#concentra_atig_imprimir").text(data.la_concentra_atig);  
-
-
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete modal");
-		});
-
-	});
 
 
 	var agregamos =  <?php echo $this->uri->segment(4,0); ?>;

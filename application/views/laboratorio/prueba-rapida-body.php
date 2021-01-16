@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-right">
-            <button type="button" id="imprimir_prueba_rapida" onclick="getPlantilla('prueba-rapida-imprimir')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida</button>
+            <button type="button" id="imprimir_prueba_rapida" onclick="vistaPreviaImprimir('prueba-rapida-imprimir', 'modal-body-imprimir', '<?=$this->uri->segment(4,0)?>')" class="btn btn-outline-dark btn btn-rounded btn-lg font-weight-bold"><i class=" fas fa-print"></i>&nbsp;Imprimir Prueba Rapida</button>
         
         </div>
     </div>

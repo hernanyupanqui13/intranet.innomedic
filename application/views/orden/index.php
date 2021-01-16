@@ -93,7 +93,7 @@
 			<div class="modal-header">
 				<div>
 					<h5 class="modal-title font-weight-bold" id="exampleModalLabel">Resultado del paciente: <span class="font-weight-normal" id="nombres_completos_pacientex"></span></h5>
-					<button type="button" id="print_prueba_rapida" class="btn btn-outline-dark btn btn-rounded"><i class=" fas fa-print"></i>&nbsp;Imprimir</button>
+					<button type="button" id="print_prueba_rapida" onclick="imprimir()" class="btn btn-outline-dark btn btn-rounded"><i class=" fas fa-print"></i>&nbsp;Imprimir</button>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true" style="border: 2px solid #210202;border-radius: 50%;">&nbsp;&nbsp;&times;&nbsp;&nbsp;</span>
@@ -111,6 +111,7 @@
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
 
 
 
@@ -222,79 +223,13 @@
 			});
 		});
 
-		 function limpiar_campos() {
+		function limpiar_campos() {
 
-            $("#fecha_inicio").val("");
-            $("#fecha_fin").val("");
-            $("#nombre_busqueda").val("");
-            $("#dni_busqueda").val("");
-		  }
-		  
-		function impresion_final($id) {
-			
-			$("#exampleModal").modal({show: true});			
-		
-			let xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("pdfdoc").innerHTML = this.responseText;
-				}
-			};
-			xhttp.open("GET", "<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>" + $id , false);
-			xhttp.send();
-
-
-							
-			$.ajax({
-				url: '<?php echo base_url().'Laboratorio/Laboratorio/imprimir_prueba_rapida/' ?>',
-				type: 'POST',
-				dataType: 'json',
-				data: {id_paciente: $id},
-			})
-			.done(function(data) {
-				console.log("success");
-
-				$("#nombres_completos_paciente").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#nombres_completos_pacientex").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#dni_paciente").text(data.dni);
-				if (data.empresa=="") {
-					aplicate = ``;
-					
-				}else{
-					aplicate = `<div class=" text-center p-2 border ">
-							<div class="font-weight-bold text-dark">
-								EMPRESA:<span class="font-weight-normal" > `+data.empresa+`&nbsp;&nbsp;&nbsp;&nbsp;`+data.ruc+`</span>
-							</div>
-						</div>`;
-					
-				}
-				$("#aplicamos_cambios").html(aplicate);
-				$("#sexo_id").text(data.sexo);
-
-				$("#igmx").text(data.igm);
-				$("#iggx").text(data.igg);
-				$("#edad_xx").text(data.edad);
-				$("#fecha_nacimientoxx").text(data.fecha_nacimiento);
-				$("#update_covid").text(data.update_covid);
-				$("#concentracion_igm_imprimir").text(data.la_concentracion_igm);
-				$("#concentracion_igg_imprimir").text(data.la_concentracion_igg);  
-				$("#antigeno_resultado_imprimir").text(data.los_resultados_antigeno);
-				$("#concentra_atig_imprimir").text(data.la_concentra_atig);  
-
-
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete impr");
-			});
-
-		
-
-
-		}
-
+			$("#fecha_inicio").val("");
+			$("#fecha_fin").val("");
+			$("#nombre_busqueda").val("");
+			$("#dni_busqueda").val("");
+		}		
 	</script>
 
 	<script>
@@ -318,6 +253,5 @@
 	<style>
 		.centrado{ 
 			text-align: center; 
-
 		}
 	</style>
