@@ -46,18 +46,15 @@ class Laboratorio_model extends CI_Model
     */
     public function Impoirmir_prueba_rapida($id) {
 
-        $query = $this->db->query("select a.*,
-            (select nombre from ts_sexo where Id=a.id_sexo) as sexo,
-            (select igm from exam_laboratorio where id_paciente=a.Id) as igm,
-            (select igg from exam_laboratorio where id_paciente=a.Id) as igg,
-            (select concentracion_igm from exam_laboratorio where id_paciente=a.Id) as la_concentracion_igm,
-            (select concentracion_igg from exam_laboratorio where id_paciente=a.Id) as la_concentracion_igg,
-            (select UPPER(antigeno_resultado) from exam_laboratorio where id_paciente=a.Id) as los_resultados_antigeno,
-            (select concentra_atig from exam_laboratorio where id_paciente=a.Id) as la_concentra_atig,
-            (select update_covid from exam_laboratorio where id_paciente=a.Id) as update_covid,
-            TIMESTAMPDIFF(YEAR,a.fecha_nacimiento,CURDATE()) as edad 
-            from exam_datos_generales a where Id='".$id."'");
+        $query = $this->db->query("select edg.*, el.* 
+            FROM exam_datos_generales edg 
+            INNER JOIN exam_laboratorio el 
+            ON el.id_paciente = edg.Id
+            WHERE edg.Id =$id"
+        );
+
         return $query->row();
+
     }
 
     public function Registrar_paquete_01($id,$data)

@@ -178,7 +178,7 @@ class ResultadoFinal extends CI_Controller {
             	$row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Enviar Resultado</a>';
             }else{
             	
-            	$row["enviar"] = '<span class="label label-warning">Resultado Enviado</span>';
+            	$row["enviar"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Volver a Enviar Resultado</a>';
             }
             
             $data[] = $row;
@@ -348,11 +348,11 @@ class ResultadoFinal extends CI_Controller {
 
         // Creando la configuracion del correo
         $mail->isSMTP();
-        $mail->Host     = 'ssl://p3plzcpnl434616.prod.phx3.secureserver.net';
+        $mail->Host     = 'ssl://smtpout.secureserver.net';
         $mail->SMTPSecure = false;
         $mail->SMTPDebug  = 3;
-        $mail->Username = 'reenviadores@innomedic.pe';
-        $mail->Password = 'Sistemas20**';
+        $mail->Username = 'aramirez@innomedic.pe';
+        $mail->Password = 's1st3m4s2411';
         $mail->SMTPAuth = true;
         $mail->SMTPAutoTLS = false; 
         $mail->SMTPSecure = 'ssl';   

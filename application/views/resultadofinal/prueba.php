@@ -103,8 +103,8 @@ oncontextmenu="return false" onkeydown="return false"
                   <tbody class="table-bordered" >
                      <tr>
                         <td class="border-right-0" ><b class="font-weight-bold">SEXO</b>:&nbsp;<span id="sexo_id"></span></td>
-                        <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad_xx"></span></td>
-                        <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimientoxx"></span></td>
+                        <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad-impr-slot"></span></td>
+                        <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimiento-impr-slot"></span></td>
                      </tr>
                   </tbody>
                </table>
@@ -112,7 +112,7 @@ oncontextmenu="return false" onkeydown="return false"
                   <tbody class="table-bordered " >
                      <tr>
                         <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
-                        <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid"></span></td>
+                        <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                      </tr>
                   </tbody>
                </table>
@@ -151,7 +151,7 @@ oncontextmenu="return false" onkeydown="return false"
                      <tr>
                         <td>Anticuerpo IgM-SARS-COV-2</td>
                         <td>
-                           <span class="font-weight-bold" id="igmx"></span>
+                           <span class="font-weight-bold" id="igm-impr-slot"></span>
                         </td>
                         <td>
                            <span>-----------</span>
@@ -163,7 +163,7 @@ oncontextmenu="return false" onkeydown="return false"
                      <tr>
                         <td>Anticuerpo IgG-SARS-COV-2</td>
                         <td>
-                           <span class="font-weight-bold" id="iggx"></span>
+                           <span class="font-weight-bold" id="igg-impr-slot"></span>
                         </td>
                         <td>
                            <span>-----------</span>
@@ -1434,11 +1434,11 @@ oncontextmenu="return false" onkeydown="return false"
                 $("#aplicamos_cambios").html(aplicate);
                 $("#sexo_id").text(data.sexo);
 
-                $("#igmx").text(data.igm);
-                $("#iggx").text(data.igg);
-                $("#edad_xx").text(data.edad);
-                $("#fecha_nacimientoxx").text(data.fecha_nacimiento);
-                $("#update_covid").text(data.update_covid);
+                $("#igm-impr-slot").text(data.igm);
+                $("#igg-impr-slot").text(data.igg);
+                $("#edad-impr-slot").text(data.edad);
+                $("#fecha_nacimiento-impr-slot").text(data.fecha_nacimiento);
+                $("#update_covid-impr-slot").text(data.update_covid);
 
             })
             .fail(function() {

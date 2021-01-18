@@ -306,15 +306,15 @@
 				$("#aplicamos_cambios").html(aplicate);
 				$("#sexo_id").text(data.sexo);
 
-				$("#igmx").text(data.igm);
-				$("#iggx").text(data.igg);
-				$("#edad_xx").text(data.edad);
-				$("#fecha_nacimientoxx").text(data.fecha_nacimiento);
-				$("#update_covid").text(data.update_covid);
-				$("#concentracion_igm_imprimir").text(data.la_concentracion_igm);
-				$("#concentracion_igg_imprimir").text(data.la_concentracion_igg);  
-				$("#antigeno_resultado_imprimir").text(data.los_resultados_antigeno);
-				$("#concentra_atig_imprimir").text(data.la_concentra_atig);  
+				$("#igm-impr-slot").text(data.igm);
+				$("#igg-impr-slot").text(data.igg);
+				$("#edad-impr-slot").text(data.edad);
+				$("#fecha_nacimiento-impr-slot").text(data.fecha_nacimiento);
+				$("#update_covid-impr-slot").text(data.update_covid);
+				$("#concentracion_igm-impr-slot").text(data.concentracion_igm);
+				$("#concentracion_igg-impr-slot").text(data.concentracion_igg);  
+				$("#antigeno_resultado-impr-slot").text(data.antigeno_resultado);
+				$("#concentra_atig-impr-slot").text(data.concentra_atig);  
 
 
 			})

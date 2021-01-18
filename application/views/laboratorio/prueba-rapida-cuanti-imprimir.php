@@ -39,8 +39,8 @@
                         <tbody class="table-bordered" >
                             <tr>
                                 <td class="border-right-0" ><b class="font-weight-bold">SEXO</b>:&nbsp;<span id="sexo_id"></span></td>
-                                <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad_xx"></span></td>
-                                <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimientoxx"></span></td>
+                                <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad-impr-slot"></span></td>
+                                <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimiento-impr-slot"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -49,7 +49,7 @@
                             <tr>
                                 <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
                                 
-                                <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid"></span></td>
+                                <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -89,13 +89,13 @@
                             <tr>
                                 <td>2019-nCov IgM (CLIA</td>
                                 <td>
-                                    <span class="font-weight-bold" id="igmx">NO REACTIVO</span>
+                                    <span class="font-weight-bold" id="igm-impr-slot">NO REACTIVO</span>
                                 </td>
                                 <td>
                                     <span>AU/mL</span>
                                 </td>
                                 <td>
-                                    <span id="concentracion_igm_imprimir"></span>
+                                    <span id="concentracion_igm-impr-slot"></span>
                                 </td>
                                 <td>
                                     <span>0-1</span>
@@ -104,13 +104,13 @@
                             <tr>
                                 <td>2019-nCov IgG (CLIA)</td>
                                 <td>
-                                    <span class="font-weight-bold" id="iggx">NO REACTIVO</span>
+                                    <span class="font-weight-bold" id="igg-impr-slot">NO REACTIVO</span>
                                 </td>
                                 <td>
                                     <span>AU/mL</span>
                                 </td>
                                 <td>
-                                    <span id="concentracion_igg_imprimir"></span>
+                                    <span id="concentracion_igg-impr-slot"></span>
                                 </td>
                                 <td>
                                     <span>0-1</span>

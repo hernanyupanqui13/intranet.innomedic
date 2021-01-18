@@ -40,8 +40,8 @@
                         <tbody class="table-bordered" >
                             <tr>
                                 <td class="border-right-0" ><b class="font-weight-bold">SEXO</b>:&nbsp;<span id="sexo_id"></span></td>
-                                <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad_xx"></span></td>
-                                <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimientoxx"></span></td>
+                                <td><b class="font-weight-bold">EDAD</b>:&nbsp;<span id="edad-impr-slot"></span></td>
+                                <td><b class="font-weight-bold">FECHA NACIMIENTO:</b>&nbsp;<span id="fecha_nacimiento-impr-slot"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,7 +50,7 @@
                             <tr>
                                 <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
                                 
-                                <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid"></span></td>
+                                <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -95,13 +95,13 @@
                             <tr>
                                 <td>ANTÍGENO</td>
                                 <td>
-                                    <span id="antigeno_resultado_imprimir"></span>
+                                    <span id="antigeno_resultado-impr-slot"></span>
                                 </td>
                                 <td>
                                     <span>IU/mL</span>
                                 </td>
                                 <td>
-                                    <span id="concentra_atig_imprimir"></span>
+                                    <span id="concentra_atig-impr-slot"></span>
                                 </td>
                                 <td>
                                     <span>0-0.4</span>

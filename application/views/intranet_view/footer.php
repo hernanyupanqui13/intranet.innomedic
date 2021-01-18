@@ -663,10 +663,12 @@
             complete: function() { 
         /* solo una vez que la petición se completa (success o no success) 
            pedimos una nueva petición en 3 segundos */
-              setTimeout(function(){
+              /*setTimeout(function(){
                  Notificacion();
                }, 2000);
               }
+              changed by hernan
+              */
         })
         };
 
