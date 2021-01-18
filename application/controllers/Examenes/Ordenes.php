@@ -27,18 +27,18 @@ class Ordenes extends CI_Controller {
         $this->load->view("intranet_view/footer",$data);
     }
 
-    public function obtener_registro_ajax()
+    public function obtener_registro_ajax($fecha_inicio=null, $fecha_fin=null, $nombre_busqueda=null, $dni_busqueda=null)
     {
         if ($this->session->userdata("session_id")=="") {
             redirect(base_url().'Inicio/Zona_roja/');
         }
-        $list = $this->Ordenes_model->obtener_registro_ajax();
+        $list = $this->Ordenes_model->obtener_registro_ajax($fecha_inicio, $fecha_fin, $nombre_busqueda, $dni_busqueda);
         $data = array();
-       // $no = 0;
+
         foreach ($list as $person) {
-         //   $no++;
-           $row = array();
-           // $row[]=$no;
+
+            $row = array();
+
             $row["nro_identificador"] = $person->nro_identificador;
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = $person->nombrex;
@@ -51,11 +51,12 @@ class Ordenes extends CI_Controller {
             if (in_array($person->id_paquete, array("1", "2", "3", "5", "580", "581", "582", "583"))) {
                 $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
                  
-            }else{
+            } else {
                 $row["laboratorio"] = '____';
                  
             }
-            //rayox x
+
+            
             if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
                  $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
             }else{
@@ -64,7 +65,6 @@ class Ordenes extends CI_Controller {
 
             
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Actualizar" onclick="impresion_final('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-           // $row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="edit_person('."'".$person->id."'".')"><i class="fas fa-location-arrow"></i>&nbsp;Enviar Resultado</a>';
             $data[] = $row; // Añadiendo el row a data
 
 
@@ -160,6 +160,10 @@ class Ordenes extends CI_Controller {
         //output to json format
         echo json_encode($output);
 
+    }
+
+    public function fake($x=null, $y=null, $z=null, $n=null) {
+        echo json_encode($list = $this->Ordenes_model->obtener_registro_ajax($x, $y, $z, $n));
     }
 
 

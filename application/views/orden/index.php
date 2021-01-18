@@ -3,8 +3,6 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-
-				<!--<table id="showcase-example-1" class="table" data-paging="true" data-filtering="true" data-sorting="true" data-editing="true" data-state="true" data-paging-size="25"></table>-->
 				<p>Mostrar registros según filtro</p>
 				<button type="button" class="btn btn-primary" data-page-size="10">10</button>
 				<button type="button" class="btn btn-primary" data-page-size="20">20</button>
@@ -61,7 +59,7 @@
                      
                     </div>
                 </div>
-				<table id="showcase-example-1" class="table "  data-filtering="true"  data-sorting="true" data-state="true" data-paging="true" data-paging-size="15"  ></table>
+				<table id="showcase-example-1" class="table "  data-filtering="true"  data-sorting="true" data-state="true" data-paging="true" data-paging-size="15"></table>
 
 
 				<div class="text-center">
@@ -82,8 +80,7 @@
 			color:red;
 			margin-left: 4px;
 		}
-	</style> 
-	
+	</style> 	
 </div>
 
 <!-- Imprimir Modal  -->
@@ -111,144 +108,10 @@
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- External Script -->
 	<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
-
-
-
-	<script>
-
-
-
-		$('[data-page-size]').on('click', function(e){
-			e.preventDefault();
-			var newSize = $(this).data('pageSize');
-			FooTable.get('#showcase-example-1').pageSize(newSize);
-
-		});
-
-
-		jQuery(function($){
-			ft = FooTable.init('#showcase-example-1', {
-
-				"columns": [
-						{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-						{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-						{ "name": "nombrex", "title": "Paciente" },
-						{ "name": "empresa", "title": "Empresa", "breakpoints": "xs", "classes":"centrado"},
-						{ "name": "tipo_examen", "title": "Examen", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-						{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"}
-						
-					],
-				"rows": jQuery.get({
-					"url": "<?php echo base_url().'Examenes/Ordenes/obtener_registro_ajax/';?>",
-					"dataType": "json",
-					
-				}),		
-			})		
-		});
-
-		$(document).ready(function() {
-
-			$(document).on('click', '#buscar_registro_por_ajax', function(event) {
-				event.preventDefault();
-
-				/* Act on the event */
-				fecha_inicio = $("#fecha_inicio").val();
-	            fecha_fin = $("#fecha_fin").val();
-	            nombre_busqueda = $("#nombre_busqueda").val();
-	            dni_busqueda = $("#dni_busqueda").val();
-
-
-	            if (fecha_inicio=="" || fecha_fin =="") {
-                  Swal.fire(
-                    'Ingrese Fecha de Busqueda',
-                    'Campos Vacios verificar por favor!',
-                    'error'
-                  )
-                	return false;
-              	}
-              		$('#showcase-example-1').footable({
-              //	ft = FooTable.init('#showcase-example-1',{
-
-              	//	"empty": "No se encontro ningun resultado",
-					
-					"columns": [
-							{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-							{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-							{ "name": "nombrex", "title": "Paciente" },
-							{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-							{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-							{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"}
-							
-						],
-
-					"rows": jQuery.post({
-						"url": "<?php echo base_url().'Examenes/Ordenes/mostrar_datos_busqueda_avanzada/';?>",
-						"dataType": "json",
-						//"type": "POST",
-						"data": {
-                                    "fecha_inicio": fecha_inicio,
-                                    "fecha_fin": fecha_fin,
-                                    "nombre_busqueda":nombre_busqueda,
-                                    "dni_busqueda":dni_busqueda,
-                                },
-                        success:  function (response) {                 
-		                      //  $(".salida").html(response);
-		                      //con esto lo eliminamos el primer tr si en caso habria un tr profesional
-		                       $("#showcase-example-1 tr:last-child").remove();
-		                     // $("#showcase-example-1").footable();
-		                    // ft.rows.load("rows", true);
-		                  },
-		                 error:function(){
-		                       alert("error")
-		                    }
-					}),
-
-					
-
-			 //   })
-			   });
-
-			   //$('.table').footable(); 
-			   //	ft.rows.load(rows, true);
-
-
-              	//$('#showcase-example-1').trigger('footable_initialized');
-             
-			   
-
-			});
-		});
-
-		function limpiar_campos() {
-
-			$("#fecha_inicio").val("");
-			$("#fecha_fin").val("");
-			$("#nombre_busqueda").val("");
-			$("#dni_busqueda").val("");
-		}		
-	</script>
-
-	<script>
-		function laboraorio(id) {
-			window.open(
-
-			  '<?php echo base_url().'Laboratorio/Laboratorio/Mostrar_registros/'?>'+id+'/?<?php echo rand(9999999,00000000);?>=<?php echo time(); ?><?php echo date('Y-m-d');?>?=<?php echo md5("INNOPMEDIC INTERNATIONAL E.I.R.L");?>?=service-protect==<?php echo rand();?>?=innomedic-gps-active-url?====<?php echo $this->session->userdata("nombre");?>',
-			  '_blank' // <- This is what makes it open in a new window.
-			);
-
-		}
-
-		function rayosx(url) {
-			window.open(
-			  '<?php echo base_url().'Rayos/Rayos/Mostrar_registros/'?>'+url+'/?<?php echo rand(9999999,00000000);?>=<?php echo time(); ?><?php echo date('Y-m-d');?>?=<?php echo md5("INNOPMEDIC INTERNATIONAL E.I.R.L");?>?=service-protect==<?php echo rand();?>?=innomedic-gps-active-url?====<?php echo $this->session->userdata("nombre");?>" "<?php echo $this->session->userdata("apellido_paterno");?>',
-			  '_blank' // <- This is what makes it open in a new window.
-			);
-		}
-	</script>
+	<script src=<?= base_url().'application/JavaScript/orden-index.js'?>></script>
 
 	<style>
 		.centrado{ 

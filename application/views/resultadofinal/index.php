@@ -416,15 +416,8 @@
 
 				$("#exampleModal12").modal("show");
 				$("#nombres_completos_idd_boleta_boletas").text(data.nombres);
-				 $("#pdfdoc_impre_boleta").html('<iframe  class="responsive-iframe" src="<?php echo base_url().'upload/boleta_cliente/'?>'+data.boleta_pago+'"  width="100%" height="700px" frameBorder="0"></iframe>');
-				//$("#nombres_completos_result_url").text(data.url_unico);
-				/*$("#nombres_completos_result_url").attr({
-					href: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'?>'+data.url_unico,
-					title:  data.nombres,
-					target: "_blank",
-				});
-				$("#text").text(data.nombres);
-				$("#correo_valid").val(data.correo);*/
+				$("#pdfdoc_impre_boleta").html('<iframe  class="responsive-iframe" src="<?php echo base_url().'upload/boleta_cliente/'?>'+data.boleta_pago+'"  width="100%" height="700px" frameBorder="0"></iframe>');
+
 
 			})
 			.fail(function() {

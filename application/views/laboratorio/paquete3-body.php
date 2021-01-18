@@ -214,35 +214,35 @@
 
                                 <tr class="FacetFilaTD" id="tr_anom1" style="display: table-row;">
                                         <td height="26" class="FacetDataTD">METAMIELOCITOS</td>
-                                    <td align="center"><input name="nuevocampo_1" type="text" class="form-control" id="nuevocampo_1" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_6');" placeholder="0"></td>
+                                    <td align="center"><input name="nuevocampo_1" type="text" class="form-control" id="nuevocampo_1-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_6');" placeholder="0"></td>
                                     <td align="center" class="FacetDataTD">%</td>
                                     <td align="center" class="FacetDataTD">0</td>
                                     <td align="center" class="FacetDataTD">&nbsp;</td>
                                 </tr>
                                 <tr class="FacetFilaTD" id="tr_anom2" style="display: table-row;">
                                     <td height="26" class="FacetDataTD">MIELOCITOS</td>
-                                    <td align="center"><input name="nuevocampo_2" type="text" class="form-control" id="nuevocampo_2" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_7');" placeholder="0"></td>
+                                    <td align="center"><input name="nuevocampo_2" type="text" class="form-control" id="nuevocampo_2-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_7');" placeholder="0"></td>
                                     <td align="center" class="FacetDataTD">%</td>
                                     <td align="center" class="FacetDataTD">0</td>
                                     <td align="center" class="FacetDataTD">&nbsp;</td>
                                 </tr>
                                 <tr class="FacetFilaTD" id="tr_anom3" style="display: table-row;">
                                     <td height="26" class="FacetDataTD">PROMIELOCITOS</td>
-                                    <td align="center"><input name="nuevocampo_3" type="text" class="form-control" id="nuevocampo_3" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_8');" placeholder="0"></td>
+                                    <td align="center"><input name="nuevocampo_3" type="text" class="form-control" id="nuevocampo_3-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_8');" placeholder="0"></td>
                                     <td align="center" class="FacetDataTD">%</td>
                                     <td align="center" class="FacetDataTD">0</td>
                                     <td align="center" class="FacetDataTD">&nbsp;</td>
                                 </tr>
                                 <tr class="FacetFilaTD" id="tr_anom4" style="display: table-row;">
                                     <td height="26" class="FacetDataTD">BLASTOS</td>
-                                    <td align="center"><input name="nuevocampo_4" type="text" class="form-control" id="nuevocampo_4" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_9');" placeholder="0"></td>
+                                    <td align="center"><input name="nuevocampo_4" type="text" class="form-control" id="nuevocampo_4-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_9');" placeholder="0"></td>
                                     <td align="center" class="FacetDataTD">%</td>
                                     <td align="center" class="FacetDataTD">0</td>
                                     <td align="center" class="FacetDataTD">&nbsp;</td>
                                 </tr>
                                 <tr class="FacetFilaTD" id="tr_anom5" style="display: table-row;">
                                     <td height="26" class="FacetDataTD">LINFOCITOS FORMA VARIANTE</td>
-                                    <td align="center"><input name="nuevocampo_5" type="text" class="form-control" id="nuevocampo_5" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_10');" placeholder="0"></td>
+                                    <td align="center"><input name="nuevocampo_5" type="text" class="form-control" id="nuevocampo_5-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');calculo(this.value,'#nuevocampo_10');" placeholder="0"></td>
                                     <td align="center" class="FacetDataTD">%</td>
                                     <td align="center" class="FacetDataTD">0</td>
                                     <td align="center" class="FacetDataTD">&nbsp;</td>
@@ -344,35 +344,35 @@
                                 </tr>
                                 <tr class="FacetFilaTD" id="tr_anom6" style="display: table-row;">
                                         <td height="26" class=" FacetDataTD">METAMIELOCITOS</td>
-                                        <td align="center"><input name="nuevocampo_6" type="text" class="form-control FacetInput" id="nuevocampo_6" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
+                                        <td align="center"><input name="nuevocampo_6" type="text" class="form-control FacetInput" id="nuevocampo_6-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
                                         <td align="center" class="FacetDataTD">/mm^3</td>
                                         <td align="center" class="FacetDataTD">0</td>
                                         <td align="center" class="FacetDataTD">&nbsp;</td>
                                     </tr>
                                     <tr class="FacetFilaTD" id="tr_anom7" style="display: table-row;">
                                         <td height="26" class="FacetDataTD">MIELOCITOS</td>
-                                        <td align="center"><input name="nuevocampo_7" type="text" class=" form-control FacetInput" id="nuevocampo_7" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
+                                        <td align="center"><input name="nuevocampo_7" type="text" class=" form-control FacetInput" id="nuevocampo_7-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
                                         <td align="center" class="FacetDataTD">/mm^3</td>
                                         <td align="center" class="FacetDataTD">0</td>
                                         <td align="center" class="FacetDataTD">&nbsp;</td>
                                     </tr>
                                     <tr class="FacetFilaTD" id="tr_anom8" style="display: table-row;">
                                         <td height="26" class="FacetDataTD">PROMIELOCITOS</td>
-                                        <td align="center"><input name="nuevocampo_8" type="text" class="form-control FacetInput" id="nuevocampo_8" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
+                                        <td align="center"><input name="nuevocampo_8" type="text" class="form-control FacetInput" id="nuevocampo_8-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
                                         <td align="center" class="FacetDataTD">/mm^3</td>
                                         <td align="center" class="FacetDataTD">0</td>
                                         <td align="center" class="FacetDataTD">&nbsp;</td>
                                     </tr>
                                     <tr class="FacetFilaTD" id="tr_anom9" style="display: table-row;">
                                         <td height="26" class="FacetDataTD">BLASTOS</td>
-                                        <td align="center"><input name="nuevocampo_9" type="text" class="form-control FacetInput" id="nuevocampo_9" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
+                                        <td align="center"><input name="nuevocampo_9" type="text" class="form-control FacetInput" id="nuevocampo_9-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
                                         <td align="center" class="FacetDataTD">/mm^3</td>
                                         <td align="center" class="FacetDataTD">0</td>
                                         <td align="center" class="FacetDataTD">&nbsp;</td>
                                     </tr>
                                     <tr class="FacetFilaTD" id="tr_anom10" style="display: table-row;">
                                         <td height="26" class="FacetDataTD">LINFOCITOS FORMA VARIANTE</td>
-                                        <td align="center"><input name="nuevocampo_10" type="text" class="form-control FacetInput" id="nuevocampo_10" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
+                                        <td align="center"><input name="nuevocampo_10" type="text" class="form-control FacetInput" id="nuevocampo_10-impr-slot" value="" size="10" onkeyup="ValidaRangos(this, '0', '0');" placeholder="0"></td>
                                         <td align="center" class="FacetDataTD">/mm^3</td>
                                         <td align="center" class="FacetDataTD">0</td>
                                         <td align="center" class="FacetDataTD">&nbsp;</td>

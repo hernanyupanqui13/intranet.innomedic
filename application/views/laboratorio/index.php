@@ -291,23 +291,23 @@ $(document).ready(function() {
 			$("#exampleModal").modal("show");
 			
 
-			$("#eritrocisrc_paquete1").text(data.eritrocisrc);
-			$("#hemoglobinarc_paquete1").text(data.hemoglobinarc);
-			$("#hematocritorc_paquete1").text(data.hematocritorc);
-			$("#copro_leuco_paquete1").text(data.copro_leuco);
-			$("#plaquetas_plaquetas1").text(data.plaquetas);
-			$("#vcm_paquete1").text(data.vcm);
-			$("#hcm_paquete1").text(data.hcm);
-			$("#ccmh_paquete1").text(data.ccmh);
-			$("#linfocitosrc_paquete1").text(data.linfocitosrc);
-			$("#monoticosrc_paquete1").text(data.monoticosrc);
-			$("#eosinofilosrc_paquete1").text(data.eosinofilosrc);
-			$("#basofilosrc_paquete1").text(data.basofilosrc);
-			$("#segmentadossrc_paquete1").text(data.segmentadossrc);
-			$("#abastonadossrc_paquete1").text(data.abastonadossrc);
+			$("#eritrocisrc-impr-slot").text(data.eritrocisrc);
+			$("#hemoglobinarc-impr-slot").text(data.hemoglobinarc);
+			$("#hematocritorc-impr-slot").text(data.hematocritorc);
+			$("#copro_leuco-impr-slot").text(data.copro_leuco);
+			$("#plaquetas-impr-slot").text(data.plaquetas);
+			$("#vcm-impr-slot").text(data.vcm);
+			$("#hcm-impr-slot").text(data.hcm);
+			$("#ccmh-impr-slot").text(data.ccmh);
+			$("#linfocitosrc-impr-slot").text(data.linfocitosrc);
+			$("#monoticosrc-impr-slot").text(data.monoticosrc);
+			$("#eosinofilosrc-impr-slot").text(data.eosinofilosrc);
+			$("#basofilosrc-impr-slot").text(data.basofilosrc);
+			$("#segmentadossrc-impr-slot").text(data.segmentadossrc);
+			$("#abastonadossrc-impr-slot").text(data.abastonadossrc);
 
-			$("#nuevocampo_1").text(data.nuevocampo_1);
-			$("#nuevocampo_2").text(data.nuevocampo_2);
+			$("#nuevocampo_1").text(data.nuevocampo_1);//3
+			$("#nuevocampo_2").text(data.nuevocampo_2);//3
 			$("#nuevocampo_3").text(data.nuevocampo_3);
 			$("#nuevocampo_4").text(data.nuevocampo_4);
 			$("#nuevocampo_5").text(data.nuevocampo_5);
@@ -316,23 +316,25 @@ $(document).ready(function() {
 			$("#nuevocampo_8").text(data.nuevocampo_8);
 			$("#nuevocampo_9").text(data.nuevocampo_9);
 			$("#nuevocampo_10").text(data.nuevocampo_10);
-			$("#linfocitos_paquete1").text(data.linfocitos);
-			$("#monocitos_paquete1").text(data.monocitos);
-			$("#eosinofilos_paquete1").text(data.eosinofilos);
-			$("#basofilos_paquete1").text(data.basofilos);
-			$("#segmentados_paquete1").text(data.segmentados);
-			$("#abastonados_paquete1").text(data.abastonados);
-			$("#fecha_evaluacion_paquete1").text(data.fecha_evaluacion);
+			$("#linfocitos-impr-slot").text(data.linfocitos);
+			$("#monocitos-impr-slot").text(data.monocitos);
+			$("#eosinofilos-impr-slot").text(data.eosinofilos);
+			$("#basofilos-impr-slot").text(data.basofilos);
+			$("#segmentados-impr-slot").text(data.segmentados);
+
+			$("#abastonados-impr-slot").text(data.abastonados);
+
+			$("#fecha_evaluacion-impr-slot").text(data.fecha_evaluacion);
 			$("#fecha_evaluacion_paquete12").text(data.fecha_evaluacion);
-			$("#comentarios_paquet2").text(data.comentarios);
-			$("#salto20").text(data.salto20);
+			$("#comentarios-impr-slot").text(data.comentarios);
+			$("#salto20-impr-slot").text(data.salto20);  // Not sure what it does
 			$("#colesteroltotal_paquete1").text(data.colesteroltotal);
 			$("#colesterolhdl_paquete1").text(data.colesterolhdl);
 			$("#trigliceridos_paquete1").text(data.trigliceridos);
 			$("#colesterolldl_paquete1").text(data.colesterolldl);
 			$("#colesterolvldl_paquete1").text(data.colesterolvldl);
-			//$("#obser_perfillipi").text(data.obser_perfillipi);
 			$("#glucosa_paquete1").text(data.glucosa);
+			
 			//paquete 2 añadidod
 			$("#salto21_paquete2").text(data.salto21);
 			$("#prote_total_paquete2").text(data.prote_total);
@@ -406,7 +408,7 @@ $(document).ready(function() {
 		$("#segmentados").val(data.segmentados);
 		$("#abastonados").val(data.abastonados);
 		$("#comentarios").val(data.comentarios);
-		$("#salto20").val(data.salto20);
+		$("#salto20-impr-slot").val(data.salto20);
 		$("#colesteroltotal").val(data.colesteroltotal);
 		$("#colesterolhdl").val(data.colesterolhdl);
 		$("#trigliceridos").val(data.trigliceridos);

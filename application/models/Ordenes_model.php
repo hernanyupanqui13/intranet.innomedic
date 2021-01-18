@@ -11,10 +11,41 @@ class Ordenes_model extends CI_Model
         ini_set('date.timezone', 'America/Lima');
     }
     
-    function obtener_registro_ajax(){
-        /*$query = $this->db->query("select e.Id as id ,e.nro_identificador, concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) as nombrex, e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status from exam_datos_generales as e where (fecha_registro>='".date('Y-m-d')." 00:00:01' and fecha_registro<='".date('Y-m-d')." 23:59:59')");
-        return $query->result();*/
-        $query = $this->db->query("select e.Id as id ,e.nro_identificador, concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) as nombrex, e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, date(e.fecha_registro) as fecha_ ,e.url_unico, e.id_paquete,(select l.nombre from exam_paquetes as l where l.Id=e.id_paquete) as nombre_paquete from exam_datos_generales as e where (fecha_registro>='".date('Y-m-d')." 00:00:01' and fecha_registro<='".date('Y-m-d')." 23:59:59')  ORDER BY Id desc, nro_identificador desc");
+    function obtener_registro_ajax($initial_date = null, $final_date = null, $nombre_busqueda = null, $dni_busqueda = null) {
+
+        if($initial_date == null) {
+            $initial_date = date("Y-m-d");
+        }
+
+        if($nombre_busqueda == null) {
+            $nombre_busqueda ="null";
+        }
+
+        if($dni_busqueda == null) {
+            $dni_busqueda="null";
+        }
+        if($final_date == null) {
+            $final_date = date('Y-m-d');
+        }
+        
+        
+        
+        $query = $this->db->query(
+        "SELECT e.Id AS id ,e.nro_identificador, 
+            concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) AS nombrex, 
+            e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, 
+            DATE(e.fecha_registro) AS fecha_ ,e.url_unico, e.id_paquete, 
+            (SELECT l.nombre FROM exam_paquetes AS l WHERE l.Id=e.id_paquete) AS nombre_paquete 
+        FROM exam_datos_generales AS e 
+        WHERE (DATE(fecha_registro)>='$initial_date' AND DATE(fecha_registro)<='$final_date')
+            OR nombre LIKE $nombre_busqueda
+            OR apellido_paterno LIKE $nombre_busqueda
+            OR apellido_materno LIKE $nombre_busqueda
+            OR dni LIKE $dni_busqueda
+        ORDER BY Id DESC, nro_identificador DESC"
+        );
+
+
         return $query->result();       
     }
 
