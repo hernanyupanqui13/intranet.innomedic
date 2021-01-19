@@ -71,9 +71,7 @@ $(document).ready(function() {
             parameters+=  "null/";					
         } else {
             parameters += dni_busqueda + "/";
-        }
-        
-   
+        }   
 
         $('#showcase-example-1').footable({			
 

@@ -34,7 +34,5 @@ dni_input.addEventListener("keyup", function() {
 
 });
 
-console.log("No los escuuuuuuuuuuuuchoooooo");
-console.log(window.location.href);
 
 /*---------------------------------------------------------------------------------------------------------------------*/

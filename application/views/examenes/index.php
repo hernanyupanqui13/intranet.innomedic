@@ -378,16 +378,15 @@
             </div>
           </div>
         </div>
+
         <div class="col-md-12 col-lg-12 col-xl-12 text-left">
           <div class="row">
-              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 col-xl-12 ">
-                <div class="form-group">
-                    <button class="btn btn-dark btn-rounded btn-block btn-md" id="buscar_registro_por_ajax"  type="button"><i class="fas fa-search"></i>&nbsp;Busqueda Avanzada</button>
-                </div>
-                  <!--<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>-->
-                </div>
-              
-            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 col-xl-12 ">
+              <div class="form-group">
+                  <button class="btn btn-dark btn-rounded btn-block btn-md" id="buscar_registro_por_ajax"  type="button"><i class="fas fa-search"></i>&nbsp;Busqueda Avanzada</button>
+              </div>
+            </div>              
+          </div>
         </div>
 
         <div class="table-responsive">
@@ -405,23 +404,8 @@
                 <th style="width: 20%;">Opciones</th>
               </tr>
             </thead>
-            <tbody>
-                  
-  
+            <tbody>          
             </tbody>
-              <!-- <tfoot class="bg-info text-white info-table">
-                  <tr>
-                      <th>#</th>
-                      <th>Apellidos</th>
-                      <th>Nombres</th>
-                      <th>Dni</th>
-                      <th>Empresa</th>
-                      <th>Fecha de Atención</th>
-                      <th>Tipo de Pago</th>
-                      <th>Estado</th>
-                      <th>Opciones</th>
-                  </tr>
-              </tfoot>-->
           </table>
         </div>
       </div>
@@ -544,7 +528,7 @@
 </div>
 
 
-<!--agregamos Paquete en General-->
+<!-- Agregamos Paquete en General-->
 <div id="compromisos_xx" class="modal fade bd-example-modal-lg_paquete_general" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">      

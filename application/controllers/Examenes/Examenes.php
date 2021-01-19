@@ -509,52 +509,39 @@ class Examenes extends CI_Controller
 
 	//mostramos datos obtenidos mendiante el sistemna
 
-	public function mostrar_datos_busqueda_avanzada()
+	public function mostrar_datos_busqueda_avanzada($fecha_inicio=null, $fecha_fin=null, $nombre_busqueda=null, $dni_busqueda=null)
 	{
-		/*if ($this->session->userdata("session_id")=="") {
+		// Revisando si el los parametros son el default o si son dados manualmente
+		if ($this->session->userdata("session_id")=="") {
 			redirect(base_url().'Inicio/Zona_roja/');
 		}
 
-		$fecha_inicio = fecha_ymd($this->input->post('fecha_inicio'));
-		$fecha_fin = fecha_ymd($this->input->post('fecha_fin'));
-		
-		 $data = $this->Examenes_model->mostrar_datos_busqueda_($fecha_inicio,$fecha_fin);
-		 echo json_encode($data);*/
-		if ($this->input->post('fecha_inicio')=="" || $this->input->post('fecha_fin')=="") {
-			$fecha_inicio = date("Y-m-d");
-			$fecha_fin = date("Y-m-d");
-		}else{
-			$fecha_inicio = fecha_ymd($this->input->post('fecha_inicio'));
-			$fecha_fin = fecha_ymd($this->input->post('fecha_fin'));
+		if($fecha_inicio==null) {
+			$fecha_inicio = $this->input->post('fecha_inicio');
 		}
 
-		//nombres
+		if($fecha_fin==null) {
+			$fecha_fin= $this->input->post('fecha_fin');
+		}
 
-		if ($this->input->post('nombre_busqueda')=="" ) {
-			$nombre_busqueda = "0"; 
-			
-		}else{
+		if($nombre_busqueda==null) {
 			$nombre_busqueda = $this->input->post('nombre_busqueda');
-			
+		}
+		
+		if($dni_busqueda==null) {
+			$dni_busqueda= $this->input->post('dni_busqueda');
 		}
 
-		//nombres
+		// Validando valores para la base de datos
+		
+		
 
-		if ($this->input->post('dni_busqueda')=="" ) {
-			$dni_busqueda = "0";
-			
-		}else{
-			$dni_busqueda = $this->input->post('dni_busqueda');
-			
-		}
-	
-
-		 if ($this->session->userdata("session_id")=="") {
-			redirect(base_url().'Inicio/Zona_roja/');
-		}
+		
+		
 
 		$list = $this->Examenes_model->mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda);
 		$data = array();
+		
 		$no = $_POST['start']; 
 		foreach ($list as $person) {
 			$no++;
@@ -607,6 +594,7 @@ class Examenes extends CI_Controller
 				);
 		//output to json format
 		echo json_encode($output);
+
 
 	}
 

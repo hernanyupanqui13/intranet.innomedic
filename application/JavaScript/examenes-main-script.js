@@ -1,12 +1,14 @@
   console.log("scripte externooooo");
   console.log($('#table_tipo_pago'));
-  
+
   
   
   //agregamos registros de la fecha
   var save_method; //for save method string
   var table;
-  //  var base_url = '<?php echo base_url();?>';
+
+
+
   function cancelar_fijo() {
     $(".title_paquete_asociado").text('Nuevo Paquete Asociado');
     $(".evaristo_eldulce").attr('id', 'registrar_tipo_paquete_asociado');
@@ -17,14 +19,12 @@
     $('#categoria_tipo_asociar').prop('selectedIndex',0);
     $("#cambio_nomre_paquete_asoaciado").html("<i class='fas fa-check-circle'></i>&nbsp;Nuevo Registro");
     $('#compromisos_xx_xx').modal('hide');
-
-
   }
+
+
   
   function cancelar_fijo_id_tipoexamen() {
-    // body...
-
-    // table_paquete_general_examen_reload();
+    
     $(".title_paquete_tipoexamen").text('Nuevo Tipo Exámen');
     $(".evaristo_eldulce_escudero").attr('id', 'registrar_tipo_paquete_asociado');
     $("#nombre_examen_tipo").val("");
@@ -35,9 +35,8 @@
     $('#compromisos_xx_xx_xx').modal('hide');
 
       
-    
-
   }
+
     
 
   function reload_table_tipo_pago()
@@ -45,6 +44,7 @@
       //reload datatable ajax 
         $('#table_tipo_pago').DataTable().ajax.reload();
   }
+
   //actualimoz datos de paquete
   function reload_table_paquete()
   {
@@ -60,6 +60,7 @@
   }
 
   $(document).ready(function() {
+
 
     //datatables
     mis_datos = $('#myTable').DataTable({ 
@@ -298,6 +299,7 @@ $(document).ready(function() {
 
   //agrrgar paquete
 $(document).ready(function() {
+
   
     $('#table_paquete_general').DataTable({ 
 
@@ -368,76 +370,88 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    // table = 
-      $("#buscar_registro_por_ajax").click(function(event) {
-        /* Act on the event */
-        event.preventDefault();
-        fecha_inicio = $("#fecha_inicio").val();
-        fecha_fin = $("#fecha_fin").val();
-        nombre_busqueda = $("#nombre_busqueda").val();
-        dni_busqueda = $("#dni_busqueda").val();
+
+  console.log("just CHECling");
+
+  $("#buscar_registro_por_ajax").click(function(event) {
+    console.log("just CHECling2222");
+
+    event.preventDefault();
+    
+    let fecha_inicio = $("#fecha_inicio").val();
+
+    if(fecha_inicio!="") {
+      fecha_inicio = fecha_inicio.split("/");
+      fecha_inicio = fecha_inicio[2] + "-" + fecha_inicio[0] + "-" + fecha_inicio[1];
+    } else {
+      fecha_inicio="null";
+    }
+    
+    
+    // Obteniendo la fecha y dando formato para que sea complatible con MySql
+    let fecha_fin = $("#fecha_fin").val();
+    if(fecha_fin!="") {
+      fecha_fin = fecha_fin.split("/");
+      fecha_fin = fecha_fin[2] + "-" + fecha_fin[0] + "-" + fecha_fin[1];    
+    } else {
+      fecha_fin = "null";
+    }
+    
+    let nombre_busqueda = $("#nombre_busqueda").val();
+    let dni_busqueda = $("#dni_busqueda").val();
+    
+    parameters = fecha_inicio + "/" + fecha_fin + "/";
 
 
+    if(nombre_busqueda == null || nombre_busqueda =="") {
+      nombre_busqueda = "null";		
+    } 
 
+    if(dni_busqueda == null || dni_busqueda =="") {
+      dni_busqueda =  "null";					
+    } 
 
-        if (fecha_inicio=="" || fecha_fin =="") {
-            Swal.fire(
-              'Ingrese Fecha de Busqueda',
-              'Campos Vacios verificar por favor!',
-              'error'
-            )
-          return false;
-        }
+    $('#myTable').DataTable({ 
+  
+      "processing": true, //Feature control the processing indicator.
+      "serverSide": true, //Feature control DataTables' server-side processing mode.
+      "order": [], //Initial no order.
 
-        $('#myTable').DataTable({ 
-      
-        "processing": true, //Feature control the processing indicator.
-        "serverSide": true, //Feature control DataTables' server-side processing mode.
-        "order": [], //Initial no order.
+      // Load data for the table's content from an Ajax source
+      "ajax": {
+        "url": window.location.origin + "/intranet.innomedic.pe" + "/Examenes/Examenes/mostrar_datos_busqueda_avanzada/",
+        "type": "POST",
+        "data": {
+          "fecha_inicio" : fecha_inicio,
+          "fecha_fin": fecha_fin,
+          "nombre_busqueda": nombre_busqueda,
+          "dni_busqueda": dni_busqueda,
+        } 
+      },
 
-        // Load data for the table's content from an Ajax source
-        "ajax": {
-            "url": window.location.href + "mostrar_datos_busqueda_avanzada/",
-            "type": "POST",
-            //"deferRender": true,
-            //"dataSrc": "",
-            "data": {
-                  "fecha_inicio": fecha_inicio,
-                  "fecha_fin": fecha_fin,
-                  "nombre_busqueda":nombre_busqueda,
-                  "dni_busqueda":dni_busqueda,
-              }
+      //Set column definition initialisation properties.
+      "columnDefs": [
+        { 
+          "targets": [ -1 ], //last column
+          "orderable": false, //set not orderable
         },
-
-        //Set column definition initialisation properties.
-        "columnDefs": [
-            { 
-                "targets": [ -1 ], //last column
-                "orderable": false, //set not orderable
-            },
-            { 
-                "targets": [ -2 ], //2 last column (photo)
-                "orderable": false, //set not orderable
-            },
-        ],
-        "lengthMenu": [[5,10, 25, 50], [5,10, 25, 50]],
+        { 
+          "targets": [ -2 ], //2 last column (photo)
+          "orderable": false, //set not orderable
+        },
+      ],
+    
+      "lengthMenu": [[5,10, 25, 50], [5,10, 25, 50]],
 
 
-        "destroy": true,
-        "info":true,
-        "sInfo":true,
-        // "order": [[1, "desc"]],
-        "language":{
+      "destroy": true,
+      "info":true,
+      "sInfo":true,
+      "language":{
         "lengthMenu": "Mostrar _MENU_ Registros por página",
         "sInfo":"Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        //"info": "Mostrando pagina _PAGE_ de _PAGES_",
-        /* "oLanguage": {
-              "sInfo": "Mostrando START a END de TOTAL registros",
-              "sZeroRecords": "No se encontraron registros coincidentes" 
-          },*/
         "infoEmpty": "No hay registros disponibles",
-        //"infoFiltered": "(filtrada de _MAX_ registros)",
         "loadingRecords": "Cargando...",
         "processing":     "Procesando...",
         "search": "Busqueda rapida:",
@@ -449,9 +463,10 @@ $(document).ready(function() {
       },
 
     });
-        reload_table();
-    });
 
+    reload_table();
+
+  });
 });
 
 

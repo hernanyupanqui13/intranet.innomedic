@@ -357,39 +357,54 @@ class Examenes_model extends CI_Model
 		}
 
 
-	public function mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)
+	public function mostrar_datos_busqueda_($initial_date,$final_date,$nombre_busqueda,$dni_busqueda)
 	{
-	   /* $query = $this->db->query("select *,(select nombre from exam_tipo_pago where Id=id_paquete) as tipopago from exam_datos_generales where fecha_registro>='".$fecha_inicio.' 00:00:01'."' and fecha_registro<='".$fecha_fin.' 00:00:01'."' order by Id desc");
-	    return $query->result();*/
-	    $this->_get_datatables_query_busqueda();
-		if($_POST['length'] != -1)
-		$this->db->select("*,(select nombre from exam_tipo_pago where Id=id_pago) as tipopago");
-	    
-	    if ($fecha_fin == date("Y-m-d")) {
-	    	
-	    }else{
-	    	$this->db->where(array(
-	    	'fecha_registro>=' =>$fecha_inicio.' 00:00:01', 
-	    	'fecha_registro<=' =>$fecha_fin.' 23:59:59',
-	    ));
+		
+		// Final date
+        if($final_date == null || $final_date=="null") {        
+            $final_date = "'". date('Y-m-d') ."'";
+        } else {
+            $final_date = "'" . $final_date . "'";
+        }
+        // Initial date
+        if($initial_date == null) {
+            $initial_date = "'" . date("Y-m-d") . "'";
+        } elseif ($initial_date=="null") {
+            $initial_date = "'2000-01-01'";     // Si es null y se hace una busqueda manual, que busque desde lo mas antes para que no afecte el resultado
+        } else {
+            $initial_date = "'" . $initial_date . "'";
+        }
 
-	    }
-	    if ($nombre_busqueda=="0") {
-	    	# code...
-	    }else{
-	    	$this->db->like('nombre',$nombre_busqueda);
-	        $this->db->or_like('apellido_paterno',$nombre_busqueda);
-	        $this->db->or_like('apellido_materno',$nombre_busqueda);
-	    }
-	    if ($dni_busqueda=="0") {
-	    	# code...
-	    }else{
-	    	$this->db->where('dni',$dni_busqueda);
-	    }
-	
-		$this->db->limit($_POST['length'], $_POST['start']);
-		$query = $this->db->get();
-		return $query->result();
+        $condition_1="(DATE(fecha_registro)>=$initial_date AND DATE(fecha_registro)<=$final_date)";
+
+        // Busqueda por nombre o apellido
+        if($nombre_busqueda == null || $nombre_busqueda=="null") {
+            $condition_2="AND TRUE";
+        } else {
+            $condition_2="AND (nombre LIKE '%$nombre_busqueda%' OR apellido_paterno LIKE '%$nombre_busqueda%' OR apellido_materno LIKE '%$nombre_busqueda%')";
+        }
+
+        // Busqueda por DNI
+        if($dni_busqueda == null || $dni_busqueda=="null") {
+            $condition_3="AND TRUE";
+        } else {
+            $condition_3="AND dni LIKE '%$dni_busqueda%'";
+        }
+        
+        
+        // Armando el pedido e insertando las condiciones
+        $query_string=(
+        "SELECT *,(SELECT nombre FROM exam_tipo_pago WHERE Id=id_pago) AS tipopago 
+        FROM exam_datos_generales AS e 
+        WHERE $condition_1 $condition_2 $condition_3
+        ORDER BY Id DESC, nro_identificador DESC"
+        );
+
+        // Haciendo el pedido a la base de datos
+        $query = $this->db->query($query_string);
+
+        // Regresando el pedido como respuesta
+        return $query->result();
 	}
 
 	public function count_all_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)
