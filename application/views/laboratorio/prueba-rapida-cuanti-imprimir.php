@@ -176,21 +176,21 @@
                             <tr class="text-center p-5 m-5">
                                 <th> 
                                     <div class="col-md-6 text-center m-4 p-4">
-                                        <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/720.jpg?ver=<?php echo rand(); ?>" alt=""></span><br>
+                                        <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/ruiz_cotrina.png?ver=<?php echo rand(); ?>" alt=""></span><br>
                                         <small>Firma y Sello<br>
-                                        Melgarejo Chamorro Pablo Armando<br>
-                                        Patólogo Clínico<br>
-                                        <strong>C.M.P. :</strong>40503   </small>     
+                                        RUIZ COTRINA JORGE MARTIN<br>
+                                        Médico especialista<br>
+                                        <strong>C.M.P. :</strong>040560			<strong>R.N.E.:</strong>021633</small>     
                                         </p>
                                     </div>
                                 </th>
                                 <th> 
                                     <div class="col-md-6 text-center ">
-                                        <p><span><img class="img-fluid "  src="<?php echo base_url().'upload/';?>firma/721.jpg?ver=<?php echo rand(); ?>" alt=""></span><br><small>
+                                        <p><span><img class="img-fluid "  src="<?php echo base_url().'upload/';?>firma/reynaldo.png?ver=<?php echo rand(); ?>" alt=""></span><br><small>
                                             Firma y Sello<br>
-                                            Ruiz Cotrina Jorge Martin<br>
-                                            Patólogo Clínico<br>
-                                            <strong>C.M.P. :</strong>040560   <strong>R.N.E.:</strong>021633
+                                            ARTICA VICENTE REYNALDO<br>
+                                            Tecnólogo médico<br>
+                                            <strong>C.T.M.P. :</strong>10626
                                         </small></p>
                                     </div>
                                 </th>
@@ -198,7 +198,7 @@
                         </thead>
                     </table>
                 </div>
-            </div>	
+            </div>
         </div>
     </div>
 </div>

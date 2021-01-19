@@ -4,7 +4,7 @@ $(document).on('submit', '#registrar_prueba_molecular', function(event) {
     /* Act on the event */
 
     $.ajax({
-        url: window.location.pathname+"../../uploadMolecular/",
+        url: window.location.origin + "/intranet.innomedic.pe"+"/Laboratorio/Laboratorio/uploadMolecular/",
         type: 'POST',
         data: new FormData(this),
         processData: false,
@@ -19,7 +19,7 @@ $(document).on('submit', '#registrar_prueba_molecular', function(event) {
             'success'
         )
         // Actualizando el iframe con el pdf nuevo
-        document.getElementById("imprimir_molecular_container").src=window.location.pathname + "../../../../upload/resultados_molecular/" + data;
+        document.getElementById("imprimir_molecular_container").src=window.location.pathname + "/../../../../upload/resultados_molecular/" + data;
 
     })
 

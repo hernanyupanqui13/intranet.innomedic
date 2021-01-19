@@ -7,7 +7,7 @@ $(document).ready(function() {
         /* Act on the event */
 
         $.ajax({
-            url: window.location.pathname+"../../actualizar_prueba_rapida/",
+            url: window.location.origin + "/intranet.innomedic.pe" + "/Laboratorio/Laboratorio/actualizar_prueba_rapida/",
             type: 'POST',
             data: $("#registrar_prueba_covid_cuantitativa").serialize(),
         })

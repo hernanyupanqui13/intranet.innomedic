@@ -70,12 +70,12 @@ function fillData(data) {
     $("#update_covid-impr-slot").text(data.update_covid);
     $("#concentracion_igm-impr-slot").text(data.concentracion_igm);
     $("#concentracion_igg-impr-slot").text(data.concentracion_igg);  
-    $("#antigeno_resultado-impr-slot").text(data.antigeno_resultado);
+    $("#antigeno_resultado-impr-slot").text(data.antigeno_resultado.toUpperCase());
     $("#concentra_atig-impr-slot").text(data.concentra_atig); 
     
     
     if(data.molecular_url!= null) {
-        document.getElementById("imprimir_molecular_container").src=window.location.origin + "intranet.innomedic" + "/upload/resultados_molecular/" + data;
+        document.getElementById("imprimir_molecular_container").src=window.location.origin + "/intranet.innomedic.pe/" + "/upload/resultados_molecular/" + data.molecular_url;
     }
 }
 
