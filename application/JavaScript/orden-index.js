@@ -37,42 +37,43 @@ $(document).ready(function() {
 
         // Obteniendo la fecha y dando formato para que sea complatible con MySql
         fecha_inicio = $("#fecha_inicio").val();
-        fecha_inicio = fecha_inicio.split("/");
-        fecha_inicio = fecha_inicio[2] + "-" + fecha_inicio[0] + "-" + fecha_inicio[1];
+
+        if(fecha_inicio!="") {
+            fecha_inicio = fecha_inicio.split("/");
+            fecha_inicio = fecha_inicio[2] + "-" + fecha_inicio[0] + "-" + fecha_inicio[1];
+        } else {
+            fecha_inicio="null";
+        }
+        
         
         // Obteniendo la fecha y dando formato para que sea complatible con MySql
         fecha_fin = $("#fecha_fin").val();
-        fecha_fin = fecha_fin.split("/");
-        fecha_fin = fecha_fin[2] + "-" + fecha_fin[0] + "-" + fecha_fin[1];
-
+        if(fecha_fin!="") {
+            fecha_fin = fecha_fin.split("/");
+            fecha_fin = fecha_fin[2] + "-" + fecha_fin[0] + "-" + fecha_fin[1];    
+        } else {
+            fecha_fin = "null";
+        }
+        
         nombre_busqueda = $("#nombre_busqueda").val();
         dni_busqueda = $("#dni_busqueda").val();
         
         parameters = fecha_inicio + "/" + fecha_fin + "/";
 
 
-        if(nombre_busqueda != null || nombre_busqueda !="") {
-            parameters+= "/" + nombre_busqueda + "/";					
+        if(nombre_busqueda == null || nombre_busqueda =="") {
+            parameters+= "null/";		
         } else {
-            parameters+= "//";
+            parameters+= nombre_busqueda + "/";
         }
 
-        if(dni_busqueda != null || dni_busqueda !="") {
-            parameters+=  "/";					
+        if(dni_busqueda == null || dni_busqueda =="") {
+            parameters+=  "null/";					
         } else {
-            parameters += "/";
+            parameters += dni_busqueda + "/";
         }
         
-
-
-        if (fecha_inicio=="" || fecha_fin =="") {
-            Swal.fire(
-                'Ingrese Fecha de Busqueda',
-                'Campos Vacios verificar por favor!',
-                'error'
-            )
-            return false;
-        }
+   
 
         $('#showcase-example-1').footable({			
 

@@ -13,70 +13,54 @@ class Ordenes_model extends CI_Model
     
     function obtener_registro_ajax($initial_date = null, $final_date = null, $nombre_busqueda = null, $dni_busqueda = null) {
 
+        // Final date
+        if($final_date == null || $final_date=="null") {        
+            $final_date = "'". date('Y-m-d') ."'";
+        } else {
+            $final_date = "'" . $final_date . "'";
+        }
+        // Initial date
         if($initial_date == null) {
-            $initial_date = date("Y-m-d");
+            $initial_date = "'" . date("Y-m-d") . "'";
+        } elseif ($initial_date=="null") {
+            $initial_date = "'2000-01-01'";     // Si es null y se hace una busqueda manual, que busque desde lo mas antes para que no afecte el resultado
+        } else {
+            $initial_date = "'" . $initial_date . "'";
         }
 
-        if($nombre_busqueda == null) {
-            $nombre_busqueda ="null";
+        $condition_1="(DATE(fecha_registro)>=$initial_date AND DATE(fecha_registro)<=$final_date)";
+
+        // Busqueda por nombre o apellido
+        if($nombre_busqueda == null || $nombre_busqueda=="null") {
+            $condition_2="AND TRUE";
+        } else {
+            $condition_2="AND (nombre LIKE '%$nombre_busqueda%' OR apellido_paterno LIKE '%$nombre_busqueda%' OR apellido_materno LIKE '%$nombre_busqueda%')";
         }
 
-        if($dni_busqueda == null) {
-            $dni_busqueda="null";
+        // Busqueda por DNI
+        if($dni_busqueda == null || $dni_busqueda=="null") {
+            $condition_3="AND TRUE";
+        } else {
+            $condition_3="AND dni LIKE '%$dni_busqueda%'";
         }
-        if($final_date == null) {
-            $final_date = date('Y-m-d');
-        }
         
         
-        
-        $query = $this->db->query(
+        // Armando el pedido e insertando las condiciones
+        $query_string=(
         "SELECT e.Id AS id ,e.nro_identificador, 
             concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) AS nombrex, 
             e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, 
             DATE(e.fecha_registro) AS fecha_ ,e.url_unico, e.id_paquete, 
             (SELECT l.nombre FROM exam_paquetes AS l WHERE l.Id=e.id_paquete) AS nombre_paquete 
         FROM exam_datos_generales AS e 
-        WHERE (DATE(fecha_registro)>='$initial_date' AND DATE(fecha_registro)<='$final_date')
-            OR nombre LIKE $nombre_busqueda
-            OR apellido_paterno LIKE $nombre_busqueda
-            OR apellido_materno LIKE $nombre_busqueda
-            OR dni LIKE $dni_busqueda
+        WHERE $condition_1 $condition_2 $condition_3
         ORDER BY Id DESC, nro_identificador DESC"
         );
 
+        // Haciendo el pedido a la base de datos
+        $query = $this->db->query($query_string);
 
-        return $query->result();       
-    }
-
-    public function mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)
-    {
-
-        $this->db->select("Id as id ,nro_identificador, concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombrex, dni,nombre,apellido_paterno,apellido_materno,id_sexo,empresa,status, date(fecha_registro) as fecha_ ,url_unico, id_paquete");
-        
-        if ($fecha_fin == date("Y-m-d")) {
-            
-        }else{
-            $this->db->where(array(
-            'fecha_registro>=' =>$fecha_inicio.' 00:00:01', 
-            'fecha_registro<=' =>$fecha_fin.' 23:59:59',
-        ));
-
-        }
-        if ($nombre_busqueda=="0") {
-            # code...
-        }else{
-            $this->db->like('nombre',$nombre_busqueda);
-            $this->db->or_like('apellido_paterno',$nombre_busqueda);
-            $this->db->or_like('apellido_materno',$nombre_busqueda);
-        }
-        if ($dni_busqueda=="0") {
-            # code...
-        }else{
-            $this->db->where('dni',$dni_busqueda);
-        }
-    
-        $query = $this->db->get("exam_datos_generales ");
+        // Regresando el pedido como respuesta
         return $query->result();
     }
 
