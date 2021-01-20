@@ -404,7 +404,7 @@ class Examenes_model extends CI_Model
         $query = $this->db->query($query_string);
 
         // Regresando el pedido como respuesta
-        return $query->result();
+		return $query->result();
 	}
 
 	public function count_all_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)

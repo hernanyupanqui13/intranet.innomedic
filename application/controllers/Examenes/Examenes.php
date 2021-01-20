@@ -509,28 +509,20 @@ class Examenes extends CI_Controller
 
 	//mostramos datos obtenidos mendiante el sistemna
 
-	public function mostrar_datos_busqueda_avanzada($fecha_inicio=null, $fecha_fin=null, $nombre_busqueda=null, $dni_busqueda=null)
+	public function mostrar_datos_busqueda_avanzada()
 	{
 		// Revisando si el los parametros son el default o si son dados manualmente
 		if ($this->session->userdata("session_id")=="") {
 			redirect(base_url().'Inicio/Zona_roja/');
 		}
 
-		if($fecha_inicio==null) {
-			$fecha_inicio = $this->input->post('fecha_inicio');
-		}
+		$fecha_inicio = $this->input->post('fecha_inicio');
+	
+		$fecha_fin= $this->input->post('fecha_fin');
 
-		if($fecha_fin==null) {
-			$fecha_fin= $this->input->post('fecha_fin');
-		}
-
-		if($nombre_busqueda==null) {
-			$nombre_busqueda = $this->input->post('nombre_busqueda');
-		}
-		
-		if($dni_busqueda==null) {
-			$dni_busqueda= $this->input->post('dni_busqueda');
-		}
+		$nombre_busqueda = $this->input->post('nombre_busqueda');
+	
+		$dni_busqueda= $this->input->post('dni_busqueda');
 
 		// Validando valores para la base de datos
 		
@@ -587,13 +579,14 @@ class Examenes extends CI_Controller
 		}
 
 		$output = array(
-						"draw" => $_POST['draw'],
-						"recordsTotal" => $this->Examenes_model->count_all_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda),
-						"recordsFiltered" => $this->Examenes_model->count_filtered_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda),
-						"data" => $data,
-				);
+			"draw" => $_POST['draw'],
+			"recordsTotal" => 0,		//$this->Examenes_model->count_all_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda),  changed by hernan
+			"recordsFiltered" => 0,		// $this->Examenes_model->count_filtered_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda),   chaged by hernan
+			"data" => $data,
+		);
 		//output to json format
 		echo json_encode($output);
+
 
 
 	}
