@@ -60,7 +60,7 @@ function fillData(data) {
         
     }
     $("#aplicamos_cambios").html(aplicate);
-    $("#sexo_id").text(data.sexo);
+    $("#sexo_id").text(data.sexo.toUpperCase());
     
 
     $("#igm-impr-slot").text(data.igm);

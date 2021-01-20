@@ -78,7 +78,9 @@ class Intranet extends CI_Controller
 			
 			if ($this->session->userdata("session_perfil")==29 || $this->session->userdata("session_perfil")==5 || $this->session->userdata("session_perfil")==19 || $this->session->userdata("session_perfil")==1 ) {//1
 				echo json_encode(array('url'=>base_url().'Inventario/View_Inventario/'));
-			}else{
+			} else if($id=37 || $id==38 || $id==39) {
+				echo json_encode(array('url'=>base_url().'Examenes/Examenes/'));
+			} else{
 				echo json_encode(array('url'=>base_url().'Intranet_view/'));
 			}
 			
