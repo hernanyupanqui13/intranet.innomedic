@@ -147,9 +147,9 @@
                 <div class="table-responsive">
                     <table border="0" width="100%" class="text-center" >
                         <thead class="text-center" >
-                            <tr class="text-center p-5 m-5">
+                            <tr class="text-center">
                                 <th> 
-                                    <div class="col-md-6 text-center m-4 p-4">
+                                    <div class="col-md-6 text-center">
                                         <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/ruiz_cotrina.png?ver=<?php echo rand(); ?>" alt=""></span><br>
                                         <small>Firma y Sello<br>
                                         RUIZ COTRINA JORGE MARTIN<br>
