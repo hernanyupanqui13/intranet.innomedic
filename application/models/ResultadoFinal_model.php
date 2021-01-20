@@ -121,5 +121,34 @@ class ResultadoFinal_model extends CI_Model
         $this->db->update("exam_datos_generales",$data);
     }
 
+    public function getPlantillaName($url_paciente) {
+        $query = $this->db->query(
+            "SELECT id_paquete
+            FROM exam_datos_generales AS edg
+            WHERE url_unico = '$url_paciente'"
+        );
+
+        $response = $query->row();
+        $nombre_plantilla="";
+
+        $url= $response->url_paciente;
+        
+        if($url == "5") {
+            $nombre_plantilla = "prueba-rapida-imprimir";    
+        } elseif ($url =="580") {
+            $nombre_plantilla = "prueba-rapida-cuanti-imprimir";    
+        } elseif ($url=="581") {
+            $nombre_plantilla ="prueba-antigenos-imprimir";
+        } elseif ($url =="582") {
+            $nombre_plantilla ="prueba-molecular-imprimir";
+        } elseif ($url =="583") {
+            $nombre_plantilla = "prueba-antigeno-cuanti-imprimir";
+        } else {
+            $nombre_plantilla = "no encontrado";
+        }
+
+        return $nombre_plantilla;
+    }
+
 
 }

@@ -75,8 +75,8 @@
                 </div>
             </div>
             <div class="informacion-medicos">
-                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>Melgarejo Chamorro Pablo Armando</div>
-                <div class="informacion-medicos-item"><span>Especialista:&nbsp;</span>Ruiz Cotrina Jorge Martin</div>
+                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>RUIZ COTRINA JORGE MARTIN</div>
+                <div class="informacion-medicos-item"><span>Tecnologo:&nbsp;</span>ARTICA VICENTE REYNALDO</div>
             </div>
             <div class="row">
                 <div class="col-md-12">

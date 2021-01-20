@@ -201,7 +201,7 @@
                                     <div class="col-md-6 text-center m-4 p-4">
                                       <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/720.jpg?ver=<?php echo rand(); ?>" alt=""></span><br>
                                       <small>Firma y Sello<br>
-                                        Melgarejo Chamorro Pablo Armando<br>
+                                        RUIZ COTRINA JORGE MARTIN<br>
                                         Patólogo Clínico<br>
                                         <strong>C.M.P. :</strong>40503   </small>     
                                         </p>
