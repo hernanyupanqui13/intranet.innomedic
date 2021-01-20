@@ -243,7 +243,8 @@
           					data: {id_paciente: id_paciente},
           				})
           				.done(function(data) {
-          					console.log("success");
+							console.log("success");
+							console.log(data);
 
           					$("#exampleModal").modal("show");
           					$("#nombres_completos_paciente").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
