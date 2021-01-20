@@ -566,7 +566,7 @@ function tipo_paquete_() {
   $.ajax({
           type: "POST",
           async:true,
-          url: window.location.href + "cargar_paquete/",
+          url: window.location.origin + "/intranet.innomedic.pe" + "/Examenes/Examenes/cargar_paquete/",
           success: function(response)
           {
               $('.mostrararea select').html(response).fadeIn();
@@ -759,6 +759,8 @@ $(document).ready(function() {
         sumar();
       
   });
+
+  console.log("cargar lista paquete");
 
   $(document).on('change', '#agregar_detalle__por_paquete', function(event) {
     event.preventDefault();

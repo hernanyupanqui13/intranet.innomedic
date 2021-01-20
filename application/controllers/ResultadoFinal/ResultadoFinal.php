@@ -74,7 +74,12 @@ class ResultadoFinal extends CI_Controller {
             //loaboratorio
             $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
             //rayox x
-             $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
+
+            if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
+                $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
+            } else {
+                $row["rayox"] = '____';
+            }
            
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Final Result" onclick="impresion_final('."'".$person->id."'".')"><i class="fas fa-print"></i>&nbsp;</a>';
 
