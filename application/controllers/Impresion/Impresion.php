@@ -60,7 +60,7 @@ class Impresion extends CI_Controller {
         } else if ($nombre_plantilla == "paquete1-imprimir") {
             return $this->getPaquete1Plantilla($id);
         } else {
-            echo "No se encontro la informacion";
+            echo "No se encontro la informacion: " . $nombre_plantilla ;
         }
     }
 

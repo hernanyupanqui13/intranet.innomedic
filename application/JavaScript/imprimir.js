@@ -59,8 +59,14 @@ function fillData(data) {
             </div>`;
         
     }
+
+    if(data.antigeno_resultado) data.antigeno_resultado = data.antigeno_resultado.toUpperCase();
+    if(data.sexo) data.sexo=data.sexo.toUpperCase();
+
     $("#aplicamos_cambios").html(aplicate);
     $("#sexo_id").text(data.sexo.toUpperCase());
+    
+    
     
 
     $("#igm-impr-slot").text(data.igm);
@@ -70,7 +76,7 @@ function fillData(data) {
     $("#update_covid-impr-slot").text(data.update_covid);
     $("#concentracion_igm-impr-slot").text(data.concentracion_igm);
     $("#concentracion_igg-impr-slot").text(data.concentracion_igg);  
-    $("#antigeno_resultado-impr-slot").text(data.antigeno_resultado.toUpperCase());
+    $("#antigeno_resultado-impr-slot").text(data.antigeno_resultado);
     $("#concentra_atig-impr-slot").text(data.concentra_atig); 
     
     

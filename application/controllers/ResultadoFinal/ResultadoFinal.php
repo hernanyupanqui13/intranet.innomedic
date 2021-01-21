@@ -270,18 +270,32 @@ class ResultadoFinal extends CI_Controller {
     	$query = $this->db->query("select * from exam_datos_generales where url_unico='".$id_paciente."'");
 		foreach ($query->result() as $emp) {
 			$nombrex = $emp->apellido_paterno." ".$emp->apellido_materno.", ".$emp->nombre;
-		}
-		$data['segmento'] = $id_pacientex;
+        }
+        
+
+        $data['segmento'] = $id_pacientex;
+        $data['the_id']=$this->ResultadoFinal_model->fromUrlToId($id_pacientex);
+        $data["nombre_plantilla"] = $this->ResultadoFinal_model->getNombrePlantilla($id_pacientex);
+
+
 		if (!$data['segmento']) {
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url();
 			
 		}else{
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($data['segmento']);
-		}
+        }
+        
+        
 		//$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($id_pacientex);
 		$data['title'] = array($nombrex);
-        $this->load->view('resultadofinal/prueba',$data);
+        //$this->load->view('resultadofinal/prueba',$data);
+        $this->load->view('resultadofinal/plantilla',$data);
 
+
+    }
+
+    public function faking($params) {
+        echo $this->ResultadoFinal_model->fromUrlToId($params);
     }
 
     public function enviar_correo_datos()
@@ -564,7 +578,7 @@ class ResultadoFinal extends CI_Controller {
         if($this->upload->do_upload('imagen')){
             $uploadDataI = $this->upload->data();
             $imagen = $uploadDataI['file_name'];
-        }else{
+        } else {
             $imagen = '';
         }
         }else{
