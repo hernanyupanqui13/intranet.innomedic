@@ -163,85 +163,81 @@
 			$(document).on('click', '#buscar_registro_por_ajax', function(event) {
 				event.preventDefault();
 
-				/* Act on the event */
-				fecha_inicio = $("#fecha_inicio").val();
-	            fecha_fin = $("#fecha_fin").val();
-	            nombre_busqueda = $("#nombre_busqueda").val();
-	            dni_busqueda = $("#dni_busqueda").val();
+				let fecha_inicio = $("#fecha_inicio").val();
+
+				if(fecha_inicio!="") {
+					fecha_inicio = fecha_inicio.split("/");
+					fecha_inicio = fecha_inicio[2] + "-" + fecha_inicio[0] + "-" + fecha_inicio[1];
+				} else {
+					fecha_inicio="null";
+				}
+				
+				
+				// Obteniendo la fecha y dando formato para que sea complatible con MySql
+				let fecha_fin = $("#fecha_fin").val();
+				if(fecha_fin!="") {
+					fecha_fin = fecha_fin.split("/");
+					fecha_fin = fecha_fin[2] + "-" + fecha_fin[0] + "-" + fecha_fin[1];    
+				} else {
+					fecha_fin = "null";
+				}
+				
+				let nombre_busqueda = $("#nombre_busqueda").val();
+				let dni_busqueda = $("#dni_busqueda").val();
+
+				if(nombre_busqueda == null || nombre_busqueda =="") {
+					nombre_busqueda = "null";		
+				} 
+
+				if(dni_busqueda == null || dni_busqueda =="") {
+					dni_busqueda =  "null";					
+				} 
 
 
-	            if (fecha_inicio=="" || fecha_fin =="") {
-                  Swal.fire(
-                    'Ingrese Fecha de Busqueda',
-                    'Campos Vacios verificar por favor!',
-                    'error'
-                  )
-                	return false;
-              	}
-              		$('#showcase-example-1').footable({
-              //	ft = FooTable.init('#showcase-example-1',{
-
-              	//	"empty": "No se encontro ningun resultado",
-					
+	            
+				$('#showcase-example-1').footable({
 					"columns": [
-							{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-							{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-							{ "name": "nombrex", "title": "Paciente" },
-							{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-							{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-							{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-						],
+						{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
+						{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
+						{ "name": "nombrex", "title": "Paciente" },
+						{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
+						{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
+						{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
+						{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
+						{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
+						{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
+						{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
+						{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
+					],
 
 					"rows": jQuery.post({
 						"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
 						"dataType": "json",
-						//"type": "POST",
 						"data": {
-                                    "fecha_inicio": fecha_inicio,
-                                    "fecha_fin": fecha_fin,
-                                    "nombre_busqueda":nombre_busqueda,
-                                    "dni_busqueda":dni_busqueda,
-                                },
-                        success:  function (response) {                 
-		                      //  $(".salida").html(response);
-		                      //con esto lo eliminamos el primer tr si en caso habria un tr profesional
-		                       $("#showcase-example-1 tr:last-child").remove();
-		                     // $("#showcase-example-1").footable();
-		                    // ft.rows.load("rows", true);
-		                  },
-		                 error:function(){
-		                       alert("error")
-		                    }
-					}),
-
-					
-
-			 //   })
+							"fecha_inicio": fecha_inicio,
+							"fecha_fin": fecha_fin,
+							"nombre_busqueda":nombre_busqueda,
+							"dni_busqueda":dni_busqueda,
+						},
+						success:  function (response) {                 		                    
+							$("#showcase-example-1 tr:last-child").remove();
+						},
+						error:function(errorThrown) {
+							console.log(errorThrown);
+							alert("error");
+						}
+					}),				
 			   });
-
-			   //$('.table').footable(); 
-			   //	ft.rows.load(rows, true);
-
-
-              	//$('#showcase-example-1').trigger('footable_initialized');
-             
-			   
 
 			});
 		});
 
-		 function limpiar_campos() {
-
-            $("#fecha_inicio").val("");
-            $("#fecha_fin").val("");
-            $("#nombre_busqueda").val("");
-            $("#dni_busqueda").val("");
-          }
+		function limpiar_campos() {
+			$("#fecha_inicio").val("");
+			$("#fecha_fin").val("");
+			$("#nombre_busqueda").val("");
+			$("#dni_busqueda").val("");
+		}
 	</script>
 
 	<script>

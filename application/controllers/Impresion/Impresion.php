@@ -10,6 +10,8 @@ class Impresion extends CI_Controller {
         $this->load->helper(array('url','funciones'));
         $this->load->model("Laboratorio_model");
         $this->load->model("ResultadoFinal_model");
+        $this->load->model("Impresion_model");
+
 
         
     } 
@@ -112,5 +114,7 @@ class Impresion extends CI_Controller {
 
 
     }
+
+    
 
 }

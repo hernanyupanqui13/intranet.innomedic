@@ -10,6 +10,8 @@ class ResultadoFinal extends CI_Controller {
 		$this->load->helper(array('url','funciones'));
         $this->load->model("ResultadoFinal_model");
         $this->load->model("Laboratorio_model");
+        $this->load->model("Impresion_model");
+
 
 	} 
 
@@ -105,54 +107,38 @@ class ResultadoFinal extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function fakeh($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda) {
+        echo json_encode($this->ResultadoFinal_model->mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda));
+    }
 
-    public function mostrar_datos_busqueda_avanzada()
-    {
+    public function mostrar_datos_busqueda_avanzada() {
+
     	if ($this->session->userdata("session_id")=="") {
             redirect(base_url().'Inicio/Zona_roja/');
         }
-        if ($this->input->post('fecha_inicio')=="" || $this->input->post('fecha_fin')=="") {
-            $fecha_inicio = date("Y-m-d");
-            $fecha_fin = date("Y-m-d");
-        }else{
-            $fecha_inicio = fecha_ymd($this->input->post('fecha_inicio'));
-            $fecha_fin = fecha_ymd($this->input->post('fecha_fin'));
-        }
 
-        //nombres
 
-        if ($this->input->post('nombre_busqueda')=="" ) {
-            $nombre_busqueda = "0"; 
-            
-        }else{
-            $nombre_busqueda = $this->input->post('nombre_busqueda');
-            
-        }
-        //nombres
-        if ($this->input->post('dni_busqueda')=="" ) {
-            $dni_busqueda = "0";
-            
-        }else{
-            $dni_busqueda = $this->input->post('dni_busqueda');
-            
-        }
+        $fecha_inicio = $this->input->post('fecha_inicio');
+	
+		$fecha_fin= $this->input->post('fecha_fin');
+
+		$nombre_busqueda = $this->input->post('nombre_busqueda');
+	
+		$dni_busqueda= $this->input->post('dni_busqueda');
+
          
-        if ($this->session->userdata("session_id")=="") {
-            redirect(base_url().'Inicio/Zona_roja/');
-        }
+      
         $list = $this->ResultadoFinal_model->mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda);
         $data = array();
-       // $no = 0;
+
         foreach ($list as $person) {
-         //   $no++;
-           $row = array();
-           // $row[]=$no;
+            $row = array();
             $row["nro_identificador"] = $person->nro_identificador;
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = '<a target="_blank" href="'.base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'.$person->url_unico.'">'.$person->nombrex.'</a>';
            
             if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "____________________";
+                $row["empresa"] = "_____";
             }else{
                 $row["empresa"] = $person->empresa;
             }
@@ -162,11 +148,20 @@ class ResultadoFinal extends CI_Controller {
             	 $row["monto"] = "<span>S/.".$person->precio."</span>";
             }
            
-            //loaboratorio
-            $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
-            //rayox x
-             $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-           
+            // Revisando si les corresponde hacer laboratorio para crear el link
+            if (in_array($person->id_paquete, array("1", "2", "3", "5", "580", "581", "582", "583"))) {
+                $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';                 
+            } else {
+                $row["laboratorio"] = '____';                 
+            }
+            
+            
+            // Revisando si les corresponde Rayos X para crear el link
+            if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
+                $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
+            } else {
+                $row["rayox"] = '____';
+            }
             
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Final Result" onclick="impresion_final('."'".$person->id."'".')"><i class="fas fa-print"></i>&nbsp;</a>';
 
@@ -194,6 +189,8 @@ class ResultadoFinal extends CI_Controller {
      
         //output to json format
         echo json_encode($output);
+
+        //echo json_encode($list);
 
     }
 
@@ -274,19 +271,18 @@ class ResultadoFinal extends CI_Controller {
         
 
         $data['segmento'] = $id_pacientex;
-        $data['the_id']=$this->ResultadoFinal_model->fromUrlToId($id_pacientex);
-        $data["nombre_plantilla"] = $this->ResultadoFinal_model->getNombrePlantilla($id_pacientex);
+        $data['the_id']=$this->Impresion_model->fromUrlToId($id_pacientex);
+        $data["nombre_plantilla"] = $this->Impresion_model->getNombrePlantilla($id_pacientex);
 
 
 		if (!$data['segmento']) {
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url();
 			
-		}else{
+		} else {
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($data['segmento']);
         }
         
         
-		//$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($id_pacientex);
 		$data['title'] = array($nombrex);
         //$this->load->view('resultadofinal/prueba',$data);
         $this->load->view('resultadofinal/plantilla',$data);

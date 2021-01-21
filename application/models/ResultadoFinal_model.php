@@ -2,53 +2,70 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class ResultadoFinal_model extends CI_Model
-{
+class ResultadoFinal_model extends CI_Model {
     
-    function __construct() 
-    {
+    function __construct() {
         parent::__construct();
         ini_set('date.timezone', 'America/Lima');
     }
     
-    function obtener_registro_ajax(){
- /*$query = $this->db->query("select e.Id as id ,e.nro_identificador, concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) as nombrex, e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status from exam_datos_generales as e where (fecha_registro>='".date('Y-m-d')." 00:00:01' and fecha_registro<='".date('Y-m-d')." 23:59:59')");
-        return $query->result();*/
+    function obtener_registro_ajax() {
         $query = $this->db->query("select e.Id as id ,e.nro_identificador, concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) as nombrex, e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, date(e.fecha_registro) as fecha_ ,e.url_unico, e.id_paquete , e.archivo, e.correo, e.boleta_pago, e.total, e.precio from exam_datos_generales as e where (fecha_registro>='".date('Y-m-d')." 00:00:01' and fecha_registro<='".date('Y-m-d')." 23:59:59')  ORDER BY Id desc, nro_identificador desc");
-        return $query->result();
-
-       
+        return $query->result();       
     }
 
-    public function mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)
+    public function mostrar_datos_busqueda_($initial_date,$final_date,$nombre_busqueda,$dni_busqueda)
     {
+        // Final date
+        if($final_date == null || $final_date=="null") {        
+            $final_date = "'". date('Y-m-d') ."'";
+        } else {
+            $final_date = "'" . $final_date . "'";
+        }
+        // Initial date
+        if($initial_date == null) {
+            $initial_date = "'" . date("Y-m-d") . "'";
+        } elseif ($initial_date=="null") {
+            $initial_date = "'2000-01-01'";     // Si es null y se hace una busqueda manual, que busque desde lo mas antes para que no afecte el resultado
+        } else {
+            $initial_date = "'" . $initial_date . "'";
+        }
 
-        $this->db->select("Id as id ,nro_identificador, concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombrex, dni,nombre,apellido_paterno,apellido_materno,id_sexo,empresa,status, date(fecha_registro) as fecha_ ,url_unico, id_paquete,archivo correo, boleta_pago,total,precio,archivo");
+        $condition_1="(DATE(fecha_registro)>=$initial_date AND DATE(fecha_registro)<=$final_date)";
+
+        // Busqueda por nombre o apellido
+        if($nombre_busqueda == null || $nombre_busqueda=="null") {
+            $condition_2="AND TRUE";
+        } else {
+            $condition_2="AND (nombre LIKE '%$nombre_busqueda%' OR apellido_paterno LIKE '%$nombre_busqueda%' OR apellido_materno LIKE '%$nombre_busqueda%')";
+        }
+
+        // Busqueda por DNI
+        if($dni_busqueda == null || $dni_busqueda=="null") {
+            $condition_3="AND TRUE";
+        } else {
+            $condition_3="AND dni LIKE '%$dni_busqueda%'";
+        }
         
-        if ($fecha_fin == date("Y-m-d")) {
-            
-        }else{
-            $this->db->where(array(
-            'fecha_registro>=' =>$fecha_inicio.' 00:00:01', 
-            'fecha_registro<=' =>$fecha_fin.' 23:59:59',
-        ));
+        
+        // Armando el pedido e insertando las condiciones
+        $query_string=(
+        "SELECT e.Id AS id ,e.nro_identificador, 
+            concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) AS nombrex, 
+            e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, 
+            DATE(e.fecha_registro) AS fecha_ ,
+            e.url_unico, e.id_paquete, e.total, e.precio,e.boleta_pago,e.archivo,
+            (SELECT l.nombre FROM exam_paquetes AS l WHERE l.Id=e.id_paquete) AS nombre_paquete 
+        FROM exam_datos_generales AS e 
+        WHERE $condition_1 $condition_2 $condition_3
+        ORDER BY Id DESC, nro_identificador DESC"
+        );
 
-        }
-        if ($nombre_busqueda=="0") {
-            # code...
-        }else{
-            $this->db->like('nombre',$nombre_busqueda);
-            $this->db->or_like('apellido_paterno',$nombre_busqueda);
-            $this->db->or_like('apellido_materno',$nombre_busqueda);
-        }
-        if ($dni_busqueda=="0") {
-            # code...
-        }else{
-            $this->db->where('dni',$dni_busqueda);
-        }
-    
-        $query = $this->db->get("exam_datos_generales ");
-        return $query->result();
+        // Haciendo el pedido a la base de datos
+        $query = $this->db->query($query_string);
+
+        // Regresando el pedido como respuesta
+		return $query->result();
     }
 
     public function laboratorio_view_register($id)
@@ -120,47 +137,5 @@ class ResultadoFinal_model extends CI_Model
         $this->db->where("Id",$id);
         $this->db->update("exam_datos_generales",$data);
     }
-
-    public function getNombrePlantilla($url) {
-        $query = $this->db->query(
-            "SELECT id_paquete
-            FROM exam_datos_generales AS edg
-            WHERE url_unico = '$url'"
-        );
-
-        $response = $query->row();
-        $nombre_plantilla="";
-
-        $id_paquete= $response->id_paquete;
-        
-        if($id_paquete == "5") {
-            $nombre_plantilla = "prueba-rapida-imprimir";    
-        } elseif ($id_paquete =="580") {
-            $nombre_plantilla = "prueba-rapida-cuanti-imprimir";    
-        } elseif ($id_paquete=="581") {
-            $nombre_plantilla ="prueba-antigeno-imprimir";
-        } elseif ($id_paquete =="582") {
-            $nombre_plantilla ="prueba-molecular-imprimir";
-        } elseif ($id_paquete =="583") {
-            $nombre_plantilla = "prueba-antigeno-cuanti-imprimir";
-        } else {
-            $nombre_plantilla = $id_paquete;
-        }
-
-        return $nombre_plantilla;
-    }
-
-    public function fromUrlToId($url) {
-        $query = $this->db->query(
-            "SELECT Id
-            FROM exam_datos_generales AS edg
-            WHERE url_unico = '$url'"
-        );
-
-        $response = $query->row();
-
-        return $response->Id;
-    }
-
 
 }
