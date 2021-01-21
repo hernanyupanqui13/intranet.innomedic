@@ -1,7 +1,12 @@
 console.log("location");
 $(document).on('submit', '#registrar_prueba_molecular', function(event) {
     event.preventDefault();
-    /* Act on the event */
+
+    if(isFulFilled ()) {
+        actualizarProgreso("2");
+    } else {
+        actualizarProgreso("1");
+    }
 
     $.ajax({
         url: window.location.origin + "/intranet.innomedic.pe"+"/Laboratorio/Laboratorio/uploadMolecular/",
@@ -34,7 +39,12 @@ $(document).on('submit', '#registrar_prueba_molecular', function(event) {
 });
 
 
-$(document).on('click', '#imprimir_prueba_molecular', function(event) {
-    event.preventDefault();
-    $("#exampleModal").modal("show");
-});
+
+
+function isFulFilled () {
+    const molecular_input = document.getElementById("test_input");
+    
+    let isMolecularFileFilled = molecular_input.value != null && molecular_input.value != "";
+    
+    return isMolecularFileFilled;
+}

@@ -98,3 +98,4 @@
 document.getElementById("antigeno_resultado_input").value = "<?=$exam_data->antigeno_resultado?>"
 
 </script>
+<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>

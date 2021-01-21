@@ -339,6 +339,14 @@ class Laboratorio extends CI_Controller {
     public function obtenerMolecularUrl($id_exam) {
         echo json_encode($this->Laboratorio_model->obtenerMolecularUrl($id_exam));
     }
+
+    public function actualizarEstadoProgreso() {
+        
+        $nuevo_estado=$this->input->post("status");
+        $id=$this->input->post("the_id");
+
+        $this->Laboratorio_model->actualizarEstadoProgreso($nuevo_estado, $id);
+    }
     
 }
  

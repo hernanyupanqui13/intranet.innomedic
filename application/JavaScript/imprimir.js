@@ -86,12 +86,21 @@ function fillData(data) {
 }
 
 function vistaPreviaImprimir(plantilla, container_id, id=null) {
-    
-    $(vista_previa_modal).modal({show: true});	
+    if(isAllowedToPrint(id)) { 
+        
+        $(vista_previa_modal).modal({show: true});	
 
-    document.getElementById(container_id).innerHTML = getPlantilla(plantilla, id);
-    let data = getData(id);
-    fillData(data);
+        document.getElementById(container_id).innerHTML = getPlantilla(plantilla, id);
+        let data = getData(id);
+        fillData(data);
+    } else {
+        Swal.fire(
+            '!No puedes imprimir!',
+            'Llena y enviar los datos primero',
+            'error'
+        )
+    }
+
 }
 
 function imprimir(element_to_print=null) {
@@ -152,4 +161,24 @@ function impresion_final($id) {
                     
     // Fill the data with getData response
     fillData(getData($id));
+}
+
+/*
+Define si el examen se puede imprimir o no basado en si se lleno y cargo toda la informacion a la base de datos
+Usa el valor estado_progreso de la base de datos
+*/
+function isAllowedToPrint(id_del_examen) {
+    let xhttp = new XMLHttpRequest();
+    let response;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            response = JSON.parse(this.responseText);
+            response = response.respuesta;
+        }
+    };
+    xhttp.open("GET", window.location.origin + "/intranet.innomedic.pe" + '/Impresion/Impresion/isAllowedToPrint/' + id_del_examen, false);
+    xhttp.send();
+
+    return response;    
+
 }

@@ -119,3 +119,4 @@ document.getElementById("antigeno_resultado_input").value = "<?= $exam_data->ant
 document.getElementById("concentra_atig_input").value = "<?= $exam_data->concentra_atig?>";
 
 </script>
+<script src=<?= base_url().'application/JavaScript/prueba-antigeno-cuantitativa.js'?>></script>

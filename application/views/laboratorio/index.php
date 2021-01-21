@@ -191,14 +191,11 @@ if (!empty($laboratorio_view_register)) {
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src=<?= base_url().'application/JavaScript/prueba-covid-cuantitativa-form.js'?>></script>
-<script src=<?= base_url().'application/JavaScript/prueba_rapida-form.js'?>></script>
-<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>
-<script src=<?= base_url().'application/JavaScript/prueba-antigeno-cuantitativa.js'?>></script>
-<script src=<?= base_url().'application/JavaScript/prueba-molecular.js'?>></script>
 
 
 <script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
+<script src=<?= base_url().'application/JavaScript/laboratorio-index.js'?>></script>
+
 <!--PAQUETE Nº1-->
 <script>
 

@@ -1,6 +1,12 @@
 $(document).on('submit', '#registrar_prueba_antigeno', function(event) {
     event.preventDefault();
-    /* Act on the event */
+    
+
+    if(isFulFilled()){
+        actualizarProgreso("2");
+    } else {
+        actualizarProgreso("1");
+    }
 
     $.ajax({
         url: window.location.origin + "/intranet.innomedic.pe"+"/Laboratorio/Laboratorio/actualizar_prueba_rapida/",
@@ -26,3 +32,11 @@ $(document).on('submit', '#registrar_prueba_antigeno', function(event) {
         console.log("complete");
     });    
 });
+
+function isFulFilled () {
+    const antig_result_input = document.getElementById("antigeno_resultado_input");
+    
+    let isAntigResultFilled = antig_result_input.value == "positivo" || antig_result_input.value == "negativo";
+    
+    return isAntigResultFilled;
+}

@@ -33,7 +33,7 @@
             </div>
             <div class="form-group molecular_file_container">
                 <label for="molecular_file">Resultado Molecular: </label>
-                <input type="file" name="userfile" size="20" />
+                <input type="file" name="userfile" size="20" id="test_input"/>
             </div>        
             <div class="informacion-medicos">
                 <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>RUIZ COTRINA JORGE MARTIN</div>
@@ -52,3 +52,4 @@
     </div>
     <div class="tab-pane p-20" id="messages" role="tabpanel">3</div>
 </div>
+<script src=<?= base_url().'application/JavaScript/prueba-molecular.js'?>></script>

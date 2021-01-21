@@ -158,3 +158,5 @@ document.getElementById("igm").value = "<?=$exam_data->igm?>";
 document.getElementById("igg").value = "<?= $exam_data->igg?>";
 
 </script>
+
+<script src=<?= base_url().'application/JavaScript/prueba-covid-cuantitativa-form.js'?>></script>

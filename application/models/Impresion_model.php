@@ -48,6 +48,18 @@ class Impresion_model extends CI_Model {
         return $response->Id;
     }
 
+    public function getEstadoProgreso($id_examen) {
+        
+        $query_string = 
+            "SELECT estado_progreso
+            FROM exam_datos_generales
+            WHERE Id = $id_examen"
+        ;
+
+        $query = $this->db->query($query_string);
+        return $query->row()->estado_progreso;
+    }
+
 }
 
 ?>

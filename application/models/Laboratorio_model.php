@@ -78,4 +78,12 @@ class Laboratorio_model extends CI_Model
         return $query->row();
     }
 
+    public function actualizarEstadoProgreso($estado_progreso, $id) {
+        $data=array('estado_progreso'=>$estado_progreso);
+
+        $this->db->where('Id', $id);
+        $this->db->update('exam_datos_generales', $data);
+    }
+
+
 }
