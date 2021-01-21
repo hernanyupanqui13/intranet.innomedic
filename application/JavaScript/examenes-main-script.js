@@ -399,9 +399,6 @@ $(document).ready(function() {
     
     let nombre_busqueda = $("#nombre_busqueda").val();
     let dni_busqueda = $("#dni_busqueda").val();
-    
-    parameters = fecha_inicio + "/" + fecha_fin + "/";
-
 
     if(nombre_busqueda == null || nombre_busqueda =="") {
       nombre_busqueda = "null";		

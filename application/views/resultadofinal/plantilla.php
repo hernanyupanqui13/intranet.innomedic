@@ -59,7 +59,7 @@ body {
 <script src="<?php echo base_url().'assets_sistema/';?>dist/js/pages/jquery.PrintArea.js" type="text/JavaScript"></script>
 
 <script>
-document.getElementById("main-body").innerHTML = getPlantilla("<?=$nombre_plantilla?>");
+document.getElementById("main-body").innerHTML = getPlantilla("<?=$nombre_plantilla?>", "<?=$the_id?>");
 fillData(getData("<?=$the_id?>"));
 
 </script>
