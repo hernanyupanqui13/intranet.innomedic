@@ -108,53 +108,28 @@
 
 		jQuery(function($){
 
-
 			ft = FooTable.init('#showcase-example-1', {
 
 				"columns": [
-						{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-						{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-						{ "name": "nombrex", "title": "Paciente" },
-						{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-						{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-						{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-					],
-					//columns: $.get("https://fooplugins.github.io/FooTable/docs/content/columns.json"),
-
-					// esta es la mas directa de asignar al registro ajax mediante jquery
-					//"rows": $.get("<?php echo base_url().'Examenes/Ordenes/obtener_registro_ajax/';?>"),
-					/*"rows": jQuery.get({
-					"url": "<?php echo base_url().'Examenes/Ordenes/obtener_registro_ajax/';?>",
-					"dataType": "json",
-
-
-				}),*/
-				"rows": jQuery.get({
-					"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
-					"dataType": "json",
+					{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
+					{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
+					{ "name": "nombrex", "title": "Paciente" },
+					{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
+					{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
+					{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
+					{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
+					{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
+					{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
+					{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
+					{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
+				],
 					
+				"rows": jQuery.get({
+					"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
+					"dataType": "json",					
 				}),
-
 				
-
 			})
-
-			 
-
-		/*	var empty = find(".footable-empty");
-	        if (empty) {
-	          empty.remove();
-	        }*/
-
-			//$('#showcase-example-1').trigger('footable_initialized');
-			//$("#showcase-example-1").footable();
-
-
 		
 		});
 
@@ -646,7 +621,7 @@
 										],
 
 									"rows": jQuery.get({
-										"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
+										"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 										"dataType": "json",
 										
 									}),
@@ -724,7 +699,7 @@
 									],
 
 								"rows": jQuery.get({
-									"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
+									"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 									"dataType": "json",
 									
 								}),
