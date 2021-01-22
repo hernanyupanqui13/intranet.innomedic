@@ -64,32 +64,11 @@ class ResultadoFinal extends CI_Controller {
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = '<a target="_blank" href="'.base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'.$person->url_unico.'">'.$person->nombrex.'</a>';
            
-            if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "_____";
-            } else {
-                $row["empresa"] = $person->empresa;
-            }
-
             if ($person->precio=="" || $person->precio==null) {
             	 $row["monto"] = "<span>S/.".$person->total."</span>";
             } else {
             	 $row["monto"] = "<span>S/.".$person->precio."</span>";
-            }
-           
-            // Revisando si les corresponde hacer laboratorio para crear el link
-            if (in_array($person->id_paquete, array("1", "2", "3", "5", "580", "581", "582", "583"))) {
-                $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';                 
-            } else {
-                $row["laboratorio"] = '____';                 
-            }
-            
-            
-            // Revisando si les corresponde Rayos X para crear el link
-            if ($person->id_paquete=="1" or $person->id_paquete=="2" or $person->id_paquete=="3" ) {
-                $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-            } else {
-                $row["rayox"] = '____';
-            }
+            }                       
             
             // Impresion final
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Final Result" onclick="impresion_final('."'".$person->id."'".')"><i class="fas fa-print"></i>&nbsp;</a>';
@@ -109,6 +88,8 @@ class ResultadoFinal extends CI_Controller {
             	
             	$row["enviar"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Volver a Enviar Resultado</a>';
             }
+
+            $row["estado"] = '' . $person->estado_progreso . '';
             
             $data[] = $row;
         }

@@ -92,10 +92,27 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
 	<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
+	<link rel="stylesheet" type="text/css" href="<?= base_url().'assets/vendor/progress-bar/loading-bar.css'?>"/>
+	<script src=<?= base_url().'application/JavaScript/resultado_final-index.js'?>></script>
+
+
 
 
 
 	<script>
+
+		const footable_columns = [
+			{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
+			{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
+			{ "name": "nombrex", "title": "Paciente" },			
+			{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado estado_progress_container"},
+			{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
+		];
+
+		
 
 
 
@@ -103,7 +120,6 @@
 			e.preventDefault();
 			var newSize = $(this).data('pageSize');
 			FooTable.get('#showcase-example-1').pageSize(newSize);
-
 		});
 
 
@@ -111,26 +127,25 @@
 
 			ft = FooTable.init('#showcase-example-1', {
 
-				"columns": [
-					{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-					{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-					{ "name": "nombrex", "title": "Paciente" },
-					{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-					{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-					{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-					{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-					{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-					{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-					{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-					{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-				],
+				"columns": footable_columns,
 					
 				"rows": jQuery.get({
 					"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
 					"dataType": "json",					
 				}),
+
+				"on": {
+					"ready.ft.table": function(e, ft){
+						fillEstadoProgreso();
+Z					}, 
+					"after.ft.paging": function(e, ft){
+						fillEstadoProgreso();
+					} 					
+				}
 				
 			})
+
+
 		
 		});
 
@@ -172,19 +187,7 @@
 
 	            
 				$('#showcase-example-1').footable({
-					"columns": [
-						{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-						{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-						{ "name": "nombrex", "title": "Paciente" },
-						{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-						{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-						{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-					],
+					"columns": footable_columns,
 
 					"rows": jQuery.post({
 						"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
@@ -202,8 +205,18 @@
 							console.log(errorThrown);
 							alert("error");
 						}
-					}),				
+					}),
+					
+					"on": {
+						"ready.ft.table": function(e, ft){
+							fillEstadoProgreso();
+						}, 
+						"after.ft.paging": function(e, ft){
+							fillEstadoProgreso();
+						} 					
+					}
 			   });
+
 
 			});
 		});
@@ -541,31 +554,28 @@
 			                      });
 			                    $("#input-file-now-custom-3").val("");
 
-			                  // $('#showcase-example-1').footable();
 			                   	$('#showcase-example-1').footable({
-									"columns": [
-											{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-											{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-											{ "name": "nombrex", "title": "Paciente" },
-											{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-											{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-											{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-										],
+									"columns": footable_columns,
 
 									"rows": jQuery.get({
 										"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 										"dataType": "json",
 										
 									}),
+
+									"on": {
+										"ready.ft.table": function(e, ft){
+											fillEstadoProgreso();
+										}, 
+										"after.ft.paging": function(e, ft){
+											fillEstadoProgreso();
+										} 					
+									}
 								});
 
 								$("#agregamos").html(`<button type="submit" class="btn btn-dark btn-rounded btn-lg" id="eliminamos">Enviar Resultados</button>`);
 								$("#eliminamos_load").remove();
+
 						})
 						.fail(function() {
 							console.log("error");
@@ -621,26 +631,25 @@
 		                      drEvent.destroy();
 		                      drEvent.init();
 			                $('#showcase-example-1').footable({
-								"columns": [
-										{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-										{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-										{ "name": "nombrex", "title": "Paciente" },
-										{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-										{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-										{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-									],
+								"columns": footable_columns,
 
 								"rows": jQuery.get({
 									"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 									"dataType": "json",
 									
 								}),
+
+								"on": {
+									"ready.ft.table": function(e, ft){
+										fillEstadoProgreso();
+									}, 
+									"after.ft.paging": function(e, ft){
+										fillEstadoProgreso();
+									} 					
+								}
 							});
+
+
 
 
 						})
@@ -725,5 +734,7 @@
                   });
                 }); 
         </script>
+		<script src=<?= base_url().'assets/vendor/progress-bar/loading-bar.js'?>></script>
+
 
 

@@ -50,7 +50,7 @@ class ResultadoFinal_model extends CI_Model {
         
         // Armando el pedido e insertando las condiciones
         $query_string=(
-        "SELECT e.Id AS id ,e.nro_identificador, 
+        "SELECT e.Id AS id , e.nro_identificador, e.estado_progreso,
             concat(e.nombre,' ',e.apellido_paterno,' ',e.apellido_materno) AS nombrex, 
             e.dni,e.nombre,e.apellido_paterno,e.apellido_materno,e.id_sexo,e.empresa,e.status, 
             DATE(e.fecha_registro) AS fecha_ ,
