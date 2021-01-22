@@ -91,6 +91,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+	<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
 
 
 
@@ -232,70 +233,6 @@
 			);
 		}
 
-		function impresion_final($id) {
-			$("#exampleModal").modal({show: true});
-			
-			
-			let xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("pdfdoc").innerHTML = this.responseText;
-				}
-			};
-			xhttp.open("GET", "<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>" + $id , false);
-			xhttp.send();
-
-
-			$.get("<?php echo base_url().'ResultadoFinal/ResultadoFinal/getFullName/'?>" + $id, function(data) {
-				let obj = JSON.parse(data);
-				$("#nombres_completos_pacientex").html(obj.full_name);
-			});
-
-			$.ajax({
-				url: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/getImpresionData/' ?>',
-				type: 'POST',
-				dataType: 'json',
-				data: {id_paciente: $id},
-			})
-			.done(function(data) {
-				console.log("success");
-
-				$("#nombres_completos_paciente").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#nombres_completos_pacientex").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#dni_paciente").text(data.dni);
-				if (data.empresa=="") {
-					aplicate = ``;
-					
-				}else{
-					aplicate = `<div class=" text-center p-2 border ">
-							<div class="font-weight-bold text-dark">
-								EMPRESA:<span class="font-weight-normal" > `+data.empresa+`&nbsp;&nbsp;&nbsp;&nbsp;`+data.ruc+`</span>
-							</div>
-						</div>`;
-					
-				}
-				$("#aplicamos_cambios").html(aplicate);
-				$("#sexo_id").text(data.sexo);
-
-				$("#igm-impr-slot").text(data.igm);
-				$("#igg-impr-slot").text(data.igg);
-				$("#edad-impr-slot").text(data.edad);
-				$("#fecha_nacimiento-impr-slot").text(data.fecha_nacimiento);
-				$("#update_covid-impr-slot").text(data.update_covid);
-				$("#concentracion_igm-impr-slot").text(data.concentracion_igm);
-				$("#concentracion_igg-impr-slot").text(data.concentracion_igg);  
-				$("#antigeno_resultado-impr-slot").text(data.antigeno_resultado);
-				$("#concentra_atig-impr-slot").text(data.concentra_atig);  
-
-
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete impr");
-			});
-		}
 
 		function enviarcorreo($id) {
 			var id_paciente = $id;

@@ -154,13 +154,22 @@ Funcion llamada al imprimir el resultado final de una orden clinica
 Muestra una vista previa en modal de la impresion
 */
 function impresion_final($id) {
-			
-    $(vista_previa_modal).modal({show: true});	
 
-    document.getElementById("pdfdoc").innerHTML = getImpresionFinal($id);
-                    
-    // Fill the data with getData response
-    fillData(getData($id));
+    if(isAllowedToPrint($id)) {
+			
+        $(vista_previa_modal).modal({show: true});	
+
+        document.getElementById("pdfdoc").innerHTML = getImpresionFinal($id);
+                        
+        // Fill the data with getData response
+        fillData(getData($id));
+    } else {        
+        Swal.fire(
+            '!No puedes imprimir!',
+            'Llena y enviar los datos primero',
+            'error'
+        )
+    }
 }
 
 /*
