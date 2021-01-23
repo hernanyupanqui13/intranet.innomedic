@@ -360,6 +360,8 @@ class ResultadoFinal extends CI_Controller {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
             $this->output->set_status_header(400);
         } else {
+            $this->ResultadoFinal_model->actualizarResultadoProgreso($id_paciente, "1");
+            $this->actualizarEstadoProgreso($id_paciente);
             echo "Su petición ha sido enviada";
         }
 
@@ -494,6 +496,19 @@ class ResultadoFinal extends CI_Controller {
 
         $this->ResultadoFinal_model->update_insert_file($id_paciente_xx,$data_update);
 
+
+    }
+
+
+    public function actualizarEstadoProgreso($id) {
+
+        // Obteniendo los datos de la base de datos
+        $progress_state = (int)$this->Impresion_model->getEstadoProgreso($id);
+        $current_lab_state = (int)$this->Impresion_model->getLabEstado($id);
+        $current_result_state = (int)$this->Impresion_model->getResultadoEstado($id);
+
+        $final_progress_state = 1 + $current_lab_state + $current_result_state;
+        $this->ResultadoFinal_model->actualizarEstadoProgreso($final_progress_state, $id);
 
     }
 

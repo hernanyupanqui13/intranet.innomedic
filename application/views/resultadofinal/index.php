@@ -248,6 +248,7 @@ Z					},
 
 
 		function enviarcorreo($id) {
+
 			var id_paciente = $id;
 			$.ajax({
 				url: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostramosdatos_del_paciente/';?>',
@@ -261,7 +262,8 @@ Z					},
 				$("#exampleModal1").modal("show");
 				$("#id_paciente_update").val($id);
 				$("#nombres_completos_idd").text(data.nombres);
-				//$("#nombres_completos_result_url").text(data.url_unico);
+				
+
 				$("#nombres_completos_result_url").attr({
 					href: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'?>'+data.url_unico,
 					title:  data.nombres,
@@ -278,13 +280,7 @@ Z					},
 			})
 			.always(function() {
 				console.log("complete");
-			});
-
-
-
-			
-			
-	 
+			});	 
 			
 		}
 
@@ -512,11 +508,11 @@ Z					},
 						var archivo = $("#input-file-now-custom-3").val();
 						if (archivo=="" || archivo ==null) {
 							Swal.fire({
-								  icon: 'error',
-								  title: 'Oops...',
-								  text: '¡Algo salió mal!',
-								  footer: '<a href>¿Por qué tengo este problema?</a>'
-								})
+								icon: 'error',
+								title: 'Oops...',
+								text: '¡Algo salió mal!',
+								footer: '<a href>¿Por qué tengo este problema?</a>'
+							})
 							$("#eliminamos_load").remove();
 							$("#agregamos").html(`<button type="submit" class="btn btn-dark btn-rounded btn-lg" id="eliminamos">Enviar Resultados</button>`);
 							return false;
@@ -529,7 +525,8 @@ Z					},
                           	contentType:false,  
                           	processData:false, 
 						 	
-						})	
+						})
+						
 						.done(function() {
 							console.log("success");
 						 		Swal.fire({
@@ -580,11 +577,11 @@ Z					},
 						.fail(function() {
 							console.log("error");
 							Swal.fire({
-				                  icon: 'error',
-				                  title: 'Oopss!',
-				                  text: 'Su petición no ha sido enviada',
-				                  footer: '<a  href="javascript:void();">Administrador IT</a>'
-				                })
+								icon: 'error',
+								title: 'Oopss!',
+								text: 'Su petición no ha sido enviada',
+								footer: '<a  href="javascript:void();">Administrador IT</a>'
+							})
 						})
 						.always(function() {
 							console.log("complete");

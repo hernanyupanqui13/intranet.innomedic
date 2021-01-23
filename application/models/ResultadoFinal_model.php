@@ -138,4 +138,19 @@ class ResultadoFinal_model extends CI_Model {
         $this->db->update("exam_datos_generales",$data);
     }
 
+    public function actualizarResultadoProgreso($id,$data) {
+
+        $data_to_send = array("resultado_enviado"=> $data);
+        
+        $this->db->where("Id",$id);
+        $this->db->update("exam_datos_generales",$data_to_send);
+    }
+
+    public function actualizarEstadoProgreso($estado_progreso, $id) {
+        $data=array('estado_progreso'=>$estado_progreso);
+
+        $this->db->where('Id', $id);
+        $this->db->update('exam_datos_generales', $data);
+    }
+
 }
