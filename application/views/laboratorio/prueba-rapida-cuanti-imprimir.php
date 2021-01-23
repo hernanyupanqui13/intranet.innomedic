@@ -47,7 +47,7 @@
                     <table class="table">
                         <tbody class="table-bordered " >
                             <tr>
-                                <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
+                                <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">RUIZ COTRINA JORGE MARTIN</span></td>
                                 
                                 <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                             </tr>
