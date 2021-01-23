@@ -116,8 +116,8 @@ class Impresion extends CI_Controller {
     }
 
     public function isAllowedToPrint($id_examen) {
-        $estado = $this->Impresion_model->getEstadoProgreso($id_examen);
-        if ($estado == "2" || $estado == "3") {
+        $estado = $this->Impresion_model->getLabEstado($id_examen);
+        if ($estado == "1") {
             echo json_encode(array("respuesta"=>true));
         } else {
             echo json_encode(array("respuesta"=>false));

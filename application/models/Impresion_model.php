@@ -60,6 +60,30 @@ class Impresion_model extends CI_Model {
         return $query->row()->estado_progreso;
     }
 
+    public function getLabEstado($id_examen) {
+        
+        $query_string = 
+            "SELECT lab_llenado
+            FROM exam_datos_generales
+            WHERE Id = $id_examen"
+        ;
+
+        $query = $this->db->query($query_string);
+        return $query->row()->lab_llenado;
+    }
+
+    public function getResultadoEstado($id_examen) {
+        
+        $query_string = 
+            "SELECT resultado_enviado
+            FROM exam_datos_generales
+            WHERE Id = $id_examen"
+        ;
+
+        $query = $this->db->query($query_string);
+        return $query->row()->resultado_enviado;
+    }
+
 }
 
 ?>

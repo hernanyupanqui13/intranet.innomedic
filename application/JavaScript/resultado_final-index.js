@@ -1,7 +1,6 @@
 function fillEstadoProgreso() {
     const estado_progreso_array = document.getElementsByClassName("estado_progress_container");
     
-    console.log("in the loop");
     for(let i=1; i<estado_progreso_array.length; i++) {
         let value = estado_progreso_array[i].innerText;
 
@@ -14,17 +13,15 @@ function fillEstadoProgreso() {
 
 
 
-        console.log(i);
 
         let bar = new ldBar(container2);        
         let progress_value;
+
         if(value== "1") {           // Orden Creada
             progress_value = 0;
         } else if(value== "2") {    // Laboratorio llenado
-            progress_value = 33;
-        } else if (value == "3") {  // Boleta cargada
-            progress_value = 67;
-        } else if (value == "4") {  // Resultados enviados
+            progress_value = 50;
+        } else if (value == "3") {  // Resultado Enviado
             progress_value = 100;
         }
 

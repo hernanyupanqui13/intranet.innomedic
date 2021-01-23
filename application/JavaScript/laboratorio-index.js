@@ -7,11 +7,11 @@ function getExamId() {
 
 }
 
-function actualizarProgreso(nuevo_estado) {
+function actualizarLabEstado(nuevo_estado="default") {
     let id = getExamId();
 
     $.ajax({
-        url: window.location.origin + "/intranet.innomedic.pe" + "/Laboratorio/Laboratorio/actualizarEstadoProgreso/",
+        url: window.location.origin + "/intranet.innomedic.pe" + "/Laboratorio/Laboratorio/actualizarLabEstado/",
         type: 'POST',
         data: {            
             status: nuevo_estado,

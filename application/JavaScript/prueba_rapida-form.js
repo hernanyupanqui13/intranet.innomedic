@@ -2,9 +2,9 @@ $(document).on('submit', '#registrar_prueba_covid', function(event) {
     event.preventDefault();
     
     if(isFulFilled()) {
-        actualizarProgreso("2");
+        actualizarLabEstado("1");
     } else {
-        actualizarProgreso("1");
+        actualizarLabEstado("0");
     }
     
     $.ajax({

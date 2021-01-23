@@ -85,5 +85,12 @@ class Laboratorio_model extends CI_Model
         $this->db->update('exam_datos_generales', $data);
     }
 
+    public function actualizarLabProgreso($nuevo_valor, $id) {
+        $data=array('lab_llenado'=>$nuevo_valor);
+
+        $this->db->where('Id', $id);
+        $this->db->update('exam_datos_generales', $data);
+    }
+
 
 }

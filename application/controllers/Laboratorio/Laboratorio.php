@@ -10,6 +10,9 @@ class Laboratorio extends CI_Controller {
         $this->load->helper(array('url','funciones'));
         $this->load->helper(array('form', 'url'));
         $this->load->model("Laboratorio_model");
+        $this->load->model("Impresion_model");
+
+        
          
     }
     
@@ -345,7 +348,46 @@ class Laboratorio extends CI_Controller {
         $nuevo_estado=$this->input->post("status");
         $id=$this->input->post("the_id");
 
+        $current_progress_state = $this->Impresion_model->getEstadoProgreso($id);
+
+
+        if($nuevo_estado == "default") {
+            $nuevo_estado = (int)$current_progress_state + 1;
+        }
+
         $this->Laboratorio_model->actualizarEstadoProgreso($nuevo_estado, $id);
+    }
+
+
+    /*
+    Actualiza el estado del laboratorio que indica si ha sido llenada 
+    toda la informacion o no.
+    Actualiza tambien la barra de progreso al finalizar
+    */
+    public function actualizarLabEstado() {
+
+        // Obteniendo los datos del cliente
+        $nuevo_estado = (int)$this->input->post("status");
+        $id=$this->input->post("the_id");
+
+
+        // Obteniendo los datos de la base de datos
+        $progress_state = (int)$this->Impresion_model->getEstadoProgreso($id);
+        $current_lab_state = (int)$this->Impresion_model->getLabEstado($id);
+        $current_result_state = (int)$this->Impresion_model->getResultadoEstado($id);
+
+
+        // Si no coinciden lo actualizamos
+        if($current_lab_state != $nuevo_estado) {
+
+            $this->Laboratorio_model->actualizarLabProgreso($nuevo_estado, $id);
+            // Aqui suponemos que el nuevo valor ha sido actualizado, en lo futuro deberia considerarse obtener nuevamente el valor de la base de datos
+            $current_lab_state = $nuevo_estado;
+        }
+
+        // Actualizando el valor de la barra de progreso
+        $final_progress_state = 1 + $current_lab_state + $current_result_state;
+        $this->Laboratorio_model->actualizarEstadoProgreso($final_progress_state, $id);
     }
     
 }

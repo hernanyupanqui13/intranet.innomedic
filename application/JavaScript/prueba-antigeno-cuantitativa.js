@@ -2,9 +2,9 @@ $(document).on('submit', '#registrar_prueba_antigeno_cuantitativa', function(eve
     event.preventDefault();
     
     if(isFulFilled()) {
-        actualizarProgreso("2");
+        actualizarLabEstado("1");
     } else {
-        actualizarProgreso("1");
+        actualizarLabEstado("0");
     }
 
 
