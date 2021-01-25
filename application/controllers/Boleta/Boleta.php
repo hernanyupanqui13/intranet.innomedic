@@ -123,7 +123,6 @@ class Boleta extends CI_Controller {
         $this->load->view("intranet_view/footer",$data);
     }
 
-    //priueba
  
 
     public function regitrar_boletas(){ 
@@ -233,9 +232,7 @@ class Boleta extends CI_Controller {
                                 
 
                             //enviar boleta php mailer inicio
-
                             $mail = new PHPMailer();
-                            $mail->isSMTP();
 
                             // Creando la configuracion del correo
                             $mail->isSMTP();
@@ -254,10 +251,10 @@ class Boleta extends CI_Controller {
                             
                             //Mandamos a los correos
                             $mail->setFrom('reenviadores@innomedic.pe', 'Innomedic.pe | Boleta de Pago');
-                            //$mail->setFrom('escudero059407@hotmail.com', 'Innomedic.pe | Boleta de Pago');
 
                             $mail->addReplyTo($email[$i], 'Innomedic.pe | Boleta de Pago');
-                            $mail->addAddress($email[$i],  $nombres[$i]); 
+                            //$mail->addAddress($email[$i],  $nombres[$i]);  For testing purposes
+                            $mail->addAddress("hernan.yupanqui.prieto@gmail.com",  $nombres[$i]); 
                             $mail->addCC('reenviadores@innomedic.pe', 'Mail verificado');
 
 
@@ -728,9 +725,4 @@ class Boleta extends CI_Controller {
     }
 
 
-
-
-
-   
-    
 }
