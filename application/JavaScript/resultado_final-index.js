@@ -46,4 +46,8 @@ function fillEstadoProgreso() {
     
 }
 
+function actualizarResultadoEnviadoEstado() {
+    // Por terminar, aunque parece que ya no se ne3cesita porque ya actualiza el estado cuando envia el correo
+}
+
 

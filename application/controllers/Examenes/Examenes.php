@@ -839,7 +839,7 @@ class Examenes extends CI_Controller
 	public function registrar_paquete_ajax()
 	{
 		if ($this->input->method() === 'post') {
-			//validamos para qie no se registre dos veces //quitamos id_paquete='".trim($this->input->post("paquete"))."' and
+			//validamos para qie no se registre dos veces
 			$query = $this->db->query("select * from exam_paquetes where nombre='".trim($this->input->post("nombre_tipo_pago"))."'");
             $row = $query->row();
             if(isset($row)){ // cuando es mayor que vacio o cero

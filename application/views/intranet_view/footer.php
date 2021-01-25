@@ -665,7 +665,9 @@
               pedimos una nueva petición en 3 segundos */
               /*setTimeout(function(){
                 Notificacion();
-              }, 2000);*/
+              }, 2000);
+              changed by hernan
+              */
             }
               
         })
