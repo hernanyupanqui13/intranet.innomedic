@@ -134,20 +134,26 @@ class Trabajador_model extends CI_Model
 
 	public function mostrar_users_cesados()
 	{
-		$query = $this->db->query("select *,(select perfil from ts_perfil_users where Id=id_perfil) as txtperfil,
-			(select genero from ts_genero where Id=id_genero) as txtgenero,
-			(select Id from ts_usuario where Id=id_usuario) as Idx,
-			(select usuario from ts_usuario where Id=id_usuario) as usuario,
-			TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) AS edad,
-			(select 
-	        CASE
-	            WHEN genero = 'Masculino' THEN 'varon.png'
-	            WHEN genero = 'Femenino' THEN 'mujer.png'
-	            WHEN genero = 'Preguntame' THEN 'medio.png'
-	            ELSE 'distinto.png'
-	        END
-	         from ts_genero where Id=id_genero) as id_otros
- from ts_datos_personales where id_usuario_statico = 1 and status=2");
+		$query = $this->db->query(
+			"SELECT *,(SELECT perfil FROM ts_perfil_users WHERE Id=id_perfil) AS txtperfil,
+				(SELECT genero FROM ts_genero WHERE Id=id_genero) AS txtgenero,
+				(SELECT Id from ts_usuario where Id=id_usuario) as Idx,
+				(SELECT usuario from ts_usuario where Id=id_usuario) as usuario,
+				TIMESTAMPDIFF(YEAR,fecha_nacimiento,CURDATE()) AS edad,
+				(SELECT 
+					CASE
+						WHEN genero = 'Masculino' THEN 'varon.png'
+						WHEN genero = 'Femenino' THEN 'mujer.png'
+						WHEN genero = 'Preguntame' THEN 'medio.png'
+						ELSE 'distinto.png'
+					END
+				FROM ts_genero where Id=id_genero) AS id_otros
+ 			FROM ts_datos_personales 
+			WHERE id_usuario_statico = 1 AND STATUS=2
+			ORDER BY apellido_paterno"
+		);
+
+
 		//WHERE not estado=3 esto es para que no muestre el estado 3 del usuario
 		if (!isset($query)) {
 			return false;
