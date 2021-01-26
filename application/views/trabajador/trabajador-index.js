@@ -488,3 +488,438 @@ $(document).on('submit', '#user_form_insert', function(event){
     
 
 });  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function fileValidatiosn(obj){
+    var uploadFile = obj.files[0];
+
+    if (!window.FileReader) {
+        alert('El navegador no soporta la lectura de archivos');
+        return;
+    }
+
+    if (!(/\.(jpg|png|gif|pdf|docx|)$/i).test(uploadFile.name)) {
+      Swal.fire({
+      title: 'Files',
+      text: "El archivo a adjuntar no es una imagen solo acepta jpg|png|gif",
+      icon: 'warning',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ok'
+    }).then((result) => {
+      if (result.value) {
+        $("#input_file").val("");
+       // $("#user_image").val("");
+      }
+    })
+       
+    }
+
+    var uploadFile = obj.files[0];
+    var img = new Image();
+    img.onload = function ()
+    {
+    if (this.width.toFixed(0) != 128 && this.height.toFixed(0) != 128)
+    {
+      Swal.fire({
+      title: 'Files',
+      text: "La imagen debe ser de tamaño 128px por 128px.",
+      icon: 'warning',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ok'
+    }).then((result) => {
+      if (result.value) {
+        $("#input_file").val("");
+       // $("#user_image").val("");
+      }
+    })
+    }
+    };
+    img.src = URL.createObjectURL(uploadFile);
+    
+                                           
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(function(){
+    $('.fantasmass').change(function(){
+    if(!$(this).prop('checked')){
+        $('#dvOcultar').hide();
+    }else{
+        $('#dvOcultar').show();
+    }
+  
+  })
+
+
+    $('#checkbox2').change(function(){
+      if(!$(this).prop('checked')){
+          $("#nombres_completos").attr('readonly', true);
+          $("#apellido_paterno_x").attr('readonly', true);
+          $("#apellido_materno").attr('readonly', true);  
+           $("#nombres_completos").attr('placeholder','');
+          $("#apellido_paterno_x").attr('placeholder','');
+          $("#apellido_materno").attr('placeholder','');
+      }else{
+          $("#nombres_completos").attr('readonly', false);
+          $("#apellido_paterno_x").attr('readonly', false);
+          $("#apellido_materno").attr('readonly', false);
+          $("#nombres_completos").attr("placeholder", "Ingrese nombres").val("").focus().blur();
+          $("#apellido_paterno_x").attr("placeholder", "Ingrese apellido paterno").val("").focus().blur();
+          $("#apellido_materno").attr("placeholder", "Ingrese apellido materno").val("").focus().blur();
+      }
+
+      
+    
+    })
+
+})
+             
+function soloNumeros(e)
+{
+   var key = window.Event ? e.which : e.keyCode
+    return ((key >= 48 && key <= 57) || (key==8))
+}
+
+function sololetras(e) {
+      if(e.key.match(/[a-zñçáéíóú\s]/i)===null) {
+        // Si la tecla pulsada no es la correcta, eliminado la pulsación
+        e.preventDefault();
+    }
+}
+function sololetrasnumeros(e) {
+  if(e.key.match(/[a-z0-9ñçáéíóú,.\s]/i)===null) {
+        // Si la tecla pulsada no es la correcta, eliminado la pulsación
+        e.preventDefault();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).on('click', '.btn_actualizar_colaborador', function(event) {
+    event.preventDefault();
+
+    var user_id = $(this).attr("id"); 
+    $.ajax({
+      url: window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/Mostrar_datos_para_actualiozar/',
+      type: 'POST',
+      dataType: 'json',
+      data: {user_id:user_id},
+    })
+
+    .done(function(data) {
+      console.log("success");
+
+      $(".bd-example-modal-lg").modal('show');
+      $("#nombres").text(data.nombre);
+      $("#puesto").val(data.puesto);
+      $("#correo").val(data.correo);
+      $("#id_usuario").val(data.id_usuario);
+      $("#mdatexxxxxx").val(data.fecha_ingreso);
+     
+    })
+
+    .fail(function() {
+      console.log("error");
+    })
+
+    .always(function() {
+      console.log("complete");
+    });
+  });
+
+  //actualizar el estado el emaio el puesto en donde estan trabajando y los demas
+
+  $(document).on('submit', '#evaristoescudero', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var puesto = $("#puesto").val();
+    var emailxx = $("#correo").val();
+    var estado = $("#estado").val();
+    var mdatexxxxxxx = $("#mdatexxxxxxx").val();
+   
+    expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if ( !expr.test(emailxx) ){
+      Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        text: "La dirección de correo " + emailxx + " es incorrecta.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+      $("#correo").focus();
+      return false;
+    }
+
+    if ($('#checkbox2').prop('checked')) {
+      if (estado == null || estado.length == 0 || /^\s+$/.test(estado)) {
+        Swal.fire(
+          'Campo estado ',
+          'Seleccione Estado',
+          'error'
+        )
+        return false;
+      }
+      if (mdatexxxxxxx == null || mdatexxxxxxx.length == 0 || /^\s+$/.test(mdatexxxxxxx)) {
+        Swal.fire(
+          'Ingrese Fecha ',
+          'Fecha de estado vacio',
+          'error'
+        )
+        return false;
+      }
+    }
+    //mandamos a registrar mediante ajax 
+
+    $.ajax({
+      url:window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/actualizar_area_emaail_puesto/',
+      type: 'POST',
+      data:new FormData(this),  
+      contentType:false,  
+      processData:false,  
+    })
+    .done(function() {
+      console.log("success");
+
+       Swal.fire(
+          'Muy Bien!',
+          'Se actualizo correctamente!',
+          'success'
+        )
+
+       $(".bd-example-modal-lg").modal("hide");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    
+
+
+  });
+    //eliminar pedido sin recargar la pagina web
+    
+   $(document).on('click', '.delete', function(){  
+       var user_id = $(this).attr("Id"); 
+       var c_obj = $(this).parents("tr");
+     // var c_objee = $("#your_div_id").load("div");
+     //  var dataTable = $('#user_data').dataTable(); 
+       if(Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¡No podrás revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({  
+                 url:window.location.origin + "/intranet.innomedic.pe/" +'Mantenimiento/Usuario/eliminar_usuario/',  
+                 method:"POST",  
+                 data:{user_id:user_id},  
+                 success:function(data)  
+                 {  
+                     c_obj.remove();
+                       //$("#example23").load(" #example23");
+                      
+                     //$('#div_load').load(location.href+" #div_load>*","");
+
+                     table.ajax.reload();  
+                 }  
+            }); 
+            let timerInterval
+              Swal.fire({
+                title: 'eliminado',
+                html: 'Se esta eliminando <b></b> paciencia.',
+                timer: 2000,
+                timerProgressBar: true,
+                onBeforeOpen: () => {
+                  Swal.showLoading()
+                  timerInterval = setInterval(() => {
+                    const content = Swal.getContent()
+                    if (content) {
+                      const b = content.querySelector('b')
+                      if (b) {
+                        b.textContent = Swal.getTimerLeft()
+                      }
+                    }
+                  }, 100)
+                },
+                onClose: () => {
+                  clearInterval(timerInterval)
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log('I was closed by the timer')
+                }
+              })
+          }
+        }))
+
+      {  
+            
+       }  
+       else  
+       {  
+          return false;       
+       }  
+  });  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Carga masiva de datos
+*/
+
+  $(document).ready(function() {
+
+    $(document).on('click', '.ficha_personal', function(){ 
+     $("#modal_ficha_personal").modal('show');
+   });
+
+
+    $(document).on('click', '.cargar_modal_hora', function(event) {
+      event.preventDefault();
+      /* Act on the event */
+
+      var user_id = $(this).attr("Id"); 
+     $.ajax({
+       url: window.location.origin + "/intranet.innomedic.pe/" +'Mantenimiento/Trabajador/ultimo_acceso/',
+       type: 'POST',
+       dataType: 'json',
+       data: {user_id: user_id},
+     })
+     .done(function(data) {
+       console.log("success");
+       if (data.fecha_ingreso_sistema=="0000-00-00 00:00:00" || data.fecha_ingreso_sistema==null) {
+        horas_view = 'Aun no ingreso al sistema';
+       }else{
+        horas_view = data.fecha_ingreso_sistema; 
+       }
+        Swal.fire({
+          title: '<strong>Ultimo Ingreso a <u>Intranet</u></strong>',
+          icon: 'info',
+          html:
+            'Colaborador: <b>'+data.nombres+'</b>,<br/>  ' +
+            '<a href="' + window.location.origin + '">Intranet | Innomedic</a> <br/>   ' +
+            '<b>Fecha ingreso</b>: '+horas_view+'',
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-up"></i> Great!',
+          confirmButtonAriaLabel: 'Thumbs up, great!',
+          cancelButtonText:
+            '<i class="fa fa-thumbs-down"></i>',
+          cancelButtonAriaLabel: 'Thumbs down'
+        })
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+     
+
+
+    });
+
+  });
+
+  console.log("externos final bien");
