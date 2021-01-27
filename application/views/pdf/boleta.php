@@ -39,9 +39,7 @@
     	<div class="row border border-dark rounded-pill ">
 			<div class="col-md-4">
 				<img src="<?php echo base_url().'assets/';?>images/logo.jpg" alt="">
-			</div>
-			
-			
+			</div>			
 		</div>
       
     </div>

@@ -283,7 +283,8 @@ foreach ($query->result() as $xx) {
                                 
                                 <td>
                                   <a class="btn-outline-info btn btn_actualizar_colaborador" id="<?php echo $users->Idx;?>" href="javascript:void(0)"><i class="fas fa-edit"></i></a>
-                                  <a class="btn-outline-warning btn cargar_modal_hora"   title="Hora de Ingreso" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="far fa-clock"></i></a>                                                   
+                                  <a class="btn-outline-warning btn cargar_modal_hora"   title="Hora de Ingreso" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="far fa-clock"></i></a>
+                                  <a class="btn-outline-danger btn descargar_informacion_colaborador" onclick="descargarInformacion('<?php echo $users->Idx;?>')" href="javascript:void(0)" ><i class="far  fa-file-pdf"></i></a>                                                   
                                 </td>
                             </tr>
                               <?php } ?>

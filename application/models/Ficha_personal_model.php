@@ -212,4 +212,34 @@ from ts_datos_referentes where Id=".$user_id."");
        return $response;
     }
 
+
+
+    public function getDatosPersonalesImpr($id) {
+      $query = $this->db->query(
+        "SELECT *,(select departamento from ts_departamento where Id=id_departamento) AS departamento,
+          (select 
+            CASE
+                WHEN genero = 'Masculino' THEN 'varon.png'
+                WHEN genero = 'Femenino' THEN 'mujer.png'
+                WHEN genero = 'Preguntame' THEN 'medio.png'
+                ELSE 'distinto.png'
+            END
+            from ts_genero where Id=id_genero) 
+            AS imagen,
+
+
+            CASE
+              WHEN id_genero ='1' THEN 'Masculino'
+              WHEN id_genero = '2' THEN 'Femenino'
+            END AS genero,  
+
+          (select provincia from ts_provincia where Id=id_provincia) as provincia,
+          (select distrito from ts_distrito where Id=id_distrito) as distrito,
+          (select civil from ts_estado_civil where Id=id_estado ) as estado_civil,
+          (select departamento from ts_departamento where Id=id_lugar_nacimiento_dep) as nacimiento,
+        DATE_FORMAT(fecha_nacimiento,'%d de %M %Y') AS fecha_nac_dia
+  			FROM ts_datos_personales where id_usuario=$id");
+      
+      return $query->row();
+    }
 } ?>

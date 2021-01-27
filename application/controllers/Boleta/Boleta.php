@@ -688,19 +688,16 @@ class Boleta extends CI_Controller {
 
         $this->pdf->set_option('isRemoteEnabled', true);
         // (Optional) Setup the paper size and orientation or portrait
-        $this->pdf->setPaper('A3', 'orientation');
+        $this->pdf->setPaper('A4', 'orientation');
         
         // Render the HTML as PDF
         $this->pdf->render();
         
         // Output the generated PDF (1 = download and 0 = preview)
        $this->pdf->stream($nombrex, array("Attachment"=>1));
-
-       // $output = $data->output();
-      // echo json_encode(array("url" => $this->pdf->output()));
-       
-
     }
+
+    
 
     public function actualizar_estadode_conformidad()
     {
@@ -723,6 +720,5 @@ class Boleta extends CI_Controller {
 
  
     }
-
 
 }

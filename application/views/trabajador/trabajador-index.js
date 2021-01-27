@@ -922,4 +922,14 @@ Carga masiva de datos
 
   });
 
+
+
+  /*
+  Se activa cuando se da click a descargar, descarga la informacion personal en pdf
+  */
+  function descargarInformacion(id) {
+    window.location = window.location.origin + "/intranet.innomedic.pe/" + 'View_intranet/Ficha_personal/descargarInformacion/' + id;
+
+  }
+
   console.log("externos final bien");
