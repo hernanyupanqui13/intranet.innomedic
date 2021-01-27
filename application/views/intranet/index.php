@@ -23,7 +23,7 @@
                  } ?>
 
                 <?php if ($this->session->userdata("session_perfil")==36) {?>
-                  <div class="row">
+                  <div class="row post-center">
                     <div class="col-md-6">
                         <div class="card" >
                             <div class="card-body">
@@ -49,7 +49,7 @@
                                               <label for="">  <span>¿Qué estás pensando, <?php echo $nombres;?>?</span>
                                                </label>
                                              <div class="summernote">
-                                                <h3>Escribe aquí tu mensaje.......</h3>
+                                                <div>Escribe aquí tu mensaje.......</div>
                                             </div>
                                          
                                             <div class=" text-right m-2">
@@ -69,7 +69,7 @@
                   <!--<textarea id="mymce" name="title"></textarea>-->
                 <?php }else if($this->session->userdata("session_perfil")==1){?>
 
-                  <div class="row">
+                  <div class="row post-center">
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
@@ -122,7 +122,7 @@
                 
 
 
-                <div class="row">
+                <div class="row post-center">
                     <div class="col-md-6 col-sm-6 col-lg-6  ">
                         <div class="card">
                             <div class="card-body" id="cargar_resulktado_xxx" style="color: #000000;">
@@ -157,9 +157,10 @@
                     position: static;
                   }*/
 
-                 .imagenes img{
-                  width: 100%;
-                  height: auto;
+                 .imagenes {
+                    width: 650px;
+                    max-width: 100%;
+                    height: auto;
                   }
                   span .color_negro p{
                     color:#000000;
@@ -516,7 +517,7 @@
 
                                   </div>`
                                 }else if(cadena == "jpg" || cadena == "png" || cadena == "svg" || cadena == "gif"){
-                                   imagen_post = `<a href="javascript:void(0);" id="`+value.Id+`"><img class="imagenes" src="<?php echo base_url().'upload/';?>archivos/`+value.img_post+`" alt="" class="img-fluid img-thumbnail" width="600" height="600"></a> <br><br/>`
+                                   imagen_post = `<a href="javascript:void(0);" id="`+value.Id+`"><img class="imagenes" src="<?php echo base_url().'upload/';?>archivos/`+value.img_post+`" alt="" class="img-fluid img-thumbnail"></a> <br><br/>`
                                 }else{
                                     imagen_post = `<a target="_blank" href="<?php echo base_url().'upload/';?>archivos/`+value.img_post+`" id="`+value.Id+`"><i class="fas fa-eye"> </i>Ver archivo</a> <a download href="<?php echo base_url().'upload/';?>archivos/`+value.img_post+`" id="`+value.Id+`"><i class="fas fa-download"> </i>Descargar</a> <br><br/><br>`
                                 }
@@ -550,7 +551,7 @@
 
                                   contenido += `
                                 
-                                    <div class="sidebar-nav">
+                                    <div id="item-` + value.Id +`"><div class="sidebar-nav">
                                       <ul id="sidebarnav_id" style=" text-decoration: none;">
                                         <li class="user-pro"> <a class="waves-effect waves-dark" href="javascript:void(0)" ><img src="<?php echo base_url().'upload/';?>images/`+variable+`" alt="img users" class="img-circle"><span class="hide-menu">`+value.nombres_completosxx+`</span> <span class="label label-success">Fecha de Publicación&nbsp;&nbsp;`+value.created+`</span></a>   
                                         </li>
@@ -570,14 +571,14 @@
                                        <br><br/>
                                           <a class="btn-outline-success btn "  id="`+value.Id+`" href="javascript:void(0)"><i class="fas fa-eye"></i></a>
                                           <a class="btn-outline-primary btn "  id="`+value.Id+`" href="javascript:void(0)"><i class="fas fa-edit"></i></a>
-                                          <a class="btn-outline-danger btn "  id="`+value.Id+`" href="javascript:void(0)"><i class="fas fa-window-close"></i></a>
+                                          <a class="btn-outline-danger btn " onclick='eliminarPost("`+ value.Id + `")' id="`+value.Id+`" href="javascript:void(0)"><i class="fas fa-window-close"></i></a>
                                        </div>
                                     </div>
 
                                     <?php } ?>
                                    <hr>
                                    <br>
-                                   <br>
+                                   <br></div>
                                    
                                 `;
                                 });
@@ -848,6 +849,30 @@
       $(function() {
           sendRequest();
       });*/
+
+      /*
+      Esta funcion elimina el post en el servideory cliente. No verifica si el proceso se cumplio en el servidor, por mejorar
+      */
+      function eliminarPost(id) {
+
+        $.ajax({
+            url: '<?php echo base_url().'Intranet_view/eliminarPost/';?>',
+            type: 'POST',
+            data: {post_id:id},
+          })
+          .done(function() {
+            console.log("success");
+            let item_name = "item-" + id;
+            document.getElementById(item_name).remove();
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+
+      }
     </script>
 
     <style>
@@ -861,6 +886,11 @@
         width: 100%;
         height: auto;
         }
+      }
+
+      .post-center {
+        display: flex;
+        justify-content: center;
       }
     </style>
 
