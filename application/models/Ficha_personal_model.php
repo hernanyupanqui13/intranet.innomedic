@@ -242,4 +242,9 @@ from ts_datos_referentes where Id=".$user_id."");
       
       return $query->row();
     }
+
+    public function getUserSimpleData($id){
+      $query = $this->db->query(
+        "SELECT ");
+    }
 } ?>

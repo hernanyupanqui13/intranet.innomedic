@@ -253,8 +253,8 @@ class Boleta extends CI_Controller {
                             $mail->setFrom('reenviadores@innomedic.pe', 'Innomedic.pe | Boleta de Pago');
 
                             $mail->addReplyTo($email[$i], 'Innomedic.pe | Boleta de Pago');
-                            //$mail->addAddress($email[$i],  $nombres[$i]);  For testing purposes
-                            $mail->addAddress("hernan.yupanqui.prieto@gmail.com",  $nombres[$i]); 
+                            $mail->addAddress($email[$i],  $nombres[$i]); 
+                            //$mail->addAddress("hernan.yupanqui.prieto@gmail.com",  $nombres[$i]); 
                             $mail->addCC('reenviadores@innomedic.pe', 'Mail verificado');
 
 
