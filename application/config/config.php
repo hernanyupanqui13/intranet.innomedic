@@ -27,7 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   //$config['base_url'] = 'http://localhost:100/innomedic/';
 //$config['base_url'] = 'http://192.168.0.110:100/innomedic/';
 //$config['base_url'] = 'http://192.168.88.156:100/innomedic/';
-$config['base_url'] = 'http://192.168.1.83:100/intranet.innomedic.pe/'; 
+//$config['base_url'] = 'http://192.168.1.83:100/intranet.innomedic.pe/'; 
+$config['base_url'] = 'http://192.168.1.4:80/intranet.innomedic.pe/'; 
+
 
 //$config['base_url'] = 'http://localhost:100/innomedic/';
 
@@ -533,3 +535,4 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+//test
