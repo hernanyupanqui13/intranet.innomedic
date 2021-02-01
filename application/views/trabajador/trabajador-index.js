@@ -1,4 +1,3 @@
-console.log("externos bien");
 
 $(document).on('submit', '#user_form_insert', function(event){  
     event.preventDefault();  
@@ -8,7 +7,11 @@ $(document).on('submit', '#user_form_insert', function(event){
     var clavexx1 = $("#repeat_clave").val();
     var perfil = $("#id_perfil").val();
     var puesto_txt_busqueda = $("#puesto_txt_busqueda").val();
-   // var area_txt_busqueda=$("#area_txt_busqueda").val();
+    
+    
+    // var area_txt_busqueda=$("#area_txt_busqueda").val();
+
+    
     var fecha_ingreso = $("#mdate").val();
     var dnix = $("#dni").val();
     var nombres_completos = $("#nombres_completos").val();
@@ -671,6 +674,7 @@ function sololetrasnumeros(e) {
 
 
 
+
 $(document).on('click', '.btn_actualizar_colaborador', function(event) {
     event.preventDefault();
 
@@ -687,10 +691,36 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
 
       $(".bd-example-modal-lg").modal('show');
       $("#nombres").text(data.nombre);
+
+      $("#id_usuario").val(data.id_usuario);
+
+
+      
+      $("#apellido_paterno_x-actualizar").val(data.apellido_paterno);
+      $("#nombres_completos-actualizar").val(data.nombres);
+      $("#apellido_materno-actualizar").val(data.apellido_materno);
       $("#puesto").val(data.puesto);
       $("#correo").val(data.correo);
-      $("#id_usuario").val(data.id_usuario);
+
+      //$("#dni").val(data.nro_documento);
+      $("#puesto_txt_busqueda").val(data.puesto);
+      $("#email").val(data.email);
+      
+      $("#celular-actualizar").val(data.celular);
+      $("#id_genero-actualizar").val(data.id_genero);
+      
       $("#mdatexxxxxx").val(data.fecha_ingreso);
+      $("#usuario-actualizar").val(data.el_usuario);
+      $("#clave-actualizar").val(data.la_clave);
+      $("#repeat_clave-actualizar").val(data.la_clave_repeat);
+      $("#id_perfil-actualizar").val(data.el_id_perfil);
+
+
+      
+
+
+      console.log("success fin");
+
      
     })
 
@@ -712,6 +742,11 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
     var emailxx = $("#correo").val();
     var estado = $("#estado").val();
     var mdatexxxxxxx = $("#mdatexxxxxxx").val();
+    let celular_actualizar = $("#celular-actualizar").val();
+    let id_perfil_actualizar = $("id_perfil-actualizar").val();
+    let usuario_actualizar = $("#usuario-actualizar").val();
+    let nueva_clave = $("#clave-actualizar").val();
+    let repetir_clave = $("#repeat_clave-actualizar").val();
    
     expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 

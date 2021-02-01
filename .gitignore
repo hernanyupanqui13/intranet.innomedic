@@ -1,2 +1,4 @@
 .htaccess
 debug.log
+application/config/database.php
+application/config/config.php

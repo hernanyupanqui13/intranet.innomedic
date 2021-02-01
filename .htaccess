@@ -27,7 +27,7 @@
     RewriteRule ^(.*)$ /index.php?/$1 [L]
 
     Options All -Indexes
-
+ 
 
       
   

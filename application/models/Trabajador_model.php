@@ -110,9 +110,24 @@ class Trabajador_model extends CI_Model
 
 	public function Mostrar_datos_para_actualiozar_xx($id)
 	{
-		$query = $this->db->query("select *,concat(apellido_paterno,' ',apellido_materno,' ', nombres) as nombres from ts_datos_personales a where id_usuario='".$id."'");
+		$query = $this->db->query(
+			"SELECT *,concat(apellido_paterno,' ',apellido_materno,' ', nombres) AS nombre, 
+				email AS correo, 
+				ts_sexo.nombre AS genero,
+				(select usuario from ts_usuario where ts_usuario.Id = a.Id) AS el_usuario,
+				(select clave from ts_usuario where ts_usuario.Id = a.Id) AS la_clave,
+				(select clave_repeat from ts_usuario where ts_usuario.Id = a.Id) AS la_clave_repeat,
+				(select id_perfil from ts_usuario where ts_usuario.Id = a.Id) AS el_id_perfil
+			FROM ts_datos_personales a 
+				INNER JOIN ts_sexo 
+					ON ts_sexo.Id = a.id_genero				
+			WHERE id_usuario='".$id."'"
+		);
+
+
+
 		//return $query->result();
-		foreach ($query->result() as $xx) {
+		/*foreach ($query->result() as $xx) {
 			
 			$output["nombre"]  =    $xx->nombres;
 			$output["puesto"]  =    $xx->puesto;
@@ -121,8 +136,8 @@ class Trabajador_model extends CI_Model
 			$output["id_usuario"]  =    $xx->id_usuario;
 			$output["fecha_ingreso"]  =    $xx->fecha_ingreso;
 			
-		}
-		return $output;
+		}*/
+		return $query->row();
 	}
 
 	public function actualizar_area_emaail_puesto($id_usuario,$data)

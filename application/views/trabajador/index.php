@@ -321,6 +321,60 @@ foreach ($query->result() as $xx) {
         <div class="modal-body">
           <form action="" class="form-horizontal form-material" id="evaristoescudero">
             <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label ">Usuario:</label>
+                  <input type="text" name="usuario" class="form-control redondeado " id="usuario-actualizar" placeholder="Usuario" onkeypress="return sololetrasnumeros(event);">
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="clave"  class="control-label">Nueva Clave:</label>
+                  <input type="password" name="clave" class="form-control redondeado" id="clave-actualizar" placeholder="password">
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Repetir Clave:</label>
+                  <input type="password" name="clave_repeat" class="form-control redondeado" id="repeat_clave-actualizar" placeholder="repeat password">
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">Perfil:</label>
+                  <select name="id_perfil" id="id_perfil-actualizar" class="form-control fondo">
+                    <option value="">--seleccionar--</option>
+                    <?php foreach ($id_perfil as $perfil_id) {?>
+                      <option value="<?php echo $perfil_id->Id;?>"><?php echo $perfil_id->perfil; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label ">Nombre</label>
+                  <input type="text" name="nombre" id="nombres_completos-actualizar" class="form-control redondeado" placeholder=""  readonly="">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label  class="control-label ">Apellido Paterno</label>
+                  <input type="text" name="apellido_paterno" class="form-control redondeado" id="apellido_paterno_x-actualizar" placeholder="" readonly="">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label ">Apellido Materno</label>
+                  <input type="text" name="apellido_materno" class="form-control redondeado" id="apellido_materno-actualizar" placeholder=""  readonly="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 <label for="">Puesto</label>
                    <input type="text" id="puesto" name="puesto" value="" class="form-control" placeholder="Ingrese puesto de trabajo" >
@@ -334,6 +388,34 @@ foreach ($query->result() as $xx) {
                    <input type="text" id="mdatexxxxxx" name="fecha_ingreso" value=" " class="form-control" placeholder="Fecha Ingreso">
               </div>
             </div>
+            <br>
+            
+            <div class="row">
+            <div class="col-md-4">
+              <div class="form-group text-center">
+                <label  class="control-label">Adjuntar imagen</label>
+                  <input type="file" id="input_file" class="dropify" name="picture" onchange="fileValidatiosn(this);"/>
+                  <span class="text-center"><small class="label label-danger">tamaño permitido 128px x 128px</small></span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label  class="control-label">Sexo:</label>
+                <select name="id_genero" id="id_genero-actualizar" class="form-control fondo">
+                  <option value="">--seleccionar--</option>
+                  <?php foreach ($id_sexo as $sexo_id) {?>
+                    <option value="<?php echo $sexo_id->Id;?>"><?php echo $sexo_id->genero; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label  class="form-label">Nº Celular:</label>
+                <input type="text" name="celular" id="celular-actualizar" class="form-control redondeado" placeholder="924543121" onkeypress="return soloNumeros(event);">
+              </div>
+            </div>
+          </div>
            <div id="statusxx"></div>
 
             <div class="form-group m-b-40 custom-control custom-checkbox pt-2">
