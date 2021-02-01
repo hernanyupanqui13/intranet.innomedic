@@ -119,14 +119,22 @@ class Trabajador extends CI_Controller
 					'puesto' =>$this->input->post("puesto"),
 					'email' =>$this->input->post("correo"),
 					'fecha_ingreso' =>$this->input->post("fecha_ingreso"),
+
+					'celular' =>$this->input->post("celular"),
+					'id_perfil' =>$this->input->post("id_perfil"),
+
 				);
 			}else{
 				$data = array(
 					'puesto' =>$this->input->post("puesto"),
-					'email' =>$this->input->post("correo"),
+					'email' =>$this->input->post("correo"),				
 					'fecha_ingreso' =>$this->input->post("fecha_ingreso"),
 					'status' => $estado,
 					'fecha_cesado_activo' => $fecha_cesado_activo,
+
+					'celular' =>$this->input->post("celular"),
+					'id_perfil' =>$this->input->post("id_perfil"),
+					
 				);
 			}
 
@@ -135,11 +143,15 @@ class Trabajador extends CI_Controller
 			if ($estado == "" || $fecha_cesado_activo === "") {
 				$t_suaurio = array(
 				'email' =>$this->input->post("correo"),
+				'usuario' =>$this->input->post("usuario"),
+				'clave' =>md5($this->input->post("clave")),
 				);
 			}else{
 				$t_suaurio = array(
 				'email' =>$this->input->post("correo"),
 				'status' => $estado,
+				'usuario' =>$this->input->post("usuario"),
+				'clave' => md5($this->input->post("clave")),
 				);
 			}
 			

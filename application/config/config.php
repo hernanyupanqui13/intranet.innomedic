@@ -27,8 +27,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   //$config['base_url'] = 'http://localhost:100/innomedic/';
 //$config['base_url'] = 'http://192.168.0.110:100/innomedic/';
 //$config['base_url'] = 'http://192.168.88.156:100/innomedic/';
-//$config['base_url'] = 'http://192.168.1.83:100/intranet.innomedic.pe/'; 
-$config['base_url'] = 'http://192.168.1.4:80/intranet.innomedic.pe/'; 
+$config['base_url'] = 'http://192.168.1.83:100/intranet.innomedic.pe/'; 
+//$config['base_url'] = 'http://192.168.1.4:80/intranet.innomedic.pe/'; 
 
 
 //$config['base_url'] = 'http://localhost:100/innomedic/';
