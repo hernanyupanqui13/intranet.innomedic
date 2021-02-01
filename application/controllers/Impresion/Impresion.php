@@ -10,6 +10,8 @@ class Impresion extends CI_Controller {
         $this->load->helper(array('url','funciones'));
         $this->load->model("Laboratorio_model");
         $this->load->model("ResultadoFinal_model");
+        $this->load->model("Impresion_model");
+
 
         
     } 
@@ -60,7 +62,7 @@ class Impresion extends CI_Controller {
         } else if ($nombre_plantilla == "paquete1-imprimir") {
             return $this->getPaquete1Plantilla($id);
         } else {
-            echo "No se encontro la informacion";
+            echo "No se encontro la informacion: " . $nombre_plantilla ;
         }
     }
 
@@ -112,5 +114,16 @@ class Impresion extends CI_Controller {
 
 
     }
+
+    public function isAllowedToPrint($id_examen) {
+        $estado = $this->Impresion_model->getLabEstado($id_examen);
+        if ($estado == "1") {
+            echo json_encode(array("respuesta"=>true));
+        } else {
+            echo json_encode(array("respuesta"=>false));
+        }
+    }
+
+    
 
 }

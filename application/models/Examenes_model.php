@@ -104,15 +104,21 @@ class Examenes_model extends CI_Model
 
 	public function cargar_paquete()
 	{
-     
-	  $this->db->order_by('nombre', 'ASC');
-	  $query = $this->db->get('exam_paquetes');
-	  $output = '<option value="0">-- Seleccione Paquetes --</option>';
-	  foreach($query->result() as $row)
-	  {
-	   $output .= '<option value="'.$row->Id.'">'.$row->nombre.'</option>';
-	  }
-	  return $output;
+		$query_string = 
+			"SELECT * 
+			FROM exam_paquetes
+			WHERE `status` = 1
+			ORDER BY nombre";
+		
+
+		$query = $this->db->query($query_string);
+
+		$output = '<option value="0">-- Seleccione Paquetes --</option>';
+		foreach($query->result() as $row)
+		{
+		$output .= '<option value="'.$row->Id.'">'.$row->nombre.'</option>';
+		}
+		return $output;
 	}
 
 
@@ -404,7 +410,7 @@ class Examenes_model extends CI_Model
         $query = $this->db->query($query_string);
 
         // Regresando el pedido como respuesta
-        return $query->result();
+		return $query->result();
 	}
 
 	public function count_all_busqueda($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda)

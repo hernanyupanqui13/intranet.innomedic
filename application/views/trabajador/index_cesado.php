@@ -135,13 +135,10 @@
                                                 <td><?php echo $users->fecha_cesado_activo;  ?></td>
                                                
                                                 <td>
-                                                    <a class="btn-outline-info btn btn_actualizar_colaborador" id="<?php echo $users->Idx;?>" href="javascript:void(0)"><i class="fas fa-edit"></i></a>
-                                                    
-                                                     <a class="btn-outline-warning btn cargar_modal_hora"   title="Hora de Ingreso" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="far fa-clock"></i></a>
-                                                     <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar"  class="btn-outline-danger btn delete" name="delete" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="fas fa-window-close"></i></a>
-                                                   
-
- 
+                                                  <a class="btn-outline-danger btn descargar_informacion_colaborador" title="Descargar PDF" id="<?php echo $users->Idx;?>" onclick="descargarInformacion('<?=$users->Idx;?>')"><i class="fas fa-file-pdf"></i></a>                                                    
+                                                  <a class="btn-outline-info btn btn_actualizar_colaborador" title="Editar información" id="<?php echo $users->Idx;?>" href="javascript:void(0)"><i class="fas fa-edit"></i></a>                                                    
+                                                  <a class="btn-outline-warning btn cargar_modal_hora"   title="Hora de Ingreso" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="far fa-clock"></i></a>
+                                                  <a data-toggle="tooltip" data-placement="top" title="Eliminar" data-original-title="Eliminar"  class="btn-outline-danger btn delete" name="delete" id="<?php echo $users->Idx;?>" href="javascript:void(0)" ><i class="fas fa-window-close"></i></a>
                                                 </td>
                                             </tr>
                                              <?php } ?>
@@ -1013,6 +1010,16 @@
     });
 
   });
+
+
+   /*
+  Se activa cuando se da click a descargar, descarga la informacion personal en pdf
+  */
+  function descargarInformacion(id) {
+    window.location = window.location.origin + "/intranet.innomedic.pe/" + 'View_intranet/Ficha_personal/descargarInformacion/' + id;
+
+  }
+
 </script>
 
 

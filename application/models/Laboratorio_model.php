@@ -46,10 +46,14 @@ class Laboratorio_model extends CI_Model
     */
     public function Impoirmir_prueba_rapida($id) {
 
-        $query = $this->db->query("select edg.*, el.* 
+        $query = $this->db->query(
+            "SELECT edg.*, el.*, ts_sexo.nombre AS sexo,
+                TIMESTAMPDIFF(YEAR,edg.fecha_nacimiento,CURDATE()) AS edad 
             FROM exam_datos_generales edg 
-            INNER JOIN exam_laboratorio el 
-            ON el.id_paciente = edg.Id
+                INNER JOIN exam_laboratorio el 
+                    ON el.id_paciente = edg.Id
+                INNER JOIN ts_sexo
+                    ON ts_sexo.Id=edg.id_sexo
             WHERE edg.Id =$id"
         );
 
@@ -73,5 +77,20 @@ class Laboratorio_model extends CI_Model
         $query=$this->db->query("select molecular_url from exam_laboratorio where Id=$id_exam");
         return $query->row();
     }
+
+    public function actualizarEstadoProgreso($estado_progreso, $id) {
+        $data=array('estado_progreso'=>$estado_progreso);
+
+        $this->db->where('Id', $id);
+        $this->db->update('exam_datos_generales', $data);
+    }
+
+    public function actualizarLabProgreso($nuevo_valor, $id) {
+        $data=array('lab_llenado'=>$nuevo_valor);
+
+        $this->db->where('Id', $id);
+        $this->db->update('exam_datos_generales', $data);
+    }
+
 
 }

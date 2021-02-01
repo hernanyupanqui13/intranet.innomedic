@@ -9,6 +9,7 @@ class Ficha_personal extends CI_Controller
 		parent::__construct();
 		$this->load->model("Ficha_personal_model");
 		ini_set('date.timezone', 'America/Lima');
+		$this->load->helper(array('url','funciones'));
 	}
 
 	public function index()			
@@ -321,6 +322,36 @@ class Ficha_personal extends CI_Controller
 		echo json_encode(array("mensaje"=>"Se actualizo de manera correcta"));
 		
 	}
+	/*
+	Esta funcion obtiene los datos personales de un colaborador y los envia al cliete para ser descargados en pdf
+	Se usa en diferentes pestañas para obtener los datos personales. Solo personal de RRHH, Logistica y Administrador
+	 tiene acceso a esta funcion
+	*/
+	function descargarInformacion($id) {
+		$data["impr"] = $this->Ficha_personal_model->getDatosPersonalesImpr($id);
+		
+		$this->load->view('pdf/inf-personal-colaborador',$data);
+
+		$html = $this->output->get_output();
+        
+        // Load pdf library
+        $this->load->library('pdf');
+
+		// Load HTML content
+		$this->pdf->loadHtml($html);//loadHtml
+
+		$this->pdf->set_option('isRemoteEnabled', true);
+		// (Optional) Setup the paper size and orientation or portrait
+		$this->pdf->setPaper('A4', 'orientation');
+
+		// Render the HTML as PDF
+		$this->pdf->render();
+
+		// Output the generated PDF (1 = download and 0 = preview)
+		$this->pdf->stream($data["impr"]->nombres, array("Attachment"=>1));
+	}
+
+
 	
 
 }?>

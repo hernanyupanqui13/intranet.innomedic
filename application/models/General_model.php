@@ -38,6 +38,8 @@ class General_model extends CI_Model
             }  
         }else{ 
             $this->db->order_by('Id', 'desc'); 
+            $this->db->where('mostrar', "1"); 
+
             $query  = $this->db->get(); 
             $result = ($query->num_rows() > 0)?$query->result_array():array(); 
         } 
@@ -152,6 +154,12 @@ class General_model extends CI_Model
         $this->db->order_by("mes");
         $resultados = $this->db->get();
         return $resultados->result();
+    }
+
+    public function eliminarPost($id_post) {
+        $this->db->set('mostrar', '0');
+        $this->db->where("Id",$id_post);
+        $this->db->update("ts_comunicados");
     }
 
   

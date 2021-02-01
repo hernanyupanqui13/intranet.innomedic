@@ -1,77 +1,59 @@
 <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <link rel="stylesheet" href="<?php echo base_url().'assets_sistema/';?>css/bootstrap.min.css">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="<?php echo base_url().'assets_sistema/';?>css/bootstrap.min.css">
 
-       <title><?php echo $title[0] ?></title>
+<title><?php echo $title[0] ?></title>
 
-     <!--  <script language=JavaScript>
-         <!--
 
-         function inhabilitar(){
-
-             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Esta función está inhabilitada.\n\nPerdonen las molestias.',
-              footer: '<a href>Comunicate con el Administrador IT</a>'
-            })
-              return false
-         }
-
-         document.oncontextmenu=inhabilitar
-oncontextmenu="return false" onkeydown="return false"
-         // 
-         </script>-->
-       <style>
-        @media all {
+<style>
+@media all {
    div.saltopagina{
       display: none;
    }
 }
 
-           @media print{
+@media print{
    div.saltopagina{
       display:block;
       page-break-before:always;
    }
 }
-    div.saltopagina{
-        page-break-before:always;
-    }
 
-       </style>
+div.saltopagina{
+   page-break-before:always;
+}
+</style>
    
 
-   </head>
-   <body >
-    <?php
-            if (!empty($laboratorio_view_register)) {
-             foreach ($laboratorio_view_register as $xx) {
-                $idd_= $xx->Id;
-                $dni = $xx->dni;
-                $nombres_completos = $xx->apellido_paterno.' '.$xx->apellido_materno.', '.$xx->nombre;
-                $id_sexo = $xx->id_sexo;
-                $fecha_nacimiento= $xx->fecha_nacimiento;
-                $empresa = $xx->empresa;
-                $ruc = $xx->ruc;
-                $edad = $xx->edad;
-                $id_paquete = $xx->id_paquete;
-                $html_paquete = $xx->html_paquete;
-                $nro_ficha = $xx->nro_identificador;
-               // $segmentadossrc= $xx->segmentadossrc;
-            
-                 
-            }
-        }else{
-            redirect(base_url());
-               
-        } ?>
+</head>
 
-<a href="javascript:void(0);" onclick="return impirmir();" id="eva" class="btn btn-outline-dark" ><strong>Imprimir Información</strong></a> <!--id="print"-->
+<body >
+<?php
+if (!empty($laboratorio_view_register)) {
+   foreach ($laboratorio_view_register as $xx) {
+      $idd_= $xx->Id;
+      $dni = $xx->dni;
+      $nombres_completos = $xx->apellido_paterno.' '.$xx->apellido_materno.', '.$xx->nombre;
+      $id_sexo = $xx->id_sexo;
+      $fecha_nacimiento= $xx->fecha_nacimiento;
+      $empresa = $xx->empresa;
+      $ruc = $xx->ruc;
+      $edad = $xx->edad;
+      $id_paquete = $xx->id_paquete;
+      $html_paquete = $xx->html_paquete;
+      $nro_ficha = $xx->nro_identificador;
+      //$segmentadossrc= $xx->segmentadossrc;            
+   }
+} else {
+   redirect(base_url());         
+} 
+?>
+
+<a href="javascript:void(0);" onclick="return impirmir();" id="eva" class="btn btn-outline-dark" ><strong>Imprimir Información</strong></a>
 <span class="printableArea">
    <div class="container bg-white ">
       <div class="row">
@@ -111,7 +93,7 @@ oncontextmenu="return false" onkeydown="return false"
                <table class="table">
                   <tbody class="table-bordered " >
                      <tr>
-                        <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
+                        <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">RUIZ COTRINA JORGE MARTIN</span></td>
                         <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                      </tr>
                   </tbody>
@@ -196,7 +178,7 @@ oncontextmenu="return false" onkeydown="return false"
                            <div class="col-md-6 text-center m-4 p-4">
                               <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/720.jpg?ver=<?php echo rand(); ?>" alt=""></span><br>
                                  <small>Firma y Sello<br>
-                                 Melgarejo Chamorro Pablo Armando<br>
+                                 RUIZ COTRINA JORGE MARTIN<br>
                                  Patólogo Clínico<br>
                                  <strong>C.M.P. :</strong>40503   </small>     
                               </p>
@@ -2490,17 +2472,9 @@ oncontextmenu="return false" onkeydown="return false"
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
-
-
-
   
-
-
-
-    
-       
-   </body>
-   </html>   
+</body>
+</html>   
 
 
 

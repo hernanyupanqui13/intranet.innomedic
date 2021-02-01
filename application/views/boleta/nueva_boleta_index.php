@@ -5,7 +5,6 @@
                  <a href="javascript: history.back()" class="btn btn-danger"  style="display: none;"><i class="fa fa-reply m-r-5"></i><span> Regresar </span></a><br><br>
             	 <h4 class="card-title" style="display: none;">DATOS DE BOLETA EN GENERAL</h4> 
                  <form id="registrar_detalle" method="post">
-            	<!--<form class="" id="registrar_cabecera" method="post" action="#">-->
             		<div class="row " style="display: none;">
             			<div class="col-md-4">
             				<label>RRHH:</label><br>
@@ -40,7 +39,6 @@
                } 
               </style>
                 <h4 class="card-title">Envío de Boletas</h4>
-               <!-- <form id="registrar_detalle" method="post">-->
                 <div class="row">
                   <div class="col-md-4">
                     <input type="text" placeholder="Buscar colaborador " id="search" class="form-control btn-rounded " style="border: 2px solid #000000;">
@@ -371,8 +369,6 @@
             		data:new FormData(this),  
                 contentType:false,  
                 processData:false,  
-            		//dataType: false,
-            		//data: $("form").serialize(),
             		statusCode: {
                     400: function(xhr) {
                         var json = JSON.parse(xhr.responseText);

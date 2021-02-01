@@ -10,12 +10,7 @@ class Boleta_model extends CI_Model
         parent::__construct();
         ini_set('date.timezone', 'America/Lima');
     }
-    /*public function lista_escudero_by_boleta()
-    {
-    	$query = $this->db->query("select * from ts_entrega_boleta order by fecha_enviado asc");
-    	return $query->result(); 
-    }
-*/ 
+    
     public function lista_escudero_by_boleta($desde,$hasta,$estado,$numboleta,$ano,$mes){        
         if($this->uri->segment(4,0)!=0 and $this->uri->segment(5,0)!=0 and $this->uri->segment(6,0)!=0 and $this->uri->segment(7,0)!=0){
             $consulta = " where (fecha_enviado>='".$desde." 00:00:01' and fecha_enviado<='".$hasta." 23:59:59') and view like '%".$estado."%' and num_boleta like '%".$numboleta."%' and  ano like '%".$ano."%' and  mes like '%".$mes."%' id_usuario='".$this->session->userdata('session_id')."' order by fecha_enviado desc";
@@ -64,11 +59,12 @@ class Boleta_model extends CI_Model
     public function lista_trabajadores($id)
     {
       // $data = $this->db->query("select * from ts_datos_personales");
-       $data = $this->db->query("select apellido_paterno, apellido_materno,nombres,nro_documento,puesto,email,area,id_usuario
+       $data = $this->db->query(
+           "SELECT apellido_paterno, apellido_materno, nombres, 
+                nro_documento, puesto, email, area, id_usuario
             FROM ts_datos_personales
-            WHERE NOT EXISTS (SELECT * 
-            FROM ts_entrega_boleta
-            WHERE ts_datos_personales.id_usuario = ts_entrega_boleta.id_usuario and ts_entrega_boleta.fija='".$id."') and ts_datos_personales.status=1;");
+            WHERE NOT EXISTS (SELECT * FROM ts_entrega_boleta WHERE ts_datos_personales.id_usuario = ts_entrega_boleta.id_usuario and ts_entrega_boleta.fija='".$id."') 
+                AND ts_datos_personales.status = '1';");
         return $data->result();
 
        
@@ -182,15 +178,18 @@ class Boleta_model extends CI_Model
     public function obtener_detalle_de_boleta_por_usuario($id_usuario,$ano)
     {
         $query = $this->db->query("SET lc_time_names = 'es_PE'");
-        $query = $this->db->query("select a.*,DATE_FORMAT(a.fecha_recibido,'%W %d de %M %Y %H:%i:%s %p') as fecha_enviado_xx,
-            CASE
-                WHEN a.view = '1' THEN 'No visto'
-                WHEN a.view = '2' THEN 'Visto'
-               
-            END as estado_xx         
-            ,
-        concat(a.mes,' ',a.ano) as periodos,(select nombre from do_tipo_boleta where Id=a.tipo_boleta) as boleta from ts_entrega_boleta a where id_usuario='".$id_usuario."' and ano='".$ano."'");
-                return $query->result();
+        $query = $this->db->query(
+            "SELECT a.*,DATE_FORMAT(a.fecha_recibido,'%W %d de %M %Y %H:%i:%s %p') AS fecha_enviado_xx,
+                CASE
+                    WHEN a.view = '1' THEN 'No visto'
+                    WHEN a.view = '2' AND a.conforme IS NULL THEN 'Visto'
+                    WHEN a.view = '2' AND a.conforme = '1' THEN 'Visto y conforme'               
+                END AS estado_xx         
+            ,concat(a.mes,' ',a.ano) AS periodos,(SELECT nombre FROM do_tipo_boleta WHERE Id=a.tipo_boleta) AS boleta 
+            FROM ts_entrega_boleta a 
+            WHERE id_usuario='".$id_usuario."' AND ano='".$ano."'");
+        
+        return $query->result();
     }
 
     //exportar a boleta

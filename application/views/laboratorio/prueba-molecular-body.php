@@ -33,17 +33,17 @@
             </div>
             <div class="form-group molecular_file_container">
                 <label for="molecular_file">Resultado Molecular: </label>
-                <input type="file" name="userfile" size="20" />
+                <input type="file" name="userfile" size="20" id="test_input"/>
             </div>        
             <div class="informacion-medicos">
-                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>Melgarejo Chamorro Pablo Armando</div>
-                <div class="informacion-medicos-item"><span>Especialista:&nbsp;</span>Ruiz Cotrina Jorge Martin</div>
+                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>RUIZ COTRINA JORGE MARTIN</div>
+                <div class="informacion-medicos-item"><span>Tecnologo:&nbsp;</span>ARTICA VICENTE REYNALDO</div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
                     <input type="hidden" name="id_unico" id="id_unico">
-                    <a href="javascript:void(0)" id="imprimir_prueba_molecular" class="btn btn-danger btn-rounded btn-lg"><i class=" fas fa-print"></i>&nbsp;Imprimir</a>
+                    <a href="javascript:void(0)" id="imprimir_prueba_molecular" onclick="vistaPreviaImprimir('prueba-molecular-imprimir', 'modal-body-imprimir', '<?=$this->uri->segment(4,0)?>')" class="btn btn-danger btn-rounded btn-lg"><i class=" fas fa-print"></i>&nbsp;Imprimir</a>
                     <button type="submit" class="btn btn-info btn-rounded btn-lg" ><i class="fas fa-check-circle"></i>&nbsp;Actualizar Prueba Molecular</button>
                     </div>
                 </div>
@@ -52,3 +52,4 @@
     </div>
     <div class="tab-pane p-20" id="messages" role="tabpanel">3</div>
 </div>
+<script src=<?= base_url().'application/JavaScript/prueba-molecular.js'?>></script>

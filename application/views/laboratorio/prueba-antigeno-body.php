@@ -75,14 +75,14 @@
                 </div>
             </div>
             <div class="informacion-medicos">
-                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>Melgarejo Chamorro Pablo Armando</div>
-                <div class="informacion-medicos-item"><span>Especialista:&nbsp;</span>Ruiz Cotrina Jorge Martin</div>
+                <div class="informacion-medicos-item"><span>Medico:&nbsp;</span>RUIZ COTRINA JORGE MARTIN</div>
+                <div class="informacion-medicos-item"><span>Tecnologo:&nbsp;</span>ARTICA VICENTE REYNALDO</div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                 <div class="text-center">
                     <input type="hidden" name="id_unico" id="id_unico">
-                    <a href="javascript:void(0)" id="imprimir_prueba_rapida" class="btn btn-danger btn-rounded btn-lg"><i class=" fas fa-print"></i>&nbsp;Imprimir</a>
+                    <a href="javascript:void(0)" id="imprimir_prueba_rapida" onclick="vistaPreviaImprimir('prueba-antigeno-imprimir', 'modal-body-imprimir', '<?=$this->uri->segment(4,0)?>')" class="btn btn-danger btn-rounded btn-lg"><i class=" fas fa-print"></i>&nbsp;Imprimir</a>
                     <button type="submit" class="btn btn-info btn-rounded btn-lg" ><i class="fas fa-check-circle"></i>&nbsp;Actualizar Prueba Antigeno</button>
                 </div>
                 </div>
@@ -98,3 +98,4 @@
 document.getElementById("antigeno_resultado_input").value = "<?=$exam_data->antigeno_resultado?>"
 
 </script>
+<script src=<?= base_url().'application/JavaScript/prueba-antigeno.js'?>></script>

@@ -118,116 +118,96 @@ class Usuario extends CI_Controller
             );
             if ($this->Usuario_model->insert($userData)) {
             	
-            $ultimoId = $this->db->insert_id();	
+				$ultimoId = $this->db->insert_id();	
 
-            $url = md5($this->input->post("usuario"));
+				$url = md5($this->input->post("usuario"));
 
-            $data_xx = array(
-            	'id_genero' => $this->input->post('id_genero'),
-                'email' => $this->input->post('email'),
-                'nombres' => $this->input->post('nombre'),
-                'puesto'=> $this->input->post('puesto'),
-				'area'=> $this->input->post('area'),
-				'nro_documento' => $this->input->post('dni'),
-				'fecha_ingreso'=> $this->input->post('fecha_ingreso'),
-                'apellido_paterno' => $this->input->post('apellido_paterno'),
-                'apellido_materno' => $this->input->post('apellido_materno'),
-                'id_perfil' => $this->input->post('id_perfil'),
-                'celular'=>$this->input->post('celular'),
-                'telefono_movil'=>$this->input->post('celular'),
-                'status'=>1,
-                'id_usuario_statico'=> 1,
-            	'id_usuario' => $ultimoId,
-            	'url' => $url,
-                'imagen' => $picture
-            );
+				$data_xx = array(
+					'id_genero' => $this->input->post('id_genero'),
+					'email' => $this->input->post('email'),
+					'nombres' => $this->input->post('nombre'),
+					'puesto'=> $this->input->post('puesto'),
+					'area'=> $this->input->post('area'),
+					'nro_documento' => $this->input->post('dni'),
+					'fecha_ingreso'=> $this->input->post('fecha_ingreso'),
+					'apellido_paterno' => $this->input->post('apellido_paterno'),
+					'apellido_materno' => $this->input->post('apellido_materno'),
+					'id_perfil' => $this->input->post('id_perfil'),
+					'celular'=>$this->input->post('celular'),
+					'telefono_movil'=>$this->input->post('celular'),
+					'status'=>1,
+					'id_usuario_statico'=> 1,
+					'id_usuario' => $ultimoId,
+					'url' => $url,
+					'imagen' => $picture
+				);
 
-            $this->Usuario_model->insert_ts_datos_personales($data_xx);
-            echo json_encode(array('mensaje'=>'Se registro de manera correcta'));
+				$this->Usuario_model->insert_ts_datos_personales($data_xx);
+				//echo json_encode(array('mensaje'=>'Se registro de manera correcta'));
 
-            $data_xx = $this->db->insert_id();
+				$data_xx = $this->db->insert_id();
 
 
-            $data_regimen = array(
-            	'id_usuario' => $ultimoId,
-            	'id_datos_personales' => $data_xx,
-            );
-            $this->Usuario_model->insert_ts_datos_regimen_penetenciario($data_regimen);
+				$data_regimen = array(
+					'id_usuario' => $ultimoId,
+					'id_datos_personales' => $data_xx,
+				);
+				$this->Usuario_model->insert_ts_datos_regimen_penetenciario($data_regimen);
 
-          
-            //datos salud
-            $data_salud = array(
-            	'id_usuario' => $ultimoId,
-            	'id_datos_personales' => $data_xx,
-            	'url' => $url,
-            );
-            $this->Usuario_model->insert_ts_datos_salud($data_salud);
+			
+				// Datos salud
+				$data_salud = array(
+					'id_usuario' => $ultimoId,
+					'id_datos_personales' => $data_xx,
+					'url' => $url,
+				);
 
-            
-             //ts_Datos_familiares --agregar--
-            $data_datos_familiares = array(
-            	'id_usuario' => $ultimoId,
-            	'id_datos_personales' => $data_xx,
-            	'url' => $url,
-
-            );
-            $this->Usuario_model->insert_data_datos_familiares($data_datos_familiares);
+				$this->Usuario_model->insert_ts_datos_salud($data_salud);
+				
+				//ts_Datos_familiares
+				$data_datos_familiares = array(
+					'id_usuario' => $ultimoId,
+					'id_datos_personales' => $data_xx,
+					'url' => $url,
+				);
+				
+				$this->Usuario_model->insert_data_datos_familiares($data_datos_familiares);
 
         	}
 
 
-        	//aqui mandamos su usuario y contraseña al correo.
-
+        	// Mandamos usuario y contraseña al correo
         	$usuario = $this->input->post('usuario');
         	$contrasena = $this->input->post('clave');
         	$email = $this->input->post('email');
         	$nombres = $this->input->post('nombre').' '.$this->input->post('apellido_paterno').' '.$this->input->post('apellido_materno');
-
-        	// Load PHPMailer library
-	       // $this->load->library('phpmailer_lib');
 	        
 	        // PHPMailer object
 	        $mail = new PHPMailer();
 	        
-	        // SMTP configuration
-	        $mail->isSMTP();
-	       /* $mail->Host     = 'smtp-mail.outlook.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'escudero059407@hotmail.com';
-            $mail->Password = 'Escuderohh';
-            $mail->SMTPSecure = 'tls';
-            $mail->Port     = 587;
-            $mail->CharSet = 'UTF-8';
-           // $mail->Host = 'localhost';
-            //$mail->SMTPAuth = false;
-            $mail->SMTPAutoTLS = false; 
-            $mail->CharSet = 'UTF-8';*/
-
-            $mail->Host     = 'ssl://ssmtp.innomedic.pe';
-            $mail->SMTPSecure = false;
-          //  $mail->SMTPAuth = true;
-            //$mail->SMTPDebug  = 3;
-            $mail->Username = 'correosenviados@innomedic.pe';
-            $mail->Password = 's0p0rt3**15';
-            $mail->Host = 'localhost';
-            $mail->SMTPAuth = false;
-            $mail->SMTPAutoTLS = false; 
-           // $mail->Port = 465; 
-           // $mail->SMTPSecure = 'ssl';
-            $mail->Port     = 25;
-            $mail->CharSet = 'UTF-8';
-
+	        
+	        // Creando la configuracion del correo
+			$mail->isSMTP();
+			$mail->Host     = 'ssl://smtpout.secureserver.net';
+			$mail->SMTPSecure = false;
+			$mail->SMTPDebug  = 3;
+			$mail->Username = 'reenviadores@innomedic.pe';
+			$mail->Password = 's1st3m4s2411';
+			$mail->SMTPAuth = true;
+			$mail->SMTPAutoTLS = false; 
+			$mail->SMTPSecure = 'ssl';   
+			$mail->Port     = 465;
+			$mail->CharSet = 'UTF-8';
+			$mail->AllowEmpty = true;                        
 	     
 	        
-	       // $mail->setFrom('escudero059407@hotmail.com', 'ACCESO AL SISTEMA - INTRANET');
-            $mail->setFrom('correosenviados@innomedic.pe', 'ACCESO AL SISTEMA - INTRANET');
+            $mail->setFrom('reenviadores@innomedic.pe', 'ACCESO AL SISTEMA - INTRANET');
 	        $mail->addReplyTo($email, 'ACCESO AL SISTEMA - INTRANET');
 	        
 	        // Add a recipient
 	        $mail->addAddress($email);
 	        // Add cc or bcc 
-	        $mail->addCC('correosenviados@innomedic.pe');//s0p0rt3**15
-	        $mail->addBCC('escudero0594@hotmail.com');
+	        $mail->addCC('reenviadores@innomedic.pe');
 	        
 	        // Email subject
 	        $mail->Subject = 'Bienvenido '.$nombres.' | Acceso al sistema';
@@ -248,7 +228,7 @@ class Usuario extends CI_Controller
 			              </tr></tbody></table></td>
 			        </tr><tr><td valign="top"><table class="full-width" align="center" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 600px"><tbody><tr><td class="mobile-spacer" width="30" style="width: 30px">&nbsp; </td>
 			                <td style="color: #555555; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; padding-top: 20px">Estimado(a) Colaborador; '.$nombres.' <br>
-			                El creado el acceso a Intranet - Innomedic <a href="http://intranet.innomedic.pe/" style="color: #1473e6; text-decoration: none">www.intranet.pe</a></td>
+			                El creado el acceso a Intranet - Innomedic <a href="http://intranet.innomedic.pe/" style="color: #1473e6; text-decoration: none">www.intranet.innomedic.pe</a></td>
 			                <td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			              </tr><tr><td class="mobile-spacer" width="30" style="width: 30px">&nbsp;</td>
 			                <td style="color: #000000; font-family: adobe-clean, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; padding-top: 20px">Usuario:<strong> '.$usuario.' <br>
@@ -275,7 +255,7 @@ class Usuario extends CI_Controller
 			          				&reg; Av. Javier Prado Este 2638, San Borja, Lima, Perú<br/>
 			                        <a target="_blank" href="http://innomedic.metjetsac.com/soporte/" style="color: #ffffff;"><font color="#ffffff">Mas informacion</font></a> Área de Sistemas T.I
 			                        <br /><br />
-			                        <a href="https://www.facebook.com/escudero05/" color="#ffffff" style="color: #ffffff;">Desarrollado por: Evaristo Escudero Huillcamascco</a>
+			                        <a href="http://www.innomedic.pe" color="#ffffff" style="color: #ffffff;">Desarrollado por: Area de Sistemas</a>
 			          			</td>
 
 			          			<td width="22" style="width: 22px">&nbsp;</td>
@@ -292,25 +272,19 @@ class Usuario extends CI_Controller
 	        $mail->Body = $mailContent;
 	        
 	        // Send email
-	        if(!$mail->send()){
-	            //echo 'Message could not be sent.';
-	            //echo 'Mailer Error: ' . $mail->ErrorInfo;
-	            // echo json_encode(array("corereo_error" => "Mailer Error: " . $mail->ErrorInfo .""));
-	             echo json_encode(array("corereo_error" => "Verificar el correo e intentar Nuevamente!"));
-	             $this->output->set_status_header(401);
-	              exit();
-	        }else{
-	           // echo json_encode(array("corereo_env" => "Message has been send"));
-	        }
+	        /*if(!$mail->send()){
+				echo json_encode(array("corereo_error" => "Verificar el correo e intentar Nuevamente!"));
+				$this->output->set_status_header(401);
+				exit();
+	        } else {
+				//echo json_encode(array("corereo_env" => "Message has been send"));
+
+			}*/
+			
+			$mail->send();
+			echo json_encode(array("response"=>"repsuesta aqui"));
 	    
             }
-            
-            //Pass user data to model
-          //  $this->Usuario_model->insert($userData);
-
-
-
-
 
 
 		}else{
@@ -321,11 +295,12 @@ class Usuario extends CI_Controller
 
 
 	}
+	
+
+	
 	/*
-		Function show users:: Created Evaristo Escudero Huillcamascco
-
+	Function show users:: Created Evaristo Escudero Huillcamascco
 	*/
-
 	public function mostrar()
 	{
 		if ($this->session->userdata('session_id')=='') {

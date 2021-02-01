@@ -91,10 +91,28 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+	<script src=<?= base_url().'application/JavaScript/imprimir.js'?>></script>
+	<link rel="stylesheet" type="text/css" href="<?= base_url().'assets/vendor/progress-bar/loading-bar.css'?>"/>
+	<script src=<?= base_url().'application/JavaScript/resultado_final-index.js'?>></script>
+
+
 
 
 
 	<script>
+
+		const footable_columns = [
+			{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
+			{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
+			{ "name": "nombrex", "title": "Paciente" },			
+			{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado estado_progress_container"},
+			{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
+			{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
+		];
+
+		
 
 
 
@@ -102,57 +120,30 @@
 			e.preventDefault();
 			var newSize = $(this).data('pageSize');
 			FooTable.get('#showcase-example-1').pageSize(newSize);
-
 		});
 
 
 		jQuery(function($){
 
-
 			ft = FooTable.init('#showcase-example-1', {
 
-				"columns": [
-						{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-						{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-						{ "name": "nombrex", "title": "Paciente" },
-						{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-						{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-						{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-						{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-					],
-					//columns: $.get("https://fooplugins.github.io/FooTable/docs/content/columns.json"),
-
-					// esta es la mas directa de asignar al registro ajax mediante jquery
-					//"rows": $.get("<?php echo base_url().'Examenes/Ordenes/obtener_registro_ajax/';?>"),
-					/*"rows": jQuery.get({
-					"url": "<?php echo base_url().'Examenes/Ordenes/obtener_registro_ajax/';?>",
-					"dataType": "json",
-
-
-				}),*/
-				"rows": jQuery.get({
-					"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
-					"dataType": "json",
+				"columns": footable_columns,
 					
+				"rows": jQuery.get({
+					"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
+					"dataType": "json",					
 				}),
 
+				"on": {
+					"ready.ft.table": function(e, ft){
+						fillEstadoProgreso();
+Z					}, 
+					"after.ft.paging": function(e, ft){
+						fillEstadoProgreso();
+					} 					
+				}
 				
-
 			})
-
-			 
-
-		/*	var empty = find(".footable-empty");
-	        if (empty) {
-	          empty.remove();
-	        }*/
-
-			//$('#showcase-example-1').trigger('footable_initialized');
-			//$("#showcase-example-1").footable();
 
 
 		
@@ -163,85 +154,79 @@
 			$(document).on('click', '#buscar_registro_por_ajax', function(event) {
 				event.preventDefault();
 
-				/* Act on the event */
-				fecha_inicio = $("#fecha_inicio").val();
-	            fecha_fin = $("#fecha_fin").val();
-	            nombre_busqueda = $("#nombre_busqueda").val();
-	            dni_busqueda = $("#dni_busqueda").val();
+				let fecha_inicio = $("#fecha_inicio").val();
+
+				if(fecha_inicio!="") {
+					fecha_inicio = fecha_inicio.split("/");
+					fecha_inicio = fecha_inicio[2] + "-" + fecha_inicio[0] + "-" + fecha_inicio[1];
+				} else {
+					fecha_inicio="null";
+				}
+				
+				
+				// Obteniendo la fecha y dando formato para que sea complatible con MySql
+				let fecha_fin = $("#fecha_fin").val();
+				if(fecha_fin!="") {
+					fecha_fin = fecha_fin.split("/");
+					fecha_fin = fecha_fin[2] + "-" + fecha_fin[0] + "-" + fecha_fin[1];    
+				} else {
+					fecha_fin = "null";
+				}
+				
+				let nombre_busqueda = $("#nombre_busqueda").val();
+				let dni_busqueda = $("#dni_busqueda").val();
+
+				if(nombre_busqueda == null || nombre_busqueda =="") {
+					nombre_busqueda = "null";		
+				} 
+
+				if(dni_busqueda == null || dni_busqueda =="") {
+					dni_busqueda =  "null";					
+				} 
 
 
-	            if (fecha_inicio=="" || fecha_fin =="") {
-                  Swal.fire(
-                    'Ingrese Fecha de Busqueda',
-                    'Campos Vacios verificar por favor!',
-                    'error'
-                  )
-                	return false;
-              	}
-              		$('#showcase-example-1').footable({
-              //	ft = FooTable.init('#showcase-example-1',{
-
-              	//	"empty": "No se encontro ningun resultado",
-					
-					"columns": [
-							{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-							{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-							{ "name": "nombrex", "title": "Paciente" },
-							{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-							{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-							{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-							{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-						],
+	            
+				$('#showcase-example-1').footable({
+					"columns": footable_columns,
 
 					"rows": jQuery.post({
 						"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostrar_datos_busqueda_avanzada/';?>",
 						"dataType": "json",
-						//"type": "POST",
 						"data": {
-                                    "fecha_inicio": fecha_inicio,
-                                    "fecha_fin": fecha_fin,
-                                    "nombre_busqueda":nombre_busqueda,
-                                    "dni_busqueda":dni_busqueda,
-                                },
-                        success:  function (response) {                 
-		                      //  $(".salida").html(response);
-		                      //con esto lo eliminamos el primer tr si en caso habria un tr profesional
-		                       $("#showcase-example-1 tr:last-child").remove();
-		                     // $("#showcase-example-1").footable();
-		                    // ft.rows.load("rows", true);
-		                  },
-		                 error:function(){
-		                       alert("error")
-		                    }
+							"fecha_inicio": fecha_inicio,
+							"fecha_fin": fecha_fin,
+							"nombre_busqueda":nombre_busqueda,
+							"dni_busqueda":dni_busqueda,
+						},
+						success:  function (response) {                 		                    
+							$("#showcase-example-1 tr:last-child").remove();
+						},
+						error:function(errorThrown) {
+							console.log(errorThrown);
+							alert("error");
+						}
 					}),
-
 					
-
-			 //   })
+					"on": {
+						"ready.ft.table": function(e, ft){
+							fillEstadoProgreso();
+						}, 
+						"after.ft.paging": function(e, ft){
+							fillEstadoProgreso();
+						} 					
+					}
 			   });
 
-			   //$('.table').footable(); 
-			   //	ft.rows.load(rows, true);
-
-
-              	//$('#showcase-example-1').trigger('footable_initialized');
-             
-			   
 
 			});
 		});
 
-		 function limpiar_campos() {
-
-            $("#fecha_inicio").val("");
-            $("#fecha_fin").val("");
-            $("#nombre_busqueda").val("");
-            $("#dni_busqueda").val("");
-          }
+		function limpiar_campos() {
+			$("#fecha_inicio").val("");
+			$("#fecha_fin").val("");
+			$("#nombre_busqueda").val("");
+			$("#dni_busqueda").val("");
+		}
 	</script>
 
 	<script>
@@ -261,72 +246,9 @@
 			);
 		}
 
-		function impresion_final($id) {
-			$("#exampleModal").modal({show: true});
-			
-			
-			let xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("pdfdoc").innerHTML = this.responseText;
-				}
-			};
-			xhttp.open("GET", "<?php echo base_url().'ResultadoFinal/ResultadoFinal/Impresion_final_view/'?>" + $id , false);
-			xhttp.send();
-
-
-			$.get("<?php echo base_url().'ResultadoFinal/ResultadoFinal/getFullName/'?>" + $id, function(data) {
-				let obj = JSON.parse(data);
-				$("#nombres_completos_pacientex").html(obj.full_name);
-			});
-
-			$.ajax({
-				url: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/getImpresionData/' ?>',
-				type: 'POST',
-				dataType: 'json',
-				data: {id_paciente: $id},
-			})
-			.done(function(data) {
-				console.log("success");
-
-				$("#nombres_completos_paciente").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#nombres_completos_pacientex").text(data.nombre+" "+data.apellido_paterno+" "+data.apellido_materno);
-				$("#dni_paciente").text(data.dni);
-				if (data.empresa=="") {
-					aplicate = ``;
-					
-				}else{
-					aplicate = `<div class=" text-center p-2 border ">
-							<div class="font-weight-bold text-dark">
-								EMPRESA:<span class="font-weight-normal" > `+data.empresa+`&nbsp;&nbsp;&nbsp;&nbsp;`+data.ruc+`</span>
-							</div>
-						</div>`;
-					
-				}
-				$("#aplicamos_cambios").html(aplicate);
-				$("#sexo_id").text(data.sexo);
-
-				$("#igm-impr-slot").text(data.igm);
-				$("#igg-impr-slot").text(data.igg);
-				$("#edad-impr-slot").text(data.edad);
-				$("#fecha_nacimiento-impr-slot").text(data.fecha_nacimiento);
-				$("#update_covid-impr-slot").text(data.update_covid);
-				$("#concentracion_igm-impr-slot").text(data.concentracion_igm);
-				$("#concentracion_igg-impr-slot").text(data.concentracion_igg);  
-				$("#antigeno_resultado-impr-slot").text(data.antigeno_resultado);
-				$("#concentra_atig-impr-slot").text(data.concentra_atig);  
-
-
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete impr");
-			});
-		}
 
 		function enviarcorreo($id) {
+
 			var id_paciente = $id;
 			$.ajax({
 				url: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/mostramosdatos_del_paciente/';?>',
@@ -340,7 +262,8 @@
 				$("#exampleModal1").modal("show");
 				$("#id_paciente_update").val($id);
 				$("#nombres_completos_idd").text(data.nombres);
-				//$("#nombres_completos_result_url").text(data.url_unico);
+				
+
 				$("#nombres_completos_result_url").attr({
 					href: '<?php echo base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'?>'+data.url_unico,
 					title:  data.nombres,
@@ -357,13 +280,7 @@
 			})
 			.always(function() {
 				console.log("complete");
-			});
-
-
-
-			
-			
-	 
+			});	 
 			
 		}
 
@@ -591,11 +508,11 @@
 						var archivo = $("#input-file-now-custom-3").val();
 						if (archivo=="" || archivo ==null) {
 							Swal.fire({
-								  icon: 'error',
-								  title: 'Oops...',
-								  text: '¡Algo salió mal!',
-								  footer: '<a href>¿Por qué tengo este problema?</a>'
-								})
+								icon: 'error',
+								title: 'Oops...',
+								text: '¡Algo salió mal!',
+								footer: '<a href>¿Por qué tengo este problema?</a>'
+							})
 							$("#eliminamos_load").remove();
 							$("#agregamos").html(`<button type="submit" class="btn btn-dark btn-rounded btn-lg" id="eliminamos">Enviar Resultados</button>`);
 							return false;
@@ -608,7 +525,8 @@
                           	contentType:false,  
                           	processData:false, 
 						 	
-						})	
+						})
+						
 						.done(function() {
 							console.log("success");
 						 		Swal.fire({
@@ -633,40 +551,37 @@
 			                      });
 			                    $("#input-file-now-custom-3").val("");
 
-			                  // $('#showcase-example-1').footable();
 			                   	$('#showcase-example-1').footable({
-									"columns": [
-											{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-											{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-											{ "name": "nombrex", "title": "Paciente" },
-											{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-											{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-											{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-											{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-										],
+									"columns": footable_columns,
 
 									"rows": jQuery.get({
-										"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
+										"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 										"dataType": "json",
 										
 									}),
+
+									"on": {
+										"ready.ft.table": function(e, ft){
+											fillEstadoProgreso();
+										}, 
+										"after.ft.paging": function(e, ft){
+											fillEstadoProgreso();
+										} 					
+									}
 								});
 
 								$("#agregamos").html(`<button type="submit" class="btn btn-dark btn-rounded btn-lg" id="eliminamos">Enviar Resultados</button>`);
 								$("#eliminamos_load").remove();
+
 						})
 						.fail(function() {
 							console.log("error");
 							Swal.fire({
-				                  icon: 'error',
-				                  title: 'Oopss!',
-				                  text: 'Su petición no ha sido enviada',
-				                  footer: '<a  href="javascript:void();">Administrador IT</a>'
-				                })
+								icon: 'error',
+								title: 'Oopss!',
+								text: 'Su petición no ha sido enviada',
+								footer: '<a  href="javascript:void();">Administrador IT</a>'
+							})
 						})
 						.always(function() {
 							console.log("complete");
@@ -713,26 +628,25 @@
 		                      drEvent.destroy();
 		                      drEvent.init();
 			                $('#showcase-example-1').footable({
-								"columns": [
-										{ "name": "nro_identificador", "title": "Codigo", "breakpoints": "xs", "sorted": "true" },
-										{ "name": "fecha_registro", "title": "Fecha Atención" ,"breakpoints": "xs"},
-										{ "name": "nombrex", "title": "Paciente" },
-										{ "name": "empresa", "title": "Empresa", "breakpoints": "xs" },
-										{ "name": "laboratorio", "title": "Laboratorio", "breakpoints": "xs sm md" , "classes":"centrado"},
-										{ "name": "rayox", "title": "Rayox X", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "final", "title": "Impresión Final", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "monto", "title": "Monto Total", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "estado", "title": "Estado", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "boleta", "title": "Boleta", "breakpoints": "xs sm md", "classes":"centrado"},
-										{ "name": "enviar", "title": "Enviar al Correo", "breakpoints": "xs sm md", "classes":"centrado"}
-									],
+								"columns": footable_columns,
 
 								"rows": jQuery.get({
-									"url": "<?php echo base_url().'ResultadoFinal/ResultadoFinal/obtener_registro_ajax/';?>",
+									"url": "<?php echo base_url().'ResultadoFinal/resultadofinal/mostrar_datos_busqueda_avanzada/';?>",
 									"dataType": "json",
 									
 								}),
+
+								"on": {
+									"ready.ft.table": function(e, ft){
+										fillEstadoProgreso();
+									}, 
+									"after.ft.paging": function(e, ft){
+										fillEstadoProgreso();
+									} 					
+								}
 							});
+
+
 
 
 						})
@@ -817,5 +731,7 @@
                   });
                 }); 
         </script>
+		<script src=<?= base_url().'assets/vendor/progress-bar/loading-bar.js'?>></script>
+
 
 

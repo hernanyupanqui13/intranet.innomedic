@@ -230,5 +230,14 @@ class Intranet_view	 extends CI_Controller
         
     }*/
 
+    public function eliminarPost() {
+
+        $id = $this->input->post("post_id");
+
+        $this->General_model->eliminarPost($id);
+
+        
+    }
+
 
 } ?>

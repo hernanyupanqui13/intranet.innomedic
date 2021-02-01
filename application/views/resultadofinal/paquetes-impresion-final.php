@@ -69,7 +69,7 @@
                   <table class="table">
                       <tbody class="table-bordered " >
                           <tr>
-                              <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">PATOLOGO CLÍNICO</span></td>
+                              <td class="border-right-0" ><b class="font-weight-bold">MEDICO</b>:&nbsp;<span id="medico">RUIZ COTRINA JORGE MARTIN</span></td>
                               
                               <td><b class="font-weight-bold">FECHA RESULTADO:</b>&nbsp;<span id="update_covid-impr-slot"></span></td>
                           </tr>
@@ -155,7 +155,7 @@
                                   <div class="col-md-6 text-center m-4 p-4">
                                     <p><span><img class="img-fluid"  src="<?php echo base_url().'upload/';?>firma/720.jpg?ver=<?php echo rand(); ?>" alt=""></span><br>
                                     <small>Firma y Sello<br>
-                                      Melgarejo Chamorro Pablo Armando<br>
+                                      RUIZ COTRINA JORGE MARTIN<br>
                                       Patólogo Clínico<br>
                                       <strong>C.M.P. :</strong>40503   </small>     
                                       </p>

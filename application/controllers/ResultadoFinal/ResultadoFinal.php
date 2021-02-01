@@ -3,25 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use PHPMailer\PHPMailer\PHPMailer;
 class ResultadoFinal extends CI_Controller {
     
-    function __construct()
-	{
-		parent::__construct();
+    function __construct() {
+
+        parent::__construct();
+        
         ini_set('date.timezone', 'America/Lima');
 		$this->load->helper(array('url','funciones'));
         $this->load->model("ResultadoFinal_model");
         $this->load->model("Laboratorio_model");
+        $this->load->model("Impresion_model");
 
 	} 
 
-	public function index()
-	{
+	public function index() {
+
 		if($this->session->userdata('session_id')==''){
             redirect(base_url());
         }
 		echo "No se a agregado ninguna cosa aqui, !Estamos para ayudarlos";
 	}
-	public function Process()
-	{
+	public function Process() {
+
 		if($this->session->userdata('session_id')==''){
             redirect(base_url());
         }
@@ -36,150 +38,58 @@ class ResultadoFinal extends CI_Controller {
 	}
 
 
-	 public function obtener_registro_ajax()
-    {
-        if ($this->session->userdata("session_id")=="") {
+    /*
+    Esta fucnion busca y los datos de examenes en la base de datos y las devuelve con el formaqto apropiado
+    Se usa tanto para buscar como cuando se carga por primera ves que pagina
+    */
+    public function mostrar_datos_busqueda_avanzada() {
+
+    	if ($this->session->userdata("session_id") == "") {
             redirect(base_url().'Inicio/Zona_roja/');
         }
-        $list = $this->ResultadoFinal_model->obtener_registro_ajax();
-        $data = array();
-       // $no = 0;
-        foreach ($list as $person) {
-         //   $no++;
-           $row = array();
-           // $row[]=$no;
-            $row["nro_identificador"] = $person->nro_identificador;
-            $row["fecha_registro"] = $person->fecha_;
-            $row["nombrex"] = '<a target="_blank" href="'.base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'.$person->url_unico.'">'.$person->nombrex.'</a>';
-            if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "___";
-            }else{
-                $row["empresa"] = $person->empresa;
-            }
-
-            if ($person->precio=="" || $person->precio==null) {
-            	 $row["monto"] = "<span>S/.".$person->total."</span>";
-            }else{
-            	 $row["monto"] = "<span>S/.".$person->precio."</span>";
-            }
-             $row["estado"] = $person->status;
-             if ($person->status=="1") {
-             	$row["estado"] = '<span class="label label-danger">Nuevo</span>';
-             }else if ($person->status=="2") {
-             	$row["estado"] = '<span class="label label-warning">En proceso</span>';
-             }else{
-             	$row["estado"] = '<span class="label label-success">Termino Exámen</span>';
-             }
-
-            //loaboratorio
-            $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
-            //rayox x
-             $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-           
-            $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Final Result" onclick="impresion_final('."'".$person->id."'".')"><i class="fas fa-print"></i>&nbsp;</a>';
-
-            if ($person->boleta_pago=="" || $person->boleta_pago==null) {
-            	$row["boleta"] = '<a class="btn btn-danger" href="javascript:void(0)" title="Adjuntar Boleta" onclick="adjuntar_boleta_pago('."'".$person->id."'".')"><i class=" fas fa-donate"></i>&nbsp;</a>';
-            }else{
-
-            	$row["boleta"] = '<a class="btn btn-secondary" href="javascript:void(0)" title="Boleta de Pago" onclick="ver_boleta('."'".$person->id."'".')"><i class="fas fa-eye"></i></a>';
-            }
-
-            if ($person->boleta_pago=="" and $person->archivo=="") {
-            	$row["enviar"] = '<span class="label label-info">Adjuntar Boleta</span>';
-            }else if ($person->archivo=="" || $person->archivo==null) {
-            	$row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Enviar Resultado</a>';
-            }else{
-            	
-            	$row["enviar"] = '<span class="label label-warning">Resultado Enviado</span>';
-            }
-            $data[] = $row;
-        }
-
-        $output = $data;
-        echo json_encode($output);
-    }
 
 
-    public function mostrar_datos_busqueda_avanzada()
-    {
-    	if ($this->session->userdata("session_id")=="") {
-            redirect(base_url().'Inicio/Zona_roja/');
-        }
-        if ($this->input->post('fecha_inicio')=="" || $this->input->post('fecha_fin')=="") {
-            $fecha_inicio = date("Y-m-d");
-            $fecha_fin = date("Y-m-d");
-        }else{
-            $fecha_inicio = fecha_ymd($this->input->post('fecha_inicio'));
-            $fecha_fin = fecha_ymd($this->input->post('fecha_fin'));
-        }
+        $fecha_inicio = $this->input->post('fecha_inicio');	
+		$fecha_fin= $this->input->post('fecha_fin');
+		$nombre_busqueda = $this->input->post('nombre_busqueda');	
+		$dni_busqueda= $this->input->post('dni_busqueda');
 
-        //nombres
-
-        if ($this->input->post('nombre_busqueda')=="" ) {
-            $nombre_busqueda = "0"; 
-            
-        }else{
-            $nombre_busqueda = $this->input->post('nombre_busqueda');
-            
-        }
-        //nombres
-        if ($this->input->post('dni_busqueda')=="" ) {
-            $dni_busqueda = "0";
-            
-        }else{
-            $dni_busqueda = $this->input->post('dni_busqueda');
-            
-        }
-         
-        if ($this->session->userdata("session_id")=="") {
-            redirect(base_url().'Inicio/Zona_roja/');
-        }
+      
         $list = $this->ResultadoFinal_model->mostrar_datos_busqueda_($fecha_inicio,$fecha_fin,$nombre_busqueda,$dni_busqueda);
         $data = array();
-       // $no = 0;
+
         foreach ($list as $person) {
-         //   $no++;
-           $row = array();
-           // $row[]=$no;
+            $row = array();
             $row["nro_identificador"] = $person->nro_identificador;
             $row["fecha_registro"] = $person->fecha_;
             $row["nombrex"] = '<a target="_blank" href="'.base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'.$person->url_unico.'">'.$person->nombrex.'</a>';
            
-            if ($person->empresa=="" || $person->empresa==NULL) {
-                $row["empresa"] = "____________________";
-            }else{
-                $row["empresa"] = $person->empresa;
-            }
             if ($person->precio=="" || $person->precio==null) {
             	 $row["monto"] = "<span>S/.".$person->total."</span>";
-            }else{
+            } else {
             	 $row["monto"] = "<span>S/.".$person->precio."</span>";
-            }
-           
-            //loaboratorio
-            $row["laboratorio"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Laboratorio" onclick="laboraorio('."'".$person->id."'".')"><i class="  fas fa-vials"></i>&nbsp;</a>';
-            //rayox x
-             $row["rayox"] = '<a class="btn btn-dark" href="javascript:void(0)" title="Rayos X" onclick="rayosx('."'".$person->id."'".')"><i class=" fas fa-file-medical-alt"></i>&nbsp;</a>';
-           
+            }                       
             
+            // Impresion final
             $row["final"] = '<a class="btn btn-info" href="javascript:void(0)" title="Final Result" onclick="impresion_final('."'".$person->id."'".')"><i class="fas fa-print"></i>&nbsp;</a>';
 
              if ($person->boleta_pago=="" || $person->boleta_pago==null) {
             	$row["boleta"] = '<a class="btn btn-danger" href="javascript:void(0)" title="Adjuntar Boleta" onclick="adjuntar_boleta_pago('."'".$person->id."'".')"><i class=" fas fa-donate"></i>&nbsp;</a>';
-            }else{
+            } else {
 
             	$row["boleta"] = '<a class="btn btn-secondary" href="javascript:void(0)" title="Boleta de Pago" onclick="ver_boleta('."'".$person->id."'".')"><i class="fas fa-eye"></i></a>';
             }
 
             if ($person->boleta_pago=="" and $person->archivo=="") {
             	$row["enviar"] = '<span class="label label-info">Adjuntar Boleta</span>';
-            }else if ($person->archivo=="" || $person->archivo==null) {
+            } elseif ($person->archivo=="" || $person->archivo==null) {
             	$row["enviar"] = '<a class="btn btn-success" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Enviar Resultado</a>';
-            }else{
+            } else {
             	
             	$row["enviar"] = '<a class="btn btn-warning" href="javascript:void(0)" title="Actualizar" onclick="enviarcorreo('."'".$person->id."'".')"><i class="fas fa-envelope"></i>&nbsp;Volver a Enviar Resultado</a>';
             }
+
+            $row["estado"] = '' . $person->estado_progreso . '';
             
             $data[] = $row;
         }
@@ -187,14 +97,12 @@ class ResultadoFinal extends CI_Controller {
         $output = $data;
 
      
-        //output to json format
+        // Devolviendo los datos en JSON
         echo json_encode($output);
-
     }
 
 
-    //impresion final Wiew
-
+    // Impresion final View
     public function Impresion_final_view($id)
     {
     	if ($this->session->userdata("session_id")=="") {
@@ -238,7 +146,7 @@ class ResultadoFinal extends CI_Controller {
     }
 
     /*
-    Esta funcion devuelve los datos par auna rapida impresion de un examen en especifico de Laboratorio
+    Esta funcion devuelve los datos para una rapida impresion de un examen en especifico de Laboratorio
     La data es procesada en el lado del cliente con JS
     */
     public function getImpresionData()
@@ -257,7 +165,10 @@ class ResultadoFinal extends CI_Controller {
         echo json_encode($query->row());
     }
 
-    //esto es una prueba que se esta realizando 
+    /*
+    Este es el link que se envia al paciente para que visualize sus resultados
+    Por ahora solo funciona para las pruebas Covid 19
+    */
     public function view_result_data_list_details($id_paciente)
     {
     	
@@ -265,20 +176,35 @@ class ResultadoFinal extends CI_Controller {
     	$query = $this->db->query("select * from exam_datos_generales where url_unico='".$id_paciente."'");
 		foreach ($query->result() as $emp) {
 			$nombrex = $emp->apellido_paterno." ".$emp->apellido_materno.", ".$emp->nombre;
-		}
-		$data['segmento'] = $id_pacientex;
+        }
+        
+
+        $data['segmento'] = $id_pacientex;
+        $data['the_id']=$this->Impresion_model->fromUrlToId($id_pacientex);
+        $data["nombre_plantilla"] = $this->Impresion_model->getNombrePlantilla($id_pacientex);
+
+
 		if (!$data['segmento']) {
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url();
 			
-		}else{
+		} else {
 			$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($data['segmento']);
-		}
-		//$data['laboratorio_view_register'] = $this->ResultadoFinal_model->laboratorio_view_register_url($id_pacientex);
+        }
+        
+        
 		$data['title'] = array($nombrex);
-        $this->load->view('resultadofinal/prueba',$data);
+        //$this->load->view('resultadofinal/prueba',$data);
+        $this->load->view('resultadofinal/plantilla',$data);
+
 
     }
 
+
+    /*
+    Esta funcion envia el correo con los resultados finales al pacientes
+    Adjunta el archivo y envia el link
+    Deberia separarse una plantilla para que sea mantenible en el futuro POR MEJORAR!
+    */
     public function enviar_correo_datos()
     {
     	if ($this->session->userdata("session_id")=="") {
@@ -295,7 +221,7 @@ class ResultadoFinal extends CI_Controller {
 			$nombrexxx = $emp->apellido_paterno." ".$emp->apellido_materno.", ".$emp->nombre;
 		}
 
-        if(!empty($_FILES['imagen']['name'])){
+        if(!empty($_FILES['imagen']['name'])) {
             $config['upload_path'] = 'upload/Resultado_analisis/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
             $config['file_name'] = $nombrexxx." ".rand(100000000000000,900000000000000).md5($_FILES['imagen']['name']);
@@ -304,14 +230,15 @@ class ResultadoFinal extends CI_Controller {
             $this->load->library('upload',$config);
             $this->upload->initialize($config);
             
-        if($this->upload->do_upload('imagen')){
-            $uploadDataI = $this->upload->data();
-            $imagen = $uploadDataI['file_name'];
-        }else{
+            if($this->upload->do_upload('imagen')){
+                $uploadDataI = $this->upload->data();
+                $imagen = $uploadDataI['file_name'];
+            } else {
+                $imagen = '';
+            }
+
+        } else {
             $imagen = '';
-        }
-        }else{
-        $imagen = '';
         }
 
         $data_update = array(
@@ -319,17 +246,16 @@ class ResultadoFinal extends CI_Controller {
         	'correo'=> $correo_paciente,
         	'status'=>"3",
         	'archivo'=>  $imagen
-
         );
 
         $this->ResultadoFinal_model->update_insert_file($id_paciente,$data_update);
 
 
           //aqui buscamos los datos del mismo
-    	$query_result = $this->db->query("select * from exam_datos_generales where Id='".$id_paciente."'");
+        $query_result = $this->db->query("select * from exam_datos_generales where Id='".$id_paciente."'");
+        
 		foreach ($query_result->result() as $emp) {
 			$nombrex = $emp->apellido_paterno." ".$emp->apellido_materno.", ".$emp->nombre;
-		//	$correo_paciente = $emp->correo;
 			$archivo1_xx = $emp->archivo;
 			$url_unico = $emp->url_unico;
 		}
@@ -338,7 +264,7 @@ class ResultadoFinal extends CI_Controller {
        
         if ($this->input->post("options")=="si") {
         	$acceso_link = base_url().'ResultadoFinal/ResultadoFinal/view_result_data_list_details/'.$url_unico;
-        }else if ($this->input->post("options")=="no") {
+        } elseif ($this->input->post("options")=="no") {
         	$acceso_link = "";
         }
 
@@ -351,7 +277,7 @@ class ResultadoFinal extends CI_Controller {
         $mail->Host     = 'ssl://smtpout.secureserver.net';
         $mail->SMTPSecure = false;
         $mail->SMTPDebug  = 3;
-        $mail->Username = 'aramirez@innomedic.pe';
+        $mail->Username = 'reenviadores@innomedic.pe';
         $mail->Password = 's1st3m4s2411';
         $mail->SMTPAuth = true;
         $mail->SMTPAutoTLS = false; 
@@ -363,11 +289,10 @@ class ResultadoFinal extends CI_Controller {
         // De: 
         $mail->setFrom('reenviadores@innomedic.pe', 'Innomedic.pe | Resultados de la Clinica Innomedic International E.I.R.L');
 
-
+        // Archivo a adjuntar en el correo. El archivo ya fue subido
         $archivo1 = 'upload/Resultado_analisis/'.$archivo1_xx;
 
 
-       // $mail->setFrom('resetpassword@innomedic.pe', 'Innomedic.pe | Restablecer la Contraseña');
         
        //Mandamos a los correos
         $mail->addReplyTo('reenviadores@innomedic.pe', 'Innomedic.pe | Reenviar Email');
@@ -427,10 +352,6 @@ class ResultadoFinal extends CI_Controller {
 			</html>';
 
         $mail->AddAttachment($archivo1);
-        //con esto funciona
-         //$mail->AddStringAttachment($imagen, '"'.$nombrex.'.pdf"', 'base64', 'application/pdf');
-      //  $mail->AddStringAttachment($imagen,$nombrex,"base64","application/pdf"); 
-        //$mail->AddAttachment($imagen , 'RenamedFile.pdf');
 
         $mail->Body = $mailContent;
 
@@ -439,6 +360,8 @@ class ResultadoFinal extends CI_Controller {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
             $this->output->set_status_header(400);
         } else {
+            $this->ResultadoFinal_model->actualizarResultadoProgreso($id_paciente, "1");
+            $this->actualizarEstadoProgreso($id_paciente);
             echo "Su petición ha sido enviada";
         }
 
@@ -560,7 +483,7 @@ class ResultadoFinal extends CI_Controller {
         if($this->upload->do_upload('imagen')){
             $uploadDataI = $this->upload->data();
             $imagen = $uploadDataI['file_name'];
-        }else{
+        } else {
             $imagen = '';
         }
         }else{
@@ -573,6 +496,19 @@ class ResultadoFinal extends CI_Controller {
 
         $this->ResultadoFinal_model->update_insert_file($id_paciente_xx,$data_update);
 
+
+    }
+
+
+    public function actualizarEstadoProgreso($id) {
+
+        // Obteniendo los datos de la base de datos
+        $progress_state = (int)$this->Impresion_model->getEstadoProgreso($id);
+        $current_lab_state = (int)$this->Impresion_model->getLabEstado($id);
+        $current_result_state = (int)$this->Impresion_model->getResultadoEstado($id);
+
+        $final_progress_state = 1 + $current_lab_state + $current_result_state;
+        $this->ResultadoFinal_model->actualizarEstadoProgreso($final_progress_state, $id);
 
     }
 
