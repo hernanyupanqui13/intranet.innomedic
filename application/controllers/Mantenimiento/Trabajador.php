@@ -138,20 +138,17 @@ class Trabajador extends CI_Controller
 				);
 			}
 
-			//validamos para el otro
-
+			// Preparando para cambiar la otra table. We must change this to be just one table. There are redundant data
 			if ($estado == "" || $fecha_cesado_activo === "") {
 				$t_suaurio = array(
 				'email' =>$this->input->post("correo"),
-				'usuario' =>$this->input->post("usuario"),
-				'clave' =>md5($this->input->post("clave")),
+
 				);
 			}else{
 				$t_suaurio = array(
 				'email' =>$this->input->post("correo"),
 				'status' => $estado,
-				'usuario' =>$this->input->post("usuario"),
-				'clave' => md5($this->input->post("clave")),
+
 				);
 			}
 			

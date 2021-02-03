@@ -392,7 +392,10 @@
                         <?php if ($this->session->userdata("session_perfil")==38 || $this->session->userdata("session_perfil")==1 || $this->session->userdata("session_perfil")==12) {?>
                              <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'ResultadoFinal/ResultadoFinal/Process/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Resultado Final</span></a></li>
                         <?php } ?>
-                        
+                        <!-- Generaor de plantillas de correo -->
+                        <?php if ($this->session->userdata("session_perfil")==2) { ?>
+                        <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'Correo_generator/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Editor de Plantillas</span></a></li>
+                        <?php } ?>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

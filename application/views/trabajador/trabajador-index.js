@@ -737,7 +737,8 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
 
   $(document).on('submit', '#evaristoescudero', function(event) {
     event.preventDefault();
-    /* Act on the event */
+    
+    // Obteniendo el valor de los inputs
     var puesto = $("#puesto").val();
     var emailxx = $("#correo").val();
     var estado = $("#estado").val();
@@ -780,8 +781,8 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
         return false;
       }
     }
-    //mandamos a registrar mediante ajax 
 
+    // Registrando los cambios en el servidor 
     $.ajax({
       url:window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/actualizar_area_emaail_puesto/',
       type: 'POST',

@@ -22,8 +22,7 @@ foreach ($query->result() as $xx) {
 </div>
 
 
-<!--Usuario_282924322163486Usuario_470839495672781Usuario8896610883298483a9f426e2460ee5ee854fd084302e3a6.png-->
-
+<!-- Registrar nuevo colaborador -->
 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content " >
@@ -72,12 +71,6 @@ foreach ($query->result() as $xx) {
                 <input type="text" name="puesto" id="puesto_txt_busqueda" class="form-control" placeholder="Buscar puesto" onkeypress="return sololetras(event);">
               </div>
             </div> 
-            <!-- <div class="col-md-4">
-              <div class="form-group">
-                <label for="">Área&nbsp; <i class="fa fa-search"></i></label>
-                <input type="text" name="area" id="area_txt_busqueda" class="form-control" placeholder="Buscar área" onkeypress="return sololetras(event);">
-              </div>
-            </div>-->
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Fecha de Ingreso</label>
@@ -116,18 +109,6 @@ foreach ($query->result() as $xx) {
                 <input type="text" name="apellido_materno" class="form-control redondeado" id="apellido_materno" placeholder=""  readonly="">
               </div>
             </div>
-            <!--<div class="col-md-4">
-              <div class="form-group">
-                <label  class="control-label ">Apellido Paterno</label>
-                <input type="text" name="apellido_paterno" class="form-control redondeado" id="apellido_paterno_x" placeholder="" readonly="">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="control-label ">Apellido Materno</label>
-                <input type="text" name="apellido_materno" class="form-control redondeado" id="apellido_materno" placeholder="" readonly="">
-              </div>
-            </div>-->
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -216,16 +197,7 @@ foreach ($query->result() as $xx) {
                                 <a href="<?php echo base_url().'Mantenimiento/Trabajador/';?>"><h6 class="text-white">Colaboradores Activos</h6></a>
                             </div>
                         </div>
-                    </div>
-                    <!-- Column -->
-                    <!--<div class="col-md-6 col-lg-3 col-xlg-3">
-                        <div class="card">
-                            <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><?php echo $observados_x;?></h1>
-                                <h6 class="text-white">Observados</h6>
-                            </div>
-                        </div>
-                    </div>-->
+                    </div>              
                     <!-- Column -->
                     <div class="col-md-6 col-lg-4 col-xlg-6">
                         <div class="card">
@@ -297,19 +269,10 @@ foreach ($query->result() as $xx) {
     </div>
 </div>
 
-<!-- ============================================================== -->
-<!-- End PAge Content -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Right sidebar -->
-<!-- ============================================================== -->
-<!-- .right-sidebar -->
 
 
 
-<!--eliminar con ajax-->
-
-
+<!-- Actualizar datos -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -324,21 +287,21 @@ foreach ($query->result() as $xx) {
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label ">Usuario:</label>
-                  <input type="text" name="usuario" class="form-control redondeado " id="usuario-actualizar" placeholder="Usuario" onkeypress="return sololetrasnumeros(event);">
+                  <input disabled type="text" name="usuario" class="form-control redondeado " id="usuario-actualizar" placeholder="Usuario" onkeypress="return sololetrasnumeros(event);">
                 </div>
               </div>
               
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="clave"  class="control-label">Nueva Clave:</label>
-                  <input type="password" name="clave" class="form-control redondeado" id="clave-actualizar" placeholder="password">
+                  <input type="password" disabled name="clave" class="form-control redondeado" id="clave-actualizar" placeholder="password">
                 </div>
               </div>
 
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label">Repetir Clave:</label>
-                  <input type="password" name="clave_repeat" class="form-control redondeado" id="repeat_clave-actualizar" placeholder="repeat password">
+                  <input type="password" disabled name="clave_repeat" class="form-control redondeado" id="repeat_clave-actualizar" placeholder="repeat password">
                 </div>
               </div>
               
@@ -391,58 +354,58 @@ foreach ($query->result() as $xx) {
             <br>
             
             <div class="row">
-            <div class="col-md-4">
-              <div class="form-group text-center">
-                <label  class="control-label">Adjuntar imagen</label>
-                  <input type="file" id="input_file" class="dropify" name="picture" onchange="fileValidatiosn(this);"/>
-                  <span class="text-center"><small class="label label-danger">tamaño permitido 128px x 128px</small></span>
+              <div class="col-md-4">
+                <div class="form-group text-center">
+                  <label  class="control-label">Adjuntar imagen</label>
+                    <input type="file" id="input_file" class="dropify" name="picture" onchange="fileValidatiosn(this);"/>
+                    <span class="text-center"><small class="label label-danger">tamaño permitido 128px x 128px</small></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label  class="control-label">Sexo:</label>
+                  <select name="id_genero" id="id_genero-actualizar" class="form-control fondo">
+                    <option value="">--seleccionar--</option>
+                    <?php foreach ($id_sexo as $sexo_id) {?>
+                      <option value="<?php echo $sexo_id->Id;?>"><?php echo $sexo_id->genero; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label  class="form-label">Nº Celular:</label>
+                  <input type="text" name="celular" id="celular-actualizar" class="form-control redondeado" placeholder="924543121" onkeypress="return soloNumeros(event);">
+                </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label  class="control-label">Sexo:</label>
-                <select name="id_genero" id="id_genero-actualizar" class="form-control fondo">
-                  <option value="">--seleccionar--</option>
-                  <?php foreach ($id_sexo as $sexo_id) {?>
-                    <option value="<?php echo $sexo_id->Id;?>"><?php echo $sexo_id->genero; ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label  class="form-label">Nº Celular:</label>
-                <input type="text" name="celular" id="celular-actualizar" class="form-control redondeado" placeholder="924543121" onkeypress="return soloNumeros(event);">
-              </div>
-            </div>
-          </div>
-           <div id="statusxx"></div>
+            <div id="statusxx"></div>
 
             <div class="form-group m-b-40 custom-control custom-checkbox pt-2">
-                <input type="checkbox" name="cbmostrar"  class="fantasmass custom-control-input mr-sm-2" id="checkbox1">
-                <label class="custom-control-label" for="checkbox1">Actualizar el Estado </label>
+              <input type="checkbox" name="cbmostrar"  class="fantasmass custom-control-input mr-sm-2" id="checkbox1">
+              <label class="custom-control-label" for="checkbox1">Actualizar el Estado </label>
             </div>
             <span id="dvOcultar" style="display: none;">
-               <div class="row">
+              <div class="row">
                 <div class="col-md-6">
-                    <select name="estado" id="estado" class="form-control " style="width: 100%">
-                      <option value="">--Seleccione estado--</option>
-                      <?php foreach ($list_status as $list) {?>
-                          <option value="<?php echo $list->Id;?>"><?php echo $list->nombre; ?></option>
-                        <?php } ?>
-                    </select>
+                  <select name="estado" id="estado" class="form-control " style="width: 100%">
+                    <option value="">--Seleccione estado--</option>
+                    <?php foreach ($list_status as $list) {?>
+                        <option value="<?php echo $list->Id;?>"><?php echo $list->nombre; ?></option>
+                      <?php } ?>
+                  </select>
                 </div>
                 <div class="col-md-6">
-                     <input type="text" id="mdatexxxxxxx" name="fecha_cesado_activo" class="form-control" placeholder="Ingrese fecha de cambio">
+                  <input type="text" id="mdatexxxxxxx" name="fecha_cesado_activo" class="form-control" placeholder="Ingrese fecha de cambio">
                 </div>
               </div>
             </span>
             <div class="row text-center pt-3">
-                <div class="col-md-12">
-                  <input type="hidden" id="id_usuario" value="" name="id_usuario">
-                  <button type="botton" class="btn btn-outline-danger btn-rounded  btn-md" data-dismiss="modal"> <i class="fas fa-times-circle"></i>&nbsp;Cancelar</button>
-                  <button type="submit" class="btn btn-outline-success btn-rounded btn-md"><i class=" fas fa-check-circle"></i>&nbsp;Actualizar</button>
-                </div>
+              <div class="col-md-12">
+                <input type="hidden" id="id_usuario" value="" name="id_usuario">
+                <button type="botton" class="btn btn-outline-danger btn-rounded  btn-md" data-dismiss="modal"> <i class="fas fa-times-circle"></i>&nbsp;Cancelar</button>
+                <button type="submit" class="btn btn-outline-success btn-rounded btn-md"><i class=" fas fa-check-circle"></i>&nbsp;Actualizar</button>
+              </div>
             </div>
           </form>
        

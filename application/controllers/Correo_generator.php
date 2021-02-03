@@ -9,18 +9,36 @@ class Correo_generator extends CI_Controller
 	function __construct()
 	{
 		parent::__construct(); 
-		ini_set('date.timezone', 'America/Lima'); 
+        ini_set('date.timezone', 'America/Lima'); 
+        $this->load->model("Correo_generator_model");
 	} 
 
     public function index() {
+
         if ($this->session->userdata("session_id")=="") {
 			redirect(base_url().'Inicio/Zona_roja/'); 
 			
         }
+
         
+		$data = array(
+            'title' =>array("estas viendo el generador de plantillas","Chat","","<a>Area de Sistemas</a>"),
+        );
+
+        $this->load->view('intranet_view/head',$data);
+        $this->load->view("intranet_view/title",$data);
+        $this->load->view('email_template_builder/email_iframe');
+        $this->load->view('intranet_view/footer',$data);
+    }
+
+    public function mainIframe() {
         $this->load->view('email_template_builder/template_builder');
     }
 
+
+    /*
+    Esta funcion envia el correo con la plantilla a la direccion especificada. Esta funcion por ahora no se esta usando
+    */
     public function enviarCorreo() {
         $config = json_decode($_POST["config"]);
 
@@ -32,7 +50,7 @@ class Correo_generator extends CI_Controller
         $content = $_POST["content"];
 
 
-
+        
         // PHPMailer object
         $mail = new PHPMailer();
 	        
@@ -68,13 +86,43 @@ class Correo_generator extends CI_Controller
         
         // Email body content
         $mailContent = $content;
-        $head = $this->load->view("header_template", "", TRUE);
+        $head = $this->load->view("email_template_builder/header_template", "", TRUE);
         $mail->Body = $head . $mailContent . "</body></html>";
         $mail->send();
 
     }
 
+    public function guardarPlantilla() {
 
+        $template = $_POST["template"];
+        $template_name = $_POST["name"];
+
+        $creator_user_id =  $this->session->userdata("session_id");
+
+        
+        $this->Correo_generator_model->saveTemplate($creator_user_id, $template, $template_name);
+        /*$file_path = "http://intranet.innomedic.pe/upload/plantillas_editables_guardadas/testing" .  rand(1, 10000) . ".html";
+        $saved_template = fopen($file_path , "w");
+        fwrite($saved_template, "hola");
+        fclose($saved_template);*/
+
+
+        
+        echo json_encode($template); 
+    }
+
+    public function obtainSavedTemplatesList() {
+        $user_id = $this->session->userdata("session_id");
+        $the_list = $this->Correo_generator_model->obtainSavedTemplatesList($user_id);
+        echo json_encode($the_list);        
+    }
+
+    public function obtainSavedTemplate($template_id) {
+        //$template_id = $_POST["template_id"];
+
+        echo json_encode($this->Correo_generator_model->obtainSavedTemplate($template_id));
+
+    }
 }
 
 ?>
