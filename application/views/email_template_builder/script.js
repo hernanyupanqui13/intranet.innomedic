@@ -63,6 +63,28 @@ async function setTemplateName() {
     }
 }
 
+function startRemovingTemplate(id) {
+    Swal.fire({
+        title: '¿Estas seguro?',
+        text: "Si aceptas, esta plantilla se eliminara de tu lista",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar!'
+      }).then((result) => {
+        
+        if (result.isConfirmed) {
+            removeTemplate(id);
+            Swal.fire(
+                'Eliminado!',
+                'La plantilla ha sido eliminada con exito.',
+                'success'
+            )
+        }
+    })
+}
+
 
 
 
@@ -162,7 +184,7 @@ function renderTemplateItem(item, main_container) {
     let remove_button = one_item.querySelector(".icon_container");
     remove_button.addEventListener("click", function(event) {
         event.stopPropagation();
-        removeTemplate(item.Id)        
+        startRemovingTemplate(item.Id);  
     });
 
 
