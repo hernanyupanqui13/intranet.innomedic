@@ -195,6 +195,10 @@ function removeSpacesFromHtml(the_html_string) {
     return the_html_string;
 }
 
+function renderItemList() {
+    requestData()
+}
+
 function requestData() {
     const the_main_container = document.getElementById("the_view_list");
     let xhttp = new XMLHttpRequest();
@@ -205,7 +209,7 @@ function requestData() {
             console.log(this.responseText);
 
             JSON.parse(this.responseText).forEach((element) => {
-                renderTemplateList(element, the_main_container);
+                renderTemplateItem(element, the_main_container);
             });
         }
     }
@@ -214,16 +218,24 @@ function requestData() {
 }
 
 
-function renderTemplateList(item, main_container) {
+function renderTemplateItem(item, main_container) {
     const one_item = document.createElement("li");
     one_item.innerHTML = `
         <div class="template_name">${item.template_name}</div>
         <div class="date_modification">${item.date_of_modification}</div>
+        <div class="icon_container"><div class="close_icon">x</div></div>
     `;
     one_item.classList.add("item_container");
     one_item.classList.add("list-group-item-action");
     one_item.id= "" + item.Id;
     one_item.addEventListener("click", (event) => editSavedTemplate(item.Id, one_item))
+    
+    // Assignning the event to the remove button to delete templates
+    let remove_button = one_item.querySelector(".icon_container");
+    remove_button.addEventListener("click", function(event) {
+        event.stopPropagation();
+        removeTemplate(item.Id)        
+    });
 
     main_container.appendChild(one_item);
 }
@@ -236,15 +248,32 @@ function editSavedTemplate(template_id, event_target)  {
 
             if(activated_template!= null && activated_template != undefined) {
                 activated_template.classList.remove("active_template");
+                activated_template.classList.add("list-group-item-action");
             }
-            event_target.classList.add("active_template");            
+            event_target.classList.add("active_template");  
+            event_target.classList.remove("list-group-item-action");
             activated_template = event_target;
 
             template_obj = JSON.parse(this.responseText);
             document.getElementById("html_page").innerHTML = template_obj.html_content;
-            document.getElementById("final_link_container").addEventListener("click", (event) => changeLink(event));            
+            document.getElementById("final_link_container").addEventListener("click", (event) => changeLink(event));                        
         }
     }
+
     xhttp.open("GET", window.location.origin + "/intranet.innomedic.pe/" + "Correo_generator/obtainSavedTemplate/" + template_id, true);
     xhttp.send();
+}
+
+function removeTemplate(id) {
+    console.log("removing template");
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("success");      
+        }
+    };
+    xhttp.open("POST", window.location.origin + "/intranet.innomedic.pe/" + "Correo_generator/removeTemplate", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("template_id=" + id);
 }

@@ -123,6 +123,14 @@ class Correo_generator extends CI_Controller
         echo json_encode($this->Correo_generator_model->obtainSavedTemplate($template_id));
 
     }
+
+    public function removeTemplate() {
+        $template_id = $_POST["template_id"];
+
+        if($this->Correo_generator_model->removeTemplate($template_id)){
+            echo "Template Removed";
+        }
+    }
 }
 
 ?>

@@ -126,6 +126,9 @@
       margin:5px;
       padding:5px 15px;
       font-family: Poppins, sans-serif,serif;
+      display: grid;
+      grid-template-columns: auto min-content;
+
     }
     
     .item_container:hover {      
@@ -145,6 +148,7 @@
       font-weight: 100;
       color: black;
       font-family: Poppins, sans-serif,serif !important;
+      grid-column: 1/2;
 
     }
 
@@ -153,6 +157,18 @@
       font-weight:100;
       font-size:14px;
       font-family: Poppins, sans-serif,serif !important;
+      grid-column: 1/2;
+    }
+    .icon_container {
+      grid-column: 2/3;
+      grid-row: 1/2;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .view_list {
@@ -166,6 +182,18 @@
 
     .side_menu_template {
       grid-row: 1/4;
+    }
+
+    .close_icon {
+      width: 20px;
+      height: 20px;
+      display:flex;
+      justify-content: center;
+      align-items:center;
+      background-color: #ED6A5A;
+      color: white;
+      font-weight: bold;
+      padding-left: 1px;
     }
 
 

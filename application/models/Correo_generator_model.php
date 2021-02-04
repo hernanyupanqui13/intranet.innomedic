@@ -40,4 +40,11 @@ class Correo_generator_model extends CI_Model {
         return $query->row();
     }
 
+    public function removeTemplate($template_id) {
+        $data = array("is_live"=>0);
+        $this->db->where("Id", $template_id);
+        $this->db->update("saved_editable_templates", $data);
+        return true; 
+    }
+
 }
