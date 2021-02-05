@@ -20,38 +20,60 @@ $.get( window.location.origin + "/intranet.innomedic.pe/" + "/chat/chat/getCurre
     currentUser = new ChatUser(currentUser.current_user_id, currentUser.nombre, currentUser.estado, currentUser.imagen);
     console.log(currentUser);
 
+
+    if (currentUser.userId==35) {
+
+        // Obteniendo los datos usuarios con los que se chateo
+        $.ajax({
+            type: "POST",
+            async:true,
+            url: window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/getChatUsers/",
+    
+            success: function(response) {
+            
+                let list_of_users = JSON.parse(response);
+                console.log(list_of_users);
+    
+                list_of_users.forEach(function (item) {
+    
+                    console.log(item);
+    
+                    let user_chat = new ChatUser(item.from_user, item.nombre, item.connect, item.imagen_perfil);
+                    list_of_ChatUsers.push(user_chat);
+                    user_chat.renderOn(chatUser_list_container);
+                });
+    
+                let final_item = document.createElement("li");
+                final_item.classList.add("p-20");
+                chatUser_list_container.appendChild(final_item);
+    
+                list_of_ChatUsers.forEach((item) => item.htmlElement.addEventListener("click", () => setTargetUser(item)));
+    
+            }
+        }); 
+    } else {
+    
+        $.ajax({
+            type: "GET",
+            async:true,
+            url: window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/getRRHHChatLink/",
+    
+            success: function(response) {
+                console.log("sucess rrhh");
+                
+                response = JSON.parse(response);
+                console.log(response);
+                let rrhh_user_chat = new ChatUser(response.Id, response.nombre, response.connect, response.imagen_perfil);
+                rrhh_user_chat.renderOn(chatUser_list_container);
+                rrhh_user_chat.htmlElement.addEventListener("click", () => setTargetUser(rrhh_user_chat));
+            }
+        }); 
+        
+    }
+
 });
 
 
-
-// Obteniendo los datos usuarios con los que se chateo
-$.ajax({
-    type: "POST",
-    async:true,
-    url: window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/getChatUsers/",
-
-    success: function(response) {
-     
-        let list_of_users = JSON.parse(response);
-        console.log(list_of_users);
-
-        list_of_users.forEach(function (item) {
-
-            console.log(item);
-
-            user_chat = new ChatUser(item.from_user, item.nombre, item.connect, item.imagen_perfil);
-            list_of_ChatUsers.push(user_chat);
-            user_chat.renderOn(chatUser_list_container);
-        });
-
-        let final_item = document.createElement("li");
-        final_item.classList.add("p-20");
-        chatUser_list_container.appendChild(final_item);
-
-        list_of_ChatUsers.forEach((item) => item.htmlElement.addEventListener("click", () => setTargetUser(item)));
-
-    }
-}); 
 
 function setTargetUser(item) {
     // To implement
@@ -105,6 +127,7 @@ class ChatUser {
     }
 
     sendMessageTo(anotherUser) {
+        let self= this;
         $.ajax({
             type: "POST",
             async:false,
@@ -112,8 +135,12 @@ class ChatUser {
             data: {"mensaje": mensaje.value, "from_user": currentUser.userId, "to_user": anotherUser.userId},  
     
             success: function(response) {
-                console.log("sucess");
+                console.log("sucess array start");
                 chat_form.reset();
+                //self.showHistoryMessagesOn(board);
+                let array_of_messages = [...board.children];
+                console.log(array_of_messages[array_of_messages.length-1]);
+
             }
         });
     }
@@ -169,6 +196,7 @@ class ChatUser {
             }
 
             htmlBoard.appendChild(li_conversation_item);
+            li_conversation_item.scrollIntoView();
             
         });
     }
@@ -183,7 +211,7 @@ class ChatUser {
     
             success: function(response) {
                 console.log("sucess");
-                self.current_conversation=JSON.parse(response);  
+                self.current_conversation=JSON.parse(response);
             }
         });
     }

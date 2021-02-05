@@ -34,9 +34,8 @@ class Chat extends CI_Controller {
     public function sendMessage() {
         $mensaje = $this->input->post("mensaje");
         $from_user = $this->input->post("from_user");
-        //$to_user = $this->input->post("to_user");
+        $to_user = $this->input->post("to_user");
 
-        $to_user = 35;      //to be changed
 
         $data = array("message"=>$mensaje, "from_user"=>$from_user, "to_user"=>$to_user);
 
@@ -68,6 +67,10 @@ class Chat extends CI_Controller {
         $target_user = $this->input->post("target_user");
 
         echo json_encode($this->Chat_model->getConversationWith($current_user, $target_user));
+    }
+
+    public function getRRHHChatLink() {
+        echo json_encode($this->Chat_model->getRRHHChatLink());
     }
     
 }
