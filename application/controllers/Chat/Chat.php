@@ -63,14 +63,29 @@ class Chat extends CI_Controller {
     
 
     public function getConversationWith() {
-        $current_user = $this->input->post("current_user");
-        $target_user = $this->input->post("target_user");
+        $current_user = $_POST["current_user"];
+        $target_user = $_POST["target_user"];
 
         echo json_encode($this->Chat_model->getConversationWith($current_user, $target_user));
     }
 
     public function getRRHHChatLink() {
         echo json_encode($this->Chat_model->getRRHHChatLink());
+    }
+
+    public function getEveryChatUser() {
+        echo json_encode($this->Chat_model->getEveryChatUser());
+    }
+
+    public function getChatUserList() {
+        $user_session_id = $this->session->userdata("session_id");
+
+        if($user_session_id == 35) {
+            $this->getEveryChatUser();
+        } else {
+            $this->getRRHHChatLink();
+        }
+
     }
     
 }

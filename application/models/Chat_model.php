@@ -54,12 +54,24 @@ class Chat_model extends CI_Model {
 
     public function getRRHHChatLink() {
         $query = $this->db->query(
-            "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, `connect`, 'varon.png' AS imagen_perfil
+            "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
+                `connect`, 'varon.png' AS imagen_perfil
             FROM ts_usuario tsu
             WHERE Id = 35"
         );
 
-        return $query->row();
+        return $query->result();
+    }
+
+    public function getEveryChatUser() {
+        $query = $this->db->query(
+            "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
+                `connect`, 'varon.png' AS imagen_perfil
+            FROM ts_usuario tsu
+            "
+        );
+
+        return $query->result();
     }
 
 

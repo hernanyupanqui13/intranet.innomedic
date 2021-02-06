@@ -8,7 +8,7 @@
                     <div class="open-panel"><i class="ti-angle-right"></i></div>
                     <div class="chat-left-inner">
                         <div class="form-material">
-                            <input class="form-control p-2" type="text" placeholder="Buscar contacto">
+                            <input class="form-control p-2" id="buscar_contacto" type="text" placeholder="Buscar contacto">
                         </div>
                         <ul class="chatonline style-none"  id="chatUser-list-container">
                             <!--<li>
