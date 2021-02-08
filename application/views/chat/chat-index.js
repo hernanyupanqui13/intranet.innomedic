@@ -142,7 +142,6 @@ class ChatBoard {
     }
 
     setTargetUser(targeted_user) {
-
         this.target_user = targeted_user
 
         this.resetConversatinBoard();
@@ -211,6 +210,7 @@ class ChatBoard {
 }
 
 const main_html_element = document.querySelector(".chat-main-box");
+
 // Creating an instance of the object
 let chat_board = new ChatBoard(main_html_element);
 
