@@ -138,5 +138,25 @@ class Chat_model extends CI_Model {
         $this->db->update("chat", $data);
     }
 
+    public function checkIfNewMessage($from_user, $to_user) {
+        $query = $this->db->query(
+            "SELECT COUNT(*) AS lenght
+            FROM chat
+            WHERE from_user = $from_user
+                AND to_user = $to_user
+            GROUP BY from_user
+            "
+        );
+        
+        $result = $query->row();
+
+        // To avoid null values
+        if ($result == null) {
+            return 0;
+        } else {
+            return $result->lenght;
+        }
+    }
+
 
 }

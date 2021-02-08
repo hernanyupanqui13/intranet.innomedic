@@ -96,5 +96,20 @@ class Chat extends CI_Controller {
 
         $this->Chat_model->viewMessage($from_user, $current_user);
     }
+
+    public function checkIfNewMessage() {
+        $to_user = $this->session->userdata("session_id");
+        $n_msg_on_client = $this->input->post("n_msg_client");
+        $from_user = $this->input->post("from_user");
+
+        
+        $n_msg_on_server = $this->Chat_model->checkIfNewMessage($from_user, $to_user);
+
+        if($n_msg_on_client == $n_msg_on_server) {
+            echo "false";   // No new messages 
+        } else {
+            echo "true"; // There is new messages
+        }
+    }
     
 }

@@ -72,6 +72,44 @@ export default class ChatBoard {
 
         this.barra_buscar_contacto.focus();
         this.target_user.htmlElement.focus();
+
+        let the_interval = setInterval(() => {
+            this.checkIfNewMessage(targeted_user).then((data) => {
+                console.log("async finish 2");
+                console.log(data);
+                if (data===true) {
+                    clearInterval(the_interval);
+                    this.setTargetUser(targeted_user);
+                }
+                
+            });
+    
+        }, 2000);
+
+        
+    }
+
+    async checkIfNewMessage(from_user) {
+
+        let condition;
+
+            
+        let number_of_msg = [...document.querySelectorAll(".from_message")].length
+
+        const my_ajax = await $.ajax({
+            type: "POST",
+            async:true,
+            url: `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/checkIfNewMessage/`,
+            data: {"n_msg_client": number_of_msg, "from_user": from_user.userId}
+        });
+
+        if (my_ajax == "false") {
+            condition = false;
+        } else if (my_ajax == "true")
+            condition = true;
+            
+
+        return condition;
     }
 
     viewMessage(targeted_user) {
@@ -82,7 +120,7 @@ export default class ChatBoard {
             data: {"from_user": targeted_user.userId},  
     
             success: function() {                
-                console.log("Success viewed");    
+                console.log("Success viewed");
             }
         });
 
@@ -127,6 +165,7 @@ export default class ChatBoard {
             if (item.from_user == self.current_user.userId) {
 
                 li_conversation_item.classList.add("reverse");
+                li_conversation_item.classList.add("to_message");
                
                 li_conversation_item.innerHTML = `
                 <div class="chat-content">
@@ -137,7 +176,9 @@ export default class ChatBoard {
                 <div class="chat-img"><img src="` + self.current_user.profile_photo + `" alt="user" /></div>
                 `;
 
-            } else {          
+            } else {       
+                
+                li_conversation_item.classList.add("from_message");
 
                 li_conversation_item.innerHTML = `
                 <div class="chat-img"><img src="` + self.target_user.profile_photo + `" alt="user" /></div>
