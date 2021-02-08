@@ -1,7 +1,6 @@
-
 export default class ChatUser {
     
-    constructor(the_userId, the_userName, the_user_state, the_profile_photo) {
+    constructor(the_userId, the_userName, the_user_state, the_profile_photo, the_unread_messages = 0) {
         this.userId = the_userId;
 
         if(the_user_state === "1") {
@@ -14,6 +13,7 @@ export default class ChatUser {
         this.userName = the_userName;
         this.htmlElement;
         this.current_conversation;
+        this.unread_messages = the_unread_messages;
     }
 
     sendMessageTo(anotherUser, mensaje) {
@@ -25,13 +25,14 @@ export default class ChatUser {
             data: {"mensaje": mensaje, "from_user": self.userId, "to_user": anotherUser.userId},  
     
             success: function() {                
-                chat_form.reset();
+                console.log("Success ajax");    
             }
         });
     }
 
     renderOn(parentHtmlElement) {
-        const container = document.createElement("li");    
+        const container = document.createElement("li");
+        let unread_messages_html;
         
         let class_of_state = "";
         if(this.user_state == "Online") {
@@ -40,9 +41,19 @@ export default class ChatUser {
             class_of_state = "text-danger";
         }
 
+        if(this.unread_messages == 0 || this.unread_messages == undefined || this.unread_messages == null) {
+            unread_messages_html = ""
+        } else {
+            unread_messages_html = `<div class="unred_mess">${this.unread_messages}</div>`
+        }
+
         // Creating the html content
         container.innerHTML = `
-            <a href="javascript:void(0)"><img src="` + this.profile_photo +`" alt="user-img" class="img-circle"><span>` + this.userName + `<small class="${class_of_state}">` + this.user_state +`</small></span></a>
+            <a href="javascript:void(0)" class="chat_user_a">
+                <img src="${this.profile_photo}" alt="user-img" class="img-circle">
+                <span>${this.userName}<small class="${class_of_state}">${this.user_state}</small></span>
+                ${unread_messages_html}
+            </a>
         `;
 
         this.htmlElement = container.querySelector("a");

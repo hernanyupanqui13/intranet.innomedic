@@ -49,7 +49,7 @@
         </div>
     </div>
 </div>
-<script type="module" src="<?php echo base_url().'application/views/chat/chat-index.js'?>"></script>
+<script src="<?php echo base_url().'application/views/chat/chat-index.js'?>" type="module" ></script>
 <style>
 .chat_user_a {
     display: grid;

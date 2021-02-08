@@ -1,3 +1,4 @@
+import ChatUser from './ChatUser.js';
 
 export default class ChatBoard {
     constructor(main_html_parent) {
@@ -5,7 +6,7 @@ export default class ChatBoard {
         this.conversation_board = main_html_parent.querySelector("#chat-board");
         this.barra_buscar_contacto = main_html_parent.querySelector("#buscar_contacto");
         this.chat_form = main_html_parent.querySelector("#chat-form");
-        this.mensaje_input = this.chat_form['mensaje-input'];
+        this.mensaje_input = main_html_parent.querySelector("#chat-form")['mensaje-input'];
         this.chat_user_list_container = document.getElementById("chatUser-list-container");
 
 
@@ -46,7 +47,7 @@ export default class ChatBoard {
                 console.log("success");
                 let list = JSON.parse(this.responseText);
                 self.chat_user_list = list.map(function(item) {
-                    return new ChatUser(item.Id, item.nombre, item.connect, item.imagen_perfil);
+                    return new ChatUser(item.Id, item.nombre, item.connect, item.imagen_perfil, item.unread_messages);
                 });
             }
         }
@@ -66,20 +67,44 @@ export default class ChatBoard {
     setTargetUser(targeted_user) {
         this.target_user = targeted_user
 
-        this.resetConversatinBoard();
+        this.resetConversationBoard();
+        this.viewMessage(targeted_user);
 
         this.barra_buscar_contacto.focus();
         this.target_user.htmlElement.focus();
     }
 
-    resetConversatinBoard() {
+    viewMessage(targeted_user) {
+        $.ajax({
+            type: "POST",
+            async:false,
+            url: `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/viewMessage/`,
+            data: {"from_user": targeted_user.userId},  
+    
+            success: function() {                
+                console.log("Success viewed");    
+            }
+        });
+
+        
+        const unread_number_html = targeted_user.htmlElement.querySelector(".unred_mess");
+        if(unread_number_html != undefined && unread_number_html!=null) {
+            unread_number_html.innerHTML = "";
+            unread_number_html.classList.remove("unred_mess");
+        }
+        
+    
+    }
+
+    resetConversationBoard() {
         let self = this;
         this.conversation_board.innerHTML="";
 
         this.active_conversation = this.current_user.getConversationWith(self.target_user);
-        console.log(this.active_conversation);
 
         this.renderActiveConversation();
+
+        this.chat_form.reset();
     }
 
     processMessageSending(event) {
@@ -87,7 +112,9 @@ export default class ChatBoard {
 
         this.current_user.sendMessageTo(this.target_user, this.mensaje_input.value);
 
-        this.resetConversatinBoard();        
+        this.resetConversationBoard();   
+        this.barra_buscar_contacto.focus();
+        this.target_user.htmlElement.focus();
     }
 
     renderActiveConversation() {
@@ -127,7 +154,4 @@ export default class ChatBoard {
             
         });
     }
-
-
 }
-
