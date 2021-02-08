@@ -12,7 +12,7 @@ class Chat_model extends CI_Model {
     public function sendMessage($mensaje) {
         $this->db->insert('chat', $mensaje);
     }
-
+    // Not used but can be useful in the future
     public function getChatUsers($user_session_id) {
         $query = $this->db->query(
             "SELECT DISTINCT from_user, tsu.nombre, tsu.apellido_paterno, `connect`, 'varon.png' AS imagen_perfil
@@ -51,11 +51,43 @@ class Chat_model extends CI_Model {
         return $query->result();
     }
 
+    public function getUnreadMessages($current_user, $target_user) {
+        $query = $this->db->query(
+            "SELECT COUNT(*) AS unread_messages
+            FROM chat
+            WHERE from_user = $target_user 
+                AND to_user = $current_user
+            GROUP BY from_user   
+            "            
+        );
 
-    public function getRRHHChatLink() {
+        if ($query->row() != null) {
+            return (int) $query->row()->unread_messages;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function getRRHHChatLink($user_session_id) {
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
-                `connect`, 'varon.png' AS imagen_perfil
+                `connect`, 'varon.png' AS imagen_perfil,
+                CASE 
+                    WHEN (SELECT count(*)
+                        FROM chat
+                        WHERE from_user = 35 
+                            AND to_user = $user_session_id  
+                            AND was_viewed = 0
+                        GROUP BY from_user) IS NOT NULL 
+                    THEN (SELECT count(*)
+                        FROM chat
+                        WHERE from_user = 35 
+                            AND to_user = $user_session_id  
+                            AND was_viewed = 0
+                        GROUP BY from_user)
+                    ELSE 0
+                END AS unread_messages
             FROM ts_usuario tsu
             WHERE Id = 35"
         );
@@ -66,12 +98,44 @@ class Chat_model extends CI_Model {
     public function getEveryChatUser() {
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
-                `connect`, 'varon.png' AS imagen_perfil
+                `connect`, 'varon.png' AS imagen_perfil,
+                CASE 
+                    WHEN (SELECT count(*)
+                        FROM chat
+                        WHERE from_user = tsu.Id 
+                            AND to_user = 35
+                            AND was_viewed = 0
+                        GROUP BY from_user) IS NOT NULL 
+                    THEN (SELECT count(*)
+                        FROM chat
+                        WHERE from_user = tsu.Id 
+                            AND to_user = 35
+                            AND was_viewed = 0
+                        GROUP BY from_user)
+                    ELSE 0
+                END AS unread_messages,
+
+                (SELECT MAX(time_send)
+                FROM chat
+                WHERE from_user = tsu.Id
+                    AND to_user = 35
+                GROUP BY from_user) AS last_conversation
             FROM ts_usuario tsu
+            ORDER BY unread_messages DESC, last_conversation DESC, tsu.nombre ASC
             "
         );
 
         return $query->result();
+    }
+
+    public function viewMessage($target_user, $current_user) {
+        
+        $data = array(
+            "was_viewed" => 1
+        );
+        $this->db->where("from_user", $target_user);
+        $this->db->where("to_user", $current_user);
+        $this->db->update("chat", $data);
     }
 
 

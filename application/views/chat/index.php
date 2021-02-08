@@ -49,8 +49,23 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url().'application/views/chat/chat-index.js'?>"></script>
-<script>
+<script type="module" src="<?php echo base_url().'application/views/chat/chat-index.js'?>"></script>
+<style>
+.chat_user_a {
+    display: grid;
+    grid-template-columns: min-content auto 30px
 
+}
 
-</script>
+.unred_mess {
+    width: 30px;
+    height: 30px;
+    background-color: #03a9f3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+
+}
+</style>

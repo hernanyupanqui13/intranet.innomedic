@@ -70,7 +70,8 @@ class Chat extends CI_Controller {
     }
 
     public function getRRHHChatLink() {
-        echo json_encode($this->Chat_model->getRRHHChatLink());
+        $user_session_id = $this->session->userdata("session_id");
+        echo json_encode($this->Chat_model->getRRHHChatLink($user_session_id));
     }
 
     public function getEveryChatUser() {
@@ -86,6 +87,14 @@ class Chat extends CI_Controller {
             $this->getRRHHChatLink();
         }
 
+    }
+
+    public function viewMessage() {
+        $current_user = $this->session->userdata("session_id");
+        $from_user = $this->input->post("from_user");
+
+
+        $this->Chat_model->viewMessage($from_user, $current_user);
     }
     
 }
