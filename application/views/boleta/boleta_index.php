@@ -423,11 +423,39 @@
 </script>
 
 <!-- Innomedic Zendesk Widget script -->
-<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=82749fb2-dc7d-4202-9b16-67546e8d59dd"> </script>
+<!--<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=82749fb2-dc7d-4202-9b16-67546e8d59dd"> </script>-->
+<div class="chat_rrhh">
+    <a href="<?=base_url();?>/chat/chat" class="chat_rrhh_a">
+        <span>Chat RRHH</span>
+        <i class="fa fa-comment-dots"></i>    
+    </a>
+</div>
 
                             
 
 <style type="text/css">
+    .chat_rrhh {
+        background-color: #1e76bd;
+        position: fixed;
+        bottom: 5px;
+        right: 30px;
+        border-radius: 50px;
+        width:130px;
+        color:white;
+        text-align:center;
+        padding: 10px;
+
+    }
+
+    .chat_rrhh_a {
+        text-align: center;
+        color: white;
+    }
+
+    .chat_rrhh_a:hover {
+        color: white;
+    }
+
     .redes-flotantes {
         position: fixed;
         right: 8px;
@@ -466,4 +494,6 @@
             width: 30%;
         }
     }
+
+
 </style>

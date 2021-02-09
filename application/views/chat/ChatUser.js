@@ -22,11 +22,7 @@ export default class ChatUser {
             type: "POST",
             async:false,
             url: window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/sendMessage/",
-            data: {"mensaje": mensaje, "from_user": self.userId, "to_user": anotherUser.userId},  
-    
-            success: function() {                
-                console.log("Success ajax");    
-            }
+            data: {"mensaje": mensaje, "from_user": self.userId, "to_user": anotherUser.userId}
         });
     }
 
@@ -56,7 +52,7 @@ export default class ChatUser {
             </a>
         `;
 
-        this.htmlElement = container.querySelector("a");
+        this.htmlElement = container;
         parentHtmlElement.appendChild(container);
     }
 
@@ -76,4 +72,32 @@ export default class ChatUser {
         
         return response;
     }    
+
+    async getUnreadMessagesFrom(another_user) {        
+
+        const n_new_msg = await $.ajax({
+            type: "POST",
+            async:true,
+            url: `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/getUnreadMessages/`,
+            data: {"from_user":another_user.userId}
+        });
+
+        return parseInt(n_new_msg);
+
+    }
+
+    renderUnreadMessagesNotification(n_of_unread_msg) {
+
+        let notification_element = this.htmlElement.querySelector(".unred_mess");
+
+        if(notification_element == null) {
+            const new_msg_notif_html = document.createElement("div");
+            new_msg_notif_html.classList.add("unred_mess");
+            new_msg_notif_html.innerHTML = n_of_unread_msg;
+            let item = this.htmlElement.querySelector(".chat_user_a");
+            item.appendChild(new_msg_notif_html);
+        } else  {
+            notification_element.innerHTML = n_of_unread_msg;
+        }        
+    }
 }

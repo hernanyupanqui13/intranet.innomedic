@@ -51,13 +51,14 @@ class Chat_model extends CI_Model {
         return $query->result();
     }
 
-    public function getUnreadMessages($current_user, $target_user) {
+    public function getUnreadMessages($from_user, $to_user) {
         $query = $this->db->query(
             "SELECT COUNT(*) AS unread_messages
             FROM chat
-            WHERE from_user = $target_user 
-                AND to_user = $current_user
-            GROUP BY from_user   
+            WHERE from_user = $from_user 
+                AND to_user = $to_user
+                AND was_viewed = 0
+            GROUP BY from_user
             "            
         );
 
@@ -121,6 +122,7 @@ class Chat_model extends CI_Model {
                     AND to_user = 35
                 GROUP BY from_user) AS last_conversation
             FROM ts_usuario tsu
+            WHERE tsu.status = 1
             ORDER BY unread_messages DESC, last_conversation DESC, tsu.nombre ASC
             "
         );

@@ -15,12 +15,14 @@ export default class ChatBoard {
         this.target_user;
         this.chat_user_list;
         this.active_conversation;
+        this.new_msg_interval;
 
         // Obtaining and defining data
         this.defineCurrentUser();
         this.defineChatUserList();
         let self = this;
         this.chat_form.addEventListener("submit", function (event) {this.processMessageSending(event);}.bind(self));
+        this.updateNewMsgNotifications();
     }
 
     defineCurrentUser() {
@@ -44,7 +46,6 @@ export default class ChatBoard {
         xhttp.onreadystatechange = function() {
     
             if (this.readyState == 4 && this.status == 200) {
-                console.log("success");
                 let list = JSON.parse(this.responseText);
                 self.chat_user_list = list.map(function(item) {
                     return new ChatUser(item.Id, item.nombre, item.connect, item.imagen_perfil, item.unread_messages);
@@ -58,27 +59,40 @@ export default class ChatBoard {
 
     renderEverything() {
         let self = this;
+        self.chat_user_list_container.innerHTML = "";
         this.chat_user_list.forEach(function(one_chat_user) {
             one_chat_user.renderOn(self.chat_user_list_container);
             one_chat_user.htmlElement.addEventListener("click", () => self.setTargetUser(one_chat_user));
         });
+
+        this.barra_buscar_contacto.scrollIntoView();
+        this.target_user.htmlElement.focus();
+
+        
+
+        // Creating a setInterval to check if there is new messages
     }
 
     setTargetUser(targeted_user) {
-        this.target_user = targeted_user
+        
+        let self = this;
+        this.target_user = targeted_user;
+
+        this.barra_buscar_contacto.scrollIntoView();
+        this.target_user.htmlElement.focus();
+
+        clearInterval(self.new_msg_interval);
 
         this.resetConversationBoard();
         this.viewMessage(targeted_user);
 
-        this.barra_buscar_contacto.focus();
-        this.target_user.htmlElement.focus();
-
-        let the_interval = setInterval(() => {
+        
+        
+        this.new_msg_interval = setInterval(() => {
             this.checkIfNewMessage(targeted_user).then((data) => {
-                console.log("async finish 2");
-                console.log(data);
+
                 if (data===true) {
-                    clearInterval(the_interval);
+                    clearInterval(self.new_msg_interval);
                     this.setTargetUser(targeted_user);
                 }
                 
@@ -92,8 +106,7 @@ export default class ChatBoard {
     async checkIfNewMessage(from_user) {
 
         let condition;
-
-            
+    
         let number_of_msg = [...document.querySelectorAll(".from_message")].length
 
         const my_ajax = await $.ajax({
@@ -112,27 +125,50 @@ export default class ChatBoard {
         return condition;
     }
 
+    updateNewMsgNotifications() {
+
+        setInterval(() => {
+            /*for(let one_chat_user of this.chat_user_list) {
+                if (this.target_user != null && one_chat_user.userId == this.target_user.userId) {
+                    // do nothing
+                } else {
+
+                    this.current_user.getUnreadMessagesFrom(one_chat_user).then((data) => {
+
+                        let current_notification_value = parseInt(one_chat_user.htmlElement.querySelector(".unc_mess").innerText);
+
+                        if (data !== current_notification_value){
+                            // one_chat_user.renderUnreadMessagesNotification(data);
+                            one_chat_user.unread_messages = data;
+                            this.renderEverything();
+                        }
+
+                    });
+                }
+                
+            }*/
+            this.defineChatUserList()
+            this.renderEverything();
+        }, 6000);
+    }
+
     viewMessage(targeted_user) {
+
+        // This is to change the view state in the browser
         $.ajax({
             type: "POST",
             async:false,
             url: `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/viewMessage/`,
             data: {"from_user": targeted_user.userId},  
     
-            success: function() {                
-                console.log("Success viewed");
-            }
         });
 
-        
+        // This is to change the notifications in the client
         const unread_number_html = targeted_user.htmlElement.querySelector(".unred_mess");
-        if(unread_number_html != undefined && unread_number_html!=null) {
-            unread_number_html.innerHTML = "";
-            unread_number_html.classList.remove("unred_mess");
-        }
-        
-    
+        if (unread_number_html!=null) {unread_number_html.remove();}
     }
+
+
 
     resetConversationBoard() {
         let self = this;
@@ -141,8 +177,9 @@ export default class ChatBoard {
         this.active_conversation = this.current_user.getConversationWith(self.target_user);
 
         this.renderActiveConversation();
+        this.barra_buscar_contacto.scrollIntoView();
+        this.target_user.htmlElement.focus();
 
-        this.chat_form.reset();
     }
 
     processMessageSending(event) {
@@ -150,8 +187,9 @@ export default class ChatBoard {
 
         this.current_user.sendMessageTo(this.target_user, this.mensaje_input.value);
 
-        this.resetConversationBoard();   
-        this.barra_buscar_contacto.focus();
+        this.resetConversationBoard();
+        this.chat_form.reset();
+        this.barra_buscar_contacto.scrollIntoView();
         this.target_user.htmlElement.focus();
     }
 

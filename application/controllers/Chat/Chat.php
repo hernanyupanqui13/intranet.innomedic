@@ -111,5 +111,14 @@ class Chat extends CI_Controller {
             echo "true"; // There is new messages
         }
     }
+
+    public function getUnreadMessages() {
+        $from_user = $this->input->post("from_user");
+        $to_user = $this->session->userdata("session_id");
+
+
+        echo json_encode($this->Chat_model->getUnreadMessages($from_user, $to_user));
+        
+    }
     
 }
