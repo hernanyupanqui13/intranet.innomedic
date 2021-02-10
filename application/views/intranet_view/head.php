@@ -393,8 +393,13 @@
                              <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'ResultadoFinal/ResultadoFinal/Process/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Resultado Final</span></a></li>
                         <?php } ?>
                         <!-- Generaor de plantillas de correo -->
-                        <?php if ($this->session->userdata("session_perfil")==2) { ?>
+                        <?php if ($this->session->userdata("session_perfil") == 2) { ?>
                         <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'Correo_generator/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Editor de Plantillas</span></a></li>
+                        <?php } ?>
+
+                        <!-- Chat de Recursos Humanos -->
+                        <?php if ($this->session->userdata("session_perfil") == 36) { ?>
+                        <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'Chat/Chat/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Chat de RRHH</span><span class="total_unread_msg"></span></a></li>
                         <?php } ?>
                     </ul>
                 </nav>
@@ -448,10 +453,56 @@
                         })
                   }
                 })
-            }
+            }   
+            // Showing the total number of unread messages in the menu  
+            $( document ).ready(function() {
+                console.log("ready");
+                let reg = /[cC]hat\/[cC]hat/;
+
+                // If we are not in the chat window, we will request a total of unread messages
+                if (!reg.test(window.location.href)) {
+
+                    let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            let show_number = "";
+                            const unread_msg_container = document.querySelector(".total_unread_msg");
+                            
+                            if (this.responseText == 0) {
+                                unread_msg_container.innerHTML = "";
+                                unread_msg_container.style.backgroundColor = "transparent";
+
+                            } else {
+                                unread_msg_container.innerHTML = this.responseText;
+                                unread_msg_container.style.backgroundColor = "#00c292";
+                            }
+                    
+                        }
+                    };
+
+                    xhttp.open("GET", "<?=base_url();?>Chat/Chat/getTotalNumberUnreadMsg/35", true);
+                    xhttp.send();
+                    
+                }                         
+            });
+
+            
+
         </script>
 
         <style>
+            .total_unread_msg {
+                float: right;
+                width: 25px;
+                height: 25px;
+                text-align: center;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: translate(0, -3px);
+                color: white;
+            }
             .evaristo_{
                 width: 100%;
                 height: auto;

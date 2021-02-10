@@ -77,7 +77,7 @@ class Chat_model extends CI_Model {
                 (SELECT tsp.imagen
                 FROM ts_datos_personales AS tsp
                 WHERE tsp.Id = tsu.Id) AS imagen_perfil,
-                
+
                 CASE 
                     WHEN (SELECT count(*)
                         FROM chat
@@ -174,5 +174,19 @@ class Chat_model extends CI_Model {
             return $result->lenght;
         }
     }
+
+    public function getTotalNumberUnreadMsg($user_id) {
+        $query = $this->db->query(
+            "SELECT COUNT(*) as total_unread_msg
+            FROM chat
+            WHERE was_viewed = 0
+                AND to_user = $user_id
+            "
+        );
+
+        return $query->row()->total_unread_msg;
+    }
+
+
 
 }
