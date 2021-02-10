@@ -2,10 +2,12 @@ import ChatUser from './ChatUser.js';
 
 export default class ChatBoard {
     constructor(main_html_parent) {
+        let self = this;
+
         // HTML elements 
         this.conversation_board = main_html_parent.querySelector("#chat-board");
         this.barra_buscar_contacto = main_html_parent.querySelector("#buscar_contacto");
-        this.chat_form = main_html_parent.querySelector("#chat-form");
+        this.chat_form = main_html_parent.querySelector("#chat-form");        
         this.mensaje_input = main_html_parent.querySelector("#chat-form")['mensaje-input'];
         this.chat_user_list_container = document.getElementById("chatUser-list-container");
 
@@ -20,8 +22,15 @@ export default class ChatBoard {
         // Obtaining and defining data
         this.defineCurrentUser();
         this.defineChatUserList();
-        let self = this;
+        this.chat_form.addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                this.processMessageSending(event);
+            }
+        }.bind(self));
+        
         this.chat_form.addEventListener("submit", function (event) {this.processMessageSending(event);}.bind(self));
+        
         this.updateNewMsgNotifications();
     }
 
@@ -36,7 +45,7 @@ export default class ChatBoard {
             }
         }
 
-        xhttp.open("GET", window.location.origin + "/intranet.innomedic.pe/" + "chat/chat/getCurrentUser", false);
+        xhttp.open("GET", `${window.location.origin}/intranet.innomedic.pe/chat/chat/getCurrentUser`, false);
         xhttp.send();
     }
 
@@ -53,7 +62,7 @@ export default class ChatBoard {
             }
         }
 
-        xhttp.open("GET", window.location.origin + "/intranet.innomedic.pe/" + "chat/chat/getChatUserList", false);
+        xhttp.open("GET", `${window.location.origin}/intranet.innomedic.pe/chat/chat/getChatUserList`, false);
         xhttp.send();
     }
 
@@ -66,11 +75,9 @@ export default class ChatBoard {
         });
 
         this.barra_buscar_contacto.scrollIntoView();
-        this.target_user.htmlElement.focus();
-
-        
-
-        // Creating a setInterval to check if there is new messages
+        if (this.target_user != null && this.target_user != undefined) {
+            this.target_user.htmlElement.focus();
+        }        
     }
 
     setTargetUser(targeted_user) {
@@ -178,7 +185,10 @@ export default class ChatBoard {
 
         this.renderActiveConversation();
         this.barra_buscar_contacto.scrollIntoView();
-        this.target_user.htmlElement.focus();
+        
+        if (this.target_user.htmlElement != null && this.target_user.htmlElement != undefined) {
+            this.target_user.htmlElement.focus();
+        }
 
     }
 

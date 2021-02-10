@@ -27,7 +27,7 @@ class Chat_model extends CI_Model {
 
     public function getCurrentUser($id) {
         $query = $this->db->query(
-            "SELECT $id AS current_user_id, CONCAT_WS(' ', dp.nombres, dp.apellido_paterno) AS nombre, 'varon.png' AS imagen, 
+            "SELECT $id AS current_user_id, CONCAT_WS(' ', dp.nombres, dp.apellido_paterno) AS nombre, imagen, 
                 (select `connect` from ts_usuario where dp.Id=ts_usuario.Id ) AS estado
             FROM ts_datos_personales dp
             WHERE Id=$id"
@@ -73,7 +73,7 @@ class Chat_model extends CI_Model {
     public function getRRHHChatLink($user_session_id) {
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
-                `connect`, 'varon.png' AS imagen_perfil,
+                `connect`, tsu.imagen AS imagen_perfil,
                 CASE 
                     WHEN (SELECT count(*)
                         FROM chat
@@ -100,6 +100,9 @@ class Chat_model extends CI_Model {
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
                 `connect`, 'varon.png' AS imagen_perfil,
+                (SELECT imagen
+                FROM ts_datos_personales tsd
+                WHERE tsd.Id = tsu.Id) AS imagen_perfil,
                 CASE 
                     WHEN (SELECT count(*)
                         FROM chat
@@ -159,6 +162,5 @@ class Chat_model extends CI_Model {
             return $result->lenght;
         }
     }
-
 
 }
