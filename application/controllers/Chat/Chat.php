@@ -74,15 +74,16 @@ class Chat extends CI_Controller {
         echo json_encode($this->Chat_model->getRRHHChatLink($user_session_id));
     }
 
-    public function getEveryChatUser() {
-        echo json_encode($this->Chat_model->getEveryChatUser());
+    public function getEveryChatUser($filter_condition) {
+        echo json_encode($this->Chat_model->getEveryChatUser($filter_condition));
     }
 
-    public function getChatUserList() {
+    public function getChatUserList($filter_condition="null") {
+        
         $user_session_id = $this->session->userdata("session_id");
 
         if($user_session_id == 35) {
-            $this->getEveryChatUser();
+            $this->getEveryChatUser($filter_condition);
         } else {
             $this->getRRHHChatLink();
         }

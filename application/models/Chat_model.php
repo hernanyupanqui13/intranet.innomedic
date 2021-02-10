@@ -96,7 +96,14 @@ class Chat_model extends CI_Model {
         return $query->result();
     }
 
-    public function getEveryChatUser() {
+    public function getEveryChatUser($filter_condition) {
+
+        if($filter_condition == "null") {
+            $filter_condition = "";
+        } else {
+            $filter_condition = "AND tsu.nombre LIKE '%$filter_condition%' ";
+        }
+
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
                 `connect`, 'varon.png' AS imagen_perfil,
@@ -126,6 +133,7 @@ class Chat_model extends CI_Model {
                 GROUP BY from_user) AS last_conversation
             FROM ts_usuario tsu
             WHERE tsu.status = 1
+            $filter_condition
             ORDER BY unread_messages DESC, last_conversation DESC, tsu.nombre ASC
             "
         );

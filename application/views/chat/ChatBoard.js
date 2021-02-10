@@ -18,19 +18,21 @@ export default class ChatBoard {
         this.chat_user_list;
         this.active_conversation;
         this.new_msg_interval;
+        this.current_filter_condition = "";
 
         // Obtaining and defining data
         this.defineCurrentUser();
         this.defineChatUserList();
+
         this.chat_form.addEventListener("keyup", function(event) {
             // Number 13 is the "Enter" key on the keyboard
             if (event.keyCode === 13) {
                 this.processMessageSending(event);
             }
         }.bind(self));
-        
+
         this.chat_form.addEventListener("submit", function (event) {this.processMessageSending(event);}.bind(self));
-        
+        this.setSearchBar();
         this.updateNewMsgNotifications();
     }
 
@@ -49,7 +51,7 @@ export default class ChatBoard {
         xhttp.send();
     }
 
-    defineChatUserList() {
+    defineChatUserList(filter_pattern = "") {
         let self=this;
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -62,7 +64,7 @@ export default class ChatBoard {
             }
         }
 
-        xhttp.open("GET", `${window.location.origin}/intranet.innomedic.pe/chat/chat/getChatUserList`, false);
+        xhttp.open("GET", `${window.location.origin}/intranet.innomedic.pe/chat/chat/getChatUserList/${filter_pattern}`, false);
         xhttp.send();
     }
 
@@ -105,15 +107,12 @@ export default class ChatBoard {
                 
             });
     
-        }, 2000);
-
-        
+        }, 2000);        
     }
 
     async checkIfNewMessage(from_user) {
 
-        let condition;
-    
+        let condition;    
         let number_of_msg = [...document.querySelectorAll(".from_message")].length
 
         const my_ajax = await $.ajax({
@@ -134,29 +133,14 @@ export default class ChatBoard {
 
     updateNewMsgNotifications() {
 
-        setInterval(() => {
-            /*for(let one_chat_user of this.chat_user_list) {
-                if (this.target_user != null && one_chat_user.userId == this.target_user.userId) {
-                    // do nothing
-                } else {
-
-                    this.current_user.getUnreadMessagesFrom(one_chat_user).then((data) => {
-
-                        let current_notification_value = parseInt(one_chat_user.htmlElement.querySelector(".unc_mess").innerText);
-
-                        if (data !== current_notification_value){
-                            // one_chat_user.renderUnreadMessagesNotification(data);
-                            one_chat_user.unread_messages = data;
-                            this.renderEverything();
-                        }
-
-                    });
-                }
-                
-            }*/
-            this.defineChatUserList()
-            this.renderEverything();
+        setInterval(() => {            
+            this.resetChatUsersList();
         }, 6000);
+    }
+
+    resetChatUsersList() {
+        this.defineChatUserList(this.current_filter_condition);
+        this.renderEverything();
     }
 
     viewMessage(targeted_user) {
@@ -174,7 +158,6 @@ export default class ChatBoard {
         const unread_number_html = targeted_user.htmlElement.querySelector(".unred_mess");
         if (unread_number_html!=null) {unread_number_html.remove();}
     }
-
 
 
     resetConversationBoard() {
@@ -242,5 +225,18 @@ export default class ChatBoard {
             li_conversation_item.scrollIntoView();
             
         });
+    }
+
+    setSearchBar() {
+        let self = this;
+        this.barra_buscar_contacto.addEventListener("keyup", function (event) {
+            
+            if (event.keyCode === 13) {
+                self.current_filter_condition = self.barra_buscar_contacto.value;
+                self.resetChatUsersList();
+            }
+           
+        });
+
     }
 }
