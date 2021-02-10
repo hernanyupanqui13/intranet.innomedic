@@ -73,7 +73,11 @@ class Chat_model extends CI_Model {
     public function getRRHHChatLink($user_session_id) {
         $query = $this->db->query(
             "SELECT tsu.Id, tsu.nombre, tsu.apellido_paterno, 
-                `connect`, tsu.imagen AS imagen_perfil,
+                `connect`, 
+                (SELECT tsp.imagen
+                FROM ts_datos_personales AS tsp
+                WHERE tsp.Id = tsu.Id) AS imagen_perfil,
+                
                 CASE 
                     WHEN (SELECT count(*)
                         FROM chat
