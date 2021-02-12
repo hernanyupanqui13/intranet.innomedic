@@ -130,12 +130,10 @@
         }
         
         .left-sidebar {
-            z-index:5 !important;     
+            z-index:15 !important;     
         }
 
-        .topbar {
-            z-index: 9 !important; /* Para que no interfiera con el datepicker */
-        }
+        
         
     </style>
 
@@ -398,9 +396,15 @@
                         <?php } ?>
 
                         <!-- Chat de Recursos Humanos -->
-                        <?php if ($this->session->userdata("session_perfil") == 36) { ?>
-                        <li> <a class="waves-effect waves-dark" href="<?php echo base_url().'Chat/Chat/';?>" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">Chat de RRHH</span><span class="total_unread_msg"></span></a></li>
-                        <?php } ?>
+                        
+                        <li>
+                            <a class="waves-effect waves-dark" href="<?php echo base_url().'Chat/Chat/';?>" aria-expanded="false">
+                                <i class="fa fa-comment-dots"></i>
+                                <span class="hide-menu">Chat de RRHH</span>
+                                <span class="total_unread_msg"></span>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

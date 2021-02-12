@@ -124,8 +124,10 @@ class Chat extends CI_Controller {
 
 
     // This returns all the unread messages to display it in the menu 
-    public function getTotalNumberUnreadMsg($user_id) {
-        echo strval($this->Chat_model->getTotalNumberUnreadMsg($user_id));
+    public function getTotalNumberUnreadMsg() {
+        $to_user = $this->session->userdata("session_id");
+
+        echo strval($this->Chat_model->getTotalNumberUnreadMsg($to_user));
     }
     
 }
