@@ -189,37 +189,6 @@ class Trabajador extends CI_Controller
 	}
 
 
-	public function getPlantillaRegistrar() {
-
-		$data = array(
-			'title' =>array("estas viendo la lista de Trabajador","Lista de Trabajador","","Evaristo Escudero Huillcamascco"),//<a class='btn-success btn-rounded btn d-none d-lg-block m-l-15' href='javascript:void(0)' data-toggle='modal' data-target='.bd-example-modal-xl'><i class='fa fa-plus-circle'></i>&nbsp;Nuevo Trabajador</a>
-			'mostrar_users' => $this->Trabajador_model->mostrar_users(),
-			'list_status'=>$this->Trabajador_model->list_status(),
-			'id_sexo' =>$this->Trabajador_model->id_sexo(),
-			'id_perfil'=>$this->Trabajador_model->id_perfil(),
-
-			
-		);
-
-		echo $this->load->view('trabajador/modal_registro',$data, true);
-
-	}
-
-	public function getPlantillaActualizar() {
-		$data = array(
-			'title' =>array("estas viendo la lista de Trabajador","Lista de Trabajador","","Evaristo Escudero Huillcamascco"),//<a class='btn-success btn-rounded btn d-none d-lg-block m-l-15' href='javascript:void(0)' data-toggle='modal' data-target='.bd-example-modal-xl'><i class='fa fa-plus-circle'></i>&nbsp;Nuevo Trabajador</a>
-			'mostrar_users' => $this->Trabajador_model->mostrar_users(),
-			'list_status'=>$this->Trabajador_model->list_status(),
-			'id_sexo' =>$this->Trabajador_model->id_sexo(),
-			'id_perfil'=>$this->Trabajador_model->id_perfil(),
-
-			
-		);
-
-		echo $this->load->view('trabajador/modal_actualizar_registro', $data, true);
-	}
-
-
 
 
 } ?>

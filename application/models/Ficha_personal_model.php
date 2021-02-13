@@ -217,15 +217,7 @@ from ts_datos_referentes where Id=".$user_id."");
     public function getDatosPersonalesImpr($id) {
       $query = $this->db->query(
         "SELECT *,(select departamento from ts_departamento where Id=id_departamento) AS departamento,
-          (select 
-            CASE
-                WHEN genero = 'Masculino' THEN 'varon.png'
-                WHEN genero = 'Femenino' THEN 'mujer.png'
-                WHEN genero = 'Preguntame' THEN 'medio.png'
-                ELSE 'distinto.png'
-            END
-            from ts_genero where Id=id_genero) 
-            AS imagen,
+          imagen,
 
 
             CASE

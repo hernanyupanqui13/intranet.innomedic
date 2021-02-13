@@ -150,18 +150,19 @@
         $(function(){
             $('#botoncito').on('click', function(){
                 var dni = $('#dni').val();
-                var url = '<?php echo base_url().'assets_sistema/reniec/consulta_reniec.php/';?>';
+                //var url = '<?php echo base_url().'assets_sistema/reniec/consulta_reniec.php/';?>';
+                let url = `https://dni.optimizeperu.com/api/persons/${dni}`;
+
                 $.ajax({
-                type:'POST',
+                type:'GET',
                 url:url,
-                data:'dni='+dni,
+                //data:'dni='+dni,
                 success: function(datos_dni){
-                    var datos = eval(datos_dni);
-                        $('#dni_mostrar_dni').val(datos[1]);
-                        $('#apellido_paterno_x').val(datos[3]);
-                        $('#apellido_materno').val(datos[4]);
-                        $('#nombres_completos').val(datos[2]);
-                       
+                  var datos = eval(datos_dni);
+                  $('#dni_mostrar_dni').val(datos_dni.dni);
+                  $('#apellido_paterno_x').val(datos_dni.first_name);
+                  $('#apellido_materno').val(datos_dni.last_name);
+                  $('#nombres_completos').val(datos_dni.name);                       
                 }
             });
             return false;

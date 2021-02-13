@@ -369,7 +369,7 @@ $(document).on('submit', '#user_form_insert', function(event){
     $(".register_data").text('Registrando.....');
   
      $.ajax({  
-       url:window.location.origin + "/intranet.innomedic.pe/"+ 'Mantenimiento/Usuario/Agregar_nuevo/',  
+       url:`${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Usuario/Agregar_nuevo/`,  
        method:'POST',  
        data:new FormData(this),  
        contentType:false,  
@@ -387,7 +387,7 @@ $(document).on('submit', '#user_form_insert', function(event){
            confirmButtonText: 'OK'
          }).then((result) => {
            if (result.value) {  
-             location.href= window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/';
+             location.href= `${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Trabajador/`;
            }
          })
 
@@ -680,7 +680,7 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
 
     var user_id = $(this).attr("id"); 
     $.ajax({
-      url: window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/Mostrar_datos_para_actualiozar/',
+      url: `${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Trabajador/Mostrar_datos_para_actualiozar/`,
       type: 'POST',
       dataType: 'json',
       data: {user_id:user_id},
@@ -784,7 +784,7 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
 
     // Registrando los cambios en el servidor 
     $.ajax({
-      url:window.location.origin + "/intranet.innomedic.pe/" + 'Mantenimiento/Trabajador/actualizar_area_emaail_puesto/',
+      url:`${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Trabajador/actualizar_area_emaail_puesto/`,
       type: 'POST',
       data:new FormData(this),  
       contentType:false,  
@@ -829,7 +829,7 @@ $(document).on('click', '.btn_actualizar_colaborador', function(event) {
         }).then((result) => {
           if (result.value) {
             $.ajax({  
-                 url:window.location.origin + "/intranet.innomedic.pe/" +'Mantenimiento/Usuario/eliminar_usuario/',  
+                 url:`${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Usuario/eliminar_usuario/`,  
                  method:"POST",  
                  data:{user_id:user_id},  
                  success:function(data)  
@@ -915,7 +915,7 @@ Carga masiva de datos
 
       var user_id = $(this).attr("Id"); 
      $.ajax({
-       url: window.location.origin + "/intranet.innomedic.pe/" +'Mantenimiento/Trabajador/ultimo_acceso/',
+       url: `${window.location.origin}/intranet.innomedic.pe/Mantenimiento/Trabajador/ultimo_acceso/`,
        type: 'POST',
        dataType: 'json',
        data: {user_id: user_id},
@@ -964,7 +964,7 @@ Carga masiva de datos
   Se activa cuando se da click a descargar, descarga la informacion personal en pdf
   */
   function descargarInformacion(id) {
-    window.location = window.location.origin + "/intranet.innomedic.pe/" + 'View_intranet/Ficha_personal/descargarInformacion/' + id;
+    window.location = `${window.location.origin}/intranet.innomedic.pe/View_intranet/Ficha_personal/descargarInformacion/${id}`;
 
   }
 
