@@ -9,7 +9,7 @@ export default class ChatUser {
             this.user_state = "Offline";
         }
 
-        this.profile_photo = window.location.origin + "/intranet.innomedic.pe/" + "upload/images/" + the_profile_photo;   
+        this.profile_photo = `${window.location.origin}/intranet.innomedic.pe/upload/images/${the_profile_photo}`;   
         this.userName = the_userName;
         this.htmlElement;
         this.current_conversation;
@@ -21,7 +21,7 @@ export default class ChatUser {
         $.ajax({
             type: "POST",
             async:false,
-            url: window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/sendMessage/",
+            url: `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/sendMessage/`,
             data: {"mensaje": mensaje, "from_user": self.userId, "to_user": anotherUser.userId}
         });
     }
@@ -66,7 +66,7 @@ export default class ChatUser {
                 response = JSON.parse(this.responseText);
             }
         };
-        xhttp.open("POST", window.location.origin + "/intranet.innomedic.pe/" + "Chat/Chat/getConversationWith", false);
+        xhttp.open("POST", `${window.location.origin}/intranet.innomedic.pe/Chat/Chat/getConversationWith`, false);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(`current_user=${self.userId}&target_user=${anotherUser.userId}`);
         
